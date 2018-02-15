@@ -15,6 +15,7 @@ Missing Person Detection Tool
   * The easiest way is to use Homebrew, then follow the linux installation instructions.
     * With Homebrew: replace 'sudo apt-get' with 'brew'
   * Once installed you can compile and run as descrided in the linux instructions 
+
   * Or use: "g++ $(pkg-config --cflags --libs opencv) <file_name>.cpp -o <executable_name>"
 
 ## Python OpenCV Setup
@@ -25,3 +26,4 @@ Missing Person Detection Tool
   * pip install pyinstaller
 * Spectral (SPy)
   * pip install spectral
+
