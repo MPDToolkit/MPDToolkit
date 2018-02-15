@@ -5,11 +5,11 @@ Missing Person Detection Tool
 ## C++ OpenCV Setup
 * Windows
   * https://docs.opencv.org/master/d3/d52/tutorial_windows_install.html
-  1. TODO Add steps here
+  1. TODO Reiterate steps here
   
 * Linux
   * https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html
-  1. TODO Add steps here
+  1. TODO Reiterate steps here
   
 * MacOS
   * The easiest way is to use Homebrew, then follow the linux installation instructions.
