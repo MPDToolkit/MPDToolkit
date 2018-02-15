@@ -21,5 +21,7 @@ Missing Person Detection Tool
 * Python 2.7.14
 * Numpy
 * SciPy
+* PyInstaller
+ * pip install pyinstaller
 * Spectral (SPy)
   * pip install spectral
