@@ -2,6 +2,17 @@
 Missing Person Detection Tool
 
 
+## Python Setup
+* Python 3.6.4
+* Numpy
+* SciPy
+* Scikit-Learn
+  * pip install scikit-learn
+* PyInstaller
+  * pip install pyinstaller
+* Spectral (SPy)
+  * pip install spectral
+
 ## C++ OpenCV Setup
 * Windows
   * https://docs.opencv.org/master/d3/d52/tutorial_windows_install.html
@@ -17,13 +28,3 @@ Missing Person Detection Tool
   * Once installed you can compile and run as descrided in the linux instructions 
 
   * Or use: "g++ $(pkg-config --cflags --libs opencv) <file_name>.cpp -o <executable_name>"
-
-## Python OpenCV Setup
-* Python 2.7.14
-* Numpy
-* SciPy
-* PyInstaller
-  * pip install pyinstaller
-* Spectral (SPy)
-  * pip install spectral
-
