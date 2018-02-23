@@ -16,7 +16,7 @@ t.start()
 args = sys.argv
 
 
-t.end()
+t.stop()
 
 print("\nElapsed time: %f ms" % (t.get_time() * 1000))
 print("Elapsed time: {0} ms\n".format(t.get_time(1000)) )

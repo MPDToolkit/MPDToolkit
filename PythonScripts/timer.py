@@ -8,7 +8,7 @@ class Timer:
     def start(self):
         self.t_start = float(time.perf_counter())
 
-    def end(self):
+    def stop(self):
         self.t_end = float(time.perf_counter())
     
     def get_time(self, args=None):
