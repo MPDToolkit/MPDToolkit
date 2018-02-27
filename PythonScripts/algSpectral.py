@@ -1,4 +1,11 @@
-#implement the algorithm described in the Spectral research paper
+#   Missing Person Detection Tool 
+#
+#
+# References:
+#    - Spectral Analysis Code: http://www.spectralpython.net/algorithms.html
+#         - Code can be found under the section: Target Detectors --> RX Anomaly Detector
+#
+
 
 import sys
 import cv2 as cv
@@ -6,71 +13,139 @@ import numpy as np
 import scipy as sp
 import spectral as spc
 from scipy.stats import chi2
-from sklearn.preprocessing import MinMaxScaler
+
+import timer    #Custom Timer class
+
+#========================================================================================================
+#-------------------------------------Define optimization perameters-------------------------------------
+#========================================================================================================
+
+scale_value = 1
+
+threshold_value = 0.999
+
+colormap_value = cv.COLORMAP_JET
+
+window_property = cv.WINDOW_KEEPRATIO
+
+window_init_width = 750
+window_init_height = 500
 
 
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
 
-import timer    #Timer class
-
-
-
-
+#Create a Timer
 t = timer.Timer()
 
-
-#Save the arguments passed into the python script
+#Get the arguments passed into the python script
 args = sys.argv
 
-#Open an image with OpenCV
+#Check if an image was provided
 if len(args) <= 1:
     print("Argument error: No input image")
     exit()
 
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
 
 
-
-       #WINDOW_NORMAL --> allows the user to adjust the window size, WINDOW_KEEPRATIO --> allows the user to adjust the window size while maintaining the image ratio
-
-raw_img = cv.imread(args[1]) 
-
-#raw_img = cv.GaussianBlur(raw_img, (21,21), 4.5)
-
-scale_value = 0.2
-
-height, width = raw_img.shape[:2]
-src_img = cv.resize(raw_img, (int(width*scale_value), int(height*scale_value)), interpolation=cv.INTER_LINEAR)
-
-
+#Start the timer
 t.start()
 
-#Calculate the RX scores
-#img_stats = spc.calc_stats(src_img)
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+#Read the source image
+src_img = cv.imread(args[1]) 
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+
+#If needed, scale image
+if scale_value != 1:
+    height, width = src_img.shape[:2]
+    src_img = cv.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv.INTER_LINEAR)
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+#Calculate the rx scores for the image
 rx_scores = spc.rx(src_img)
 
-#Apply chi-square percent point function such that only values < 0.1% are kept
-rx_chi = chi2.ppf(0.001, rx_scores)
 
-#Normalize values such that they are between the range [0,255] (RGB images are in this range)
-scaler = MinMaxScaler(feature_range=(0, 255), copy=False)
-scaler.fit_transform(rx_chi)
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
 
-rx_img = cv.applyColorMap(rx_chi.astype(np.uint8), cv.COLORMAP_JET)
 
-t.end()
+#Calculate the reference bands
+rx_bands = src_img.shape[-1]
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+#Apply a threshold to the rx scores using the chi-square percent point function
+rx_chi = chi2.ppf( threshold_value, rx_bands)
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+
+#Apply a colormap
+rx_img = cv.applyColorMap( rx_scores.astype(np.uint8), colormap_value )
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+
+#Stop the timer
+t.stop()
 print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 
 
-cv.namedWindow('rx_img', cv.WINDOW_AUTOSIZE)
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+
+cv.namedWindow('rx_img', window_property)
+cv.resizeWindow('rx_img', window_init_width, window_init_height)
 cv.imshow("rx_img", rx_img)
 
-#cv.imwrite("rx_img_255.jpg", rx_img)
 
-cv.namedWindow("src_img", cv.WINDOW_AUTOSIZE)
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+
+
+cv.namedWindow("src_img", window_property)
+cv.resizeWindow('src_img', window_init_width, window_init_height)
 cv.imshow("src_img", src_img)
 
 
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
 
-cv.waitKey(0)    #Wait until a key is pressed
+#Wait until a key is pressed
+cv.waitKey(0)   
+
+
+#========================================================================================================
+#--------------------------------------------Clean Up & Exit---------------------------------------------
+#========================================================================================================
+
+
 cv.destroyAllWindows()
-
 exit()
+
+
+
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
