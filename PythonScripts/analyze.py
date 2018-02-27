@@ -19,6 +19,7 @@ def main():
 
     t.stop()
 
+
     print("\nElapsed time: %f ms" % (t.get_time() * 1000))
     print("Elapsed time: {0} ms\n".format(t.get_time(1000)) )
 
