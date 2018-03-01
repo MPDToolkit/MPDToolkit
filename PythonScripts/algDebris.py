@@ -8,10 +8,11 @@
 
 
 import sys
+import math
 import cv2 as cv
 import numpy as np
 import scipy as sp
-import skimage as ski
+#import skimage as ski
 from scipy.stats import chi2
 import matplotlib.pyplot as plt
 
@@ -124,18 +125,44 @@ preprocess_img = cv.bilateralFilter(src_img, 9, 75, 75)
 #Apply Canny edge detection
 #Threshold values are variable in this example
 def edgeDetect(arg):
-    low_threshold = cv.getTrackbarPos('Low', 'edge_img')
-    high_threshold = cv.getTrackbarPos('High', 'edge_img')
-
-    edge_img = cv.Canny(preprocess_img, low_threshold, high_threshold)
-    cv.imshow('edge_img', edge_img)
-
+	low_threshold = cv.getTrackbarPos('Low', 'edge_img') / 10.0
+	high_threshold = (cv.getTrackbarPos('Low', 'edge_img') / 10.0)*2.0
+	
+	edge_img = cv.Canny(preprocess_img, low_threshold, high_threshold)
+	#cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
+	lines = cv.HoughLines(edge_img, 0.7, np.pi / 180, 150)
+	if lines is not None:
+		for i in range(0, len(lines)):
+			rho = lines[i][0][0]
+			theta = lines[i][0][1]
+			a = math.cos(theta)
+			b = math.sin(theta)
+			x0 = a * rho
+			y0 = b * rho
+			pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+			pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+			cv.line(edge_img, pt1, pt2, (0,0,255), 3, cv.LINE_AA)
+	cv.imshow('edge_img', edge_img)
+	
 
 cv.namedWindow('edge_img', window_property)
 cv.resizeWindow('edge_img', window_init_width, window_init_height)
-cv.createTrackbar('Low', 'edge_img', 100, 1024, edgeDetect)
-cv.createTrackbar('High', 'edge_img', 0, 1024, edgeDetect)
-edge_img = cv.Canny(preprocess_img, 100, 0)
+cv.createTrackbar('Low', 'edge_img', 1130, 10000, edgeDetect)
+
+edge_img = cv.Canny(preprocess_img, 50, 200)
+#cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
+lines = cv.HoughLines(edge_img, 0.7, np.pi / 180, 150)
+if lines is not None:
+	for i in range(0, len(lines)):
+		rho = lines[i][0][0]
+		theta = lines[i][0][1]
+		a = math.cos(theta)
+		b = math.sin(theta)
+		x0 = a * rho
+		y0 = b * rho
+		pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+		pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+		cv.line(edge_img, pt1, pt2, (0,0,255), 3, cv.LINE_AA)
 cv.imshow('edge_img', edge_img)
 
 #--------------------------------------------------------------------------------------------------------
