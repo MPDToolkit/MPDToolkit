@@ -8,7 +8,7 @@ import math
 import timer    #Custom Timer class
 
 #========================================================================================================
-#-------------------------------------Define optimization perameters-------------------------------------
+#-------------------------------------Define optimization parameters-------------------------------------
 #========================================================================================================
 
 scale_value = 1
@@ -19,8 +19,8 @@ colormap_value = cv2.COLORMAP_JET
 
 window_property = cv2.WINDOW_KEEPRATIO
 
-window_init_width = 1920
-window_init_height = 1080
+window_init_width = 1600
+window_init_height = 900
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -62,14 +62,13 @@ except:
 #--------------------------------------------------------------------------------------------------------
 #If needed, scale image
 if scale_value != 1:
-    height, width = src_img.shape[:2]
-    src_img = cv2.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv2.INTER_LINEAR)
+    height, width = img.shape[:2]
+    img = cv2.resize( img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv2.INTER_LINEAR)
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-width, height = img.shape[:2]
+height, width = img.shape[:2]
 avg_dim = (((width+height)//2)//3)*2
-print(avg_dim)
 # Gaussian Blur
 proc_img = cv2.GaussianBlur(img, (5,5), 0)
 
@@ -117,43 +116,60 @@ else:
 	proc2_img = cv2.bilateralFilter(proc2_img, 9, 100, 100)
 
 	# Shi-Tomasi
-	# Green pixels
-	lower_green = np.array([31, 48, 91])
-	upper_green = np.array([51, 68, 171])
+	# Green and brown HSV values
+	lower_green = np.array([33, 87, 78])
+	upper_green = np.array([53, 107, 158])
+	lower_brown = np.array([167, 13, 186])
+	upper_brown = np.array([187, 33, 266])
 	
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
 	corners = cv2.goodFeaturesToTrack(gray, 100, 0.02, 10)
 	corners = np.int0(corners)
+	hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+	
 	for i in corners:
 		x, y = i.ravel()
-		# Indexing into an opencv image is backwards
-		pixel1 = img[y-1, x-1]
-		pixel2 = img[y-1, x]
-		pixel3 = img[y-1, x+1]
-		pixel4 = img[y, x-1]
-		pixel5 = img[y, x+1]
-		pixel6 = img[y+1, x-1]
-		pixel7 = img[y+1, x]
-		pixel8 = img[y+1, x+1]
-		# check for local
-		if ((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) and \
-			((pixel2 >= lower_green).all() and (pixel2 <= upper_green).all()) and \
-			((pixel3 >= lower_green).all() and (pixel3 <= upper_green).all()) and \
-			((pixel4 >= lower_green).all() and (pixel4 <= upper_green).all()) and \
-			((pixel5 >= lower_green).all() and (pixel5 <= upper_green).all()) and \
-			((pixel6 >= lower_green).all() and (pixel6 <= upper_green).all()) and \
-			((pixel7 >= lower_green).all() and (pixel7 <= upper_green).all()) and \
-			((pixel8 >= lower_green).all() and (pixel8 <= upper_green).all()):
+		
+		# Indexing into an opencv image is height, width
+		pixel1 = hsv_img[y-1, x-1]
+		pixel2 = hsv_img[y-1, x]
+		pixel3 = hsv_img[y-1, x+1]
+		pixel4 = hsv_img[y, x-1]
+		pixel5 = hsv_img[y, x+1]
+		pixel6 = hsv_img[y+1, x-1]
+		pixel7 = hsv_img[y+1, x]
+		pixel8 = hsv_img[y+1, x+1]
+		
+		hue, sat, value = hsv_img[y,x]
+		print(hue, sat, value)
+		# Filter based on HSV values of local pixels
+		if (((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) or ((pixel1 >= lower_brown).all() and (pixel1 <= upper_brown).all())) and \
+			(((pixel2 >= lower_green).all() and (pixel2 <= upper_green).all()) or ((pixel2 >= lower_brown).all() and (pixel2 <= upper_brown).all())) and \
+			(((pixel3 >= lower_green).all() and (pixel3 <= upper_green).all()) or ((pixel3 >= lower_brown).all() and (pixel3 <= upper_brown).all())) and \
+			(((pixel4 >= lower_green).all() and (pixel4 <= upper_green).all()) or ((pixel4 >= lower_brown).all() and (pixel4 <= upper_brown).all())) and \
+			(((pixel5 >= lower_green).all() and (pixel5 <= upper_green).all()) or ((pixel5 >= lower_brown).all() and (pixel5 <= upper_brown).all())) and \
+			(((pixel6 >= lower_green).all() and (pixel6 <= upper_green).all()) or ((pixel6 >= lower_brown).all() and (pixel6 <= upper_brown).all())) and \
+			(((pixel7 >= lower_green).all() and (pixel7 <= upper_green).all()) or ((pixel7 >= lower_brown).all() and (pixel7 <= upper_brown).all())) and \
+			(((pixel8 >= lower_green).all() and (pixel8 <= upper_green).all()) or ((pixel8 >= lower_brown).all() and (pixel8 <= upper_brown).all())):
+			print("Green/brown")
+			continue
+		# Filter if all pixels have low saturation and high value
+		elif (((pixel1[1] <= 20) and (pixel1[2]>=220)) and \
+			((pixel2[1] <= 20) and (pixel2[2]>=220)) and \
+			((pixel3[1] <= 20) and (pixel3[2]>=220)) and \
+			((pixel4[1] <= 20) and (pixel4[2]>=220)) and \
+			((pixel5[1] <= 20) and (pixel5[2]>=220)) and \
+			((pixel6[1] <= 20) and (pixel6[2]>=220)) and \
+			((pixel7[1] <= 20) and (pixel7[2]>=220)) and \
+			((pixel8[1] <= 20) and (pixel8[2]>=220))):
+			print("Value/Saturation")
 			continue
 		else:
-			cv2.circle(proc2_img, (x,y), 3, 255, -1)
+			cv2.circle(proc2_img, (x,y), 3, 255, 10)
 	cv2.namedWindow('shi', window_property)
 	#cv2.resizeWindow('shi', window_init_width, window_init_height)
 	cv2.imshow('shi',proc2_img)
 	cv2.waitKey(0)
-
-	# Filter based on HSV values of local pixels
-	
 	
 	# Filter out outliers
 
