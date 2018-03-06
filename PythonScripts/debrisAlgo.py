@@ -19,14 +19,14 @@ colormap_value = cv2.COLORMAP_JET
 
 window_property = cv2.WINDOW_KEEPRATIO
 
-window_init_width = 750
-window_init_height = 500
+window_init_width = 1600
+window_init_height = 900
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 
 #Create a Timer
-t = timer.Timer()
+#t = timer.Timer()
 
 #Get the arguments passed into the python script
 args = sys.argv
@@ -41,7 +41,7 @@ if len(args) <= 1:
 
 
 #Start the timer
-t.start()
+#t.start()
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -67,7 +67,9 @@ if scale_value != 1:
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-
+width, height = img.shape[:2]
+avg_dim = (((width+height)//2)//3)*2
+print(avg_dim)
 # Gaussian Blur
 proc_img = cv2.GaussianBlur(img, (5,5), 0)
 
@@ -78,12 +80,10 @@ proc_img = cv2.dilate(proc_img, (5,5), iterations=1)
 proc_img = cv2.bilateralFilter(proc_img, 9, 75, 75)
 
 # Low sensitivity Hough transform
-dst = cv2.Canny(proc_img, 50, 200, None, 3)
-cv2.namedWindow("s", window_property)
-cv2.resizeWindow('s', window_init_width, window_init_height)
-cv2.imshow('s',dst)
+dst = cv2.Canny(proc_img, 100, 0)
 cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
-lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), 150)
+lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), avg_dim)
+
 if lines is not None:
 	for i in range(0, len(lines)):
 		rho = lines[i][0][0]
@@ -95,41 +95,54 @@ if lines is not None:
 		pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
 		pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
 		cv2.line(proc_img, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+	# canny
+	cv2.namedWindow("s", window_property)
+	cv2.resizeWindow('s', window_init_width, window_init_height)
+	cv2.imshow('s',dst)
+	# hough
+	cv2.namedWindow("dst", window_property)
+	cv2.resizeWindow('dst', window_init_width, window_init_height)
+	cv2.imshow('dst',proc_img)
+	cv2.waitKey(0)
 
-cv2.namedWindow("dst", window_property)
-cv2.resizeWindow('dst', window_init_width, window_init_height)
-cv2.imshow('dst',proc_img)
-cv2.waitKey(0)
+else:
+	# if no edges detected
+	# Gaussian Blur
+	proc2_img = cv2.GaussianBlur(img, (5,5), 0)
+
+	# Erosion
+	proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
+
+	# Stronger Bilateral Blur
+	proc2_img = cv2.bilateralFilter(proc2_img, 9, 100, 100)
+
+	# Shi-Tomasi
+	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
+	corners = cv2.goodFeaturesToTrack(gray, 25, 0.01, 10)
+	corners = np.int0(corners)
+	for i in corners:
+		x, y = i.ravel()
+		cv2.circle(proc2_img, (x,y), 3, 255, -1)
+	cv2.namedWindow('shi', window_property)
+	cv2.resizeWindow('shi', window_init_width, window_init_height)
+	cv2.imshow('shi',proc2_img)
+	cv2.waitKey(0)
+
+	# Filter based on HSV values of local pixels
+
+
+	# Filter out outliers
+
+
+	# Generate line segments (shape generation)
+
+
+	# Classify
 
 #Stop the timer
-t.stop()
-print("Elapsed time: {0} ms".format(t.get_time(1000)) )
+#t.stop()
+#print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 
 cv2.destroyAllWindows()
 exit()
 
-# TODO: Check hough transform for edges, if none proceed to below code section
-# if no edges detected
-
-# Gaussian Blur
-proc2_img = cv2.GaussianBlur(img, (5,5), 0)
-
-# Erosion
-proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
-
-# Stronger Bilateral Blur
-proc_img = cv2.bilateralFilter(proc_img, 9, 100, 100)
-
-# Shi-Tomasi
-
-
-# Filter based on HSV values of local pixels
-
-
-# Filter out outliers
-
-
-# Generate line segments (shape generation)
-
-
-# Classify
