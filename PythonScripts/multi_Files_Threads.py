@@ -18,7 +18,7 @@ from scipy.stats import chi2
 from multiprocessing import Pool
 
 import timer            #Custom Timer class
-import RXDetector       #Spectral Algorithm
+import RXDetector as rxd      #Spectral Algorithm
 
 
 
@@ -29,7 +29,7 @@ import RXDetector       #Spectral Algorithm
 #========================================================================================================
 
 multithread = True
-num_threads = 6
+num_threads = 8
 
 
 #Common window properties
@@ -39,16 +39,16 @@ window_property = cv.WINDOW_KEEPRATIO
 window_init_width = 750
 window_init_height = 500
 
-anomaly_folder = "result"
-not_anomaly_folder = "not_result"
+result_folder = "Result"
+other_folder = "Other"
 
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 
 #Create a Timer
-t = timer.Timer()
-rxd = RXDetector.RXD()
+total = timer.Timer()
+#rxd = RXDetector.RXD()
 
 #Get the arguments passed into the python script
 args = sys.argv
@@ -61,11 +61,11 @@ if len(args) <= 1:
 #--------------------------------------------------------------------------------------------------------
 
 #Create the output directory if it does not exist
-if not os.path.exists(anomaly_folder):
-    os.makedirs(anomaly_folder)
+if not os.path.exists(result_folder):
+    os.makedirs(result_folder)
 
-if not os.path.exists(not_anomaly_folder):
-    os.makedirs(not_anomaly_folder)
+if not os.path.exists(other_folder):
+    os.makedirs(other_folder)
 
 
 #--------------------------------------------------------------------------------------------------------
@@ -75,6 +75,7 @@ if not os.path.exists(not_anomaly_folder):
 argv = args[1] 
 
 extensions = ("*.JPG","*.jpg","*.jpeg","*.JPEG")
+result_list = [{}]
 img_list = []
 
  #Check if argument is a file or a directory
@@ -85,19 +86,27 @@ else:                       #Else: argv is a directory
         img_list.extend(glob.glob( argv + "/" + ext ))
 
 
-t.start()
+total.start()
 
 if multithread:
     with Pool(num_threads) as p:
+        #result_list.append( p.map(rxd.analyze, img_list) )
         p.map(rxd.analyze, img_list)
 
 else:
     for i in range(0, len(img_list)):
         rx_img = rxd.analyze(img_list[i])
+        #result_list.append( rxd.analyze(img_list[i]) )
+total.stop()
 
-t.stop()
 
-
+#for r in result_list:
+#    if r.get('flag') == 'R':
+#        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-' + r.get('flag'), r.get('name'), r.get('time'), r.get('stats') ) )
+#        cv.imwrite(os.path.join( result_folder, r.get('name') + "_result.jpeg"), r.get('heatmap'))
+#    else:
+#        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-' + r.get('flag'), r.get('name'), r.get('time'), r.get('stats') ) )
+#        cv.imwrite(os.path.join( other_folder, r.get('name') + "_other.jpeg"), r.get('heatmap'))
 
 
 #========================================================================================================
@@ -108,8 +117,8 @@ t.stop()
 #cv.destroyAllWindows()
 
 print("\n{0} image(s) analyzed\n".format(len(img_list)))
-print("Average elapsed time: {0} ms".format( t.get_time(1000) / len(img_list) ) )
-print("Total elapsed time: {0} sec\n".format( t.get_time() ) )
+print("Average elapsed time: {0:.3f} ms".format( total.get_time(1000) / len(img_list) ) )
+print("Total elapsed time: {0:.3f} sec\n".format( total.get_time() ) )
 
 exit()
 

@@ -17,86 +17,96 @@ import spectral as spc
 from scipy.stats import chi2
 #import matplotlib.pyplot as plt
 
-import timer
-
-
-
-class RXD:
-
-    def __init__(self, scale=1, chi=0.999, threshold=90.0, color=cv.COLORMAP_JET):
-        self.heatmap = None
-        self.rx_mask = None
-        self.rx_scores = None
-        self.scale_value = scale
-        self.chi_threshold = chi
-        self.anomaly_threshold = threshold
-        self.stats = 0.0
-        self.colormap_value = color
-        self.result_name = ""
-        self.t = timer.Timer()
+import timer   
         
-        
+#----------------------------------------------------Analyze Image----------------------------------------------------
 
-    #--------------------------------------------------------------------------------------------------------
-    def analyze(self, image_file):
-
-        #Read the source image
-        try:
-            self.t.start()
-
-            src_img = cv.imread( image_file ) 
-
-            self.result_name = image_file.split("/")[-1].split(".")[0]
-
-            #If needed, scale image
-            if self.scale_value != 1:
-                height, width = src_img.shape[:2]
-                src_img = cv.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv.INTER_LINEAR)
-
-
-            #Calculate the rx scores for the image
-            self.rx_scores = spc.rx(src_img)
-
-            #Calculate the reference bands
-            #rx_bands = src_img.shape[-1]
-
-            #Apply a threshold to the rx scores using the chi-square percent point function
-            rx_chi = chi2.ppf( self.chi_threshold, src_img.shape[-1])
-
-            #Create a mask with the threshold values
-            self.rx_mask = (1 * (self.rx_scores > rx_chi))
-
-            #Apply the mask to the raw rx_scores
-            self.rx_mask = self.rx_mask * self.rx_scores
-
-            self.stats = ((self.rx_mask >= self.anomaly_threshold).sum() / self.rx_mask.size ) * 100.0
-
-            #Apply a colormap
-            self.heatmap = cv.applyColorMap( self.rx_mask.astype(np.uint8), self.colormap_value )
-
-            #return self.heatmap
-
-            self.t.stop()
-
-            if np.max(self.rx_mask) >= self.anomaly_threshold : 
-                print("{0} {1} {2}_ms {3}% --> {4}".format( '--', self.result_name, self.t.get_time(1000), self.stats, "Result") )
-                cv.imwrite(os.path.join( "result", self.result_name + "_result.jpg"), self.heatmap)
-                
-
-            else:
-                print("{0} {1} {2}_ms {3}% --> {4}".format( '--', self.result_name, self.t.get_time(1000), self.stats, "Other") )
-                cv.imwrite(os.path.join( "not_result", self.result_name + "_other.jpg"), self.heatmap)
-
-
-        except OSError as e:
-            print("OS error: {0}".format(e))
-        except ValueError as e:
-            print("Value error: {0}".format(e))
-        except TypeError as e:
-            print("Type error: {0}".format(e))
-        #except:
-        #    print("Unexpected error:", sys.exc_info()[0])
-
+def analyze( image_file, argv=None ):
     
+    #Analysis Variables
+    scale_value = 1.0
+    chi_threshold = 0.999
+    anomaly_threshold = 90.0
+    
+    #Output Variables
+    colormap_value = cv.COLORMAP_JET
+    
+    #Statistics Variables
+    t = timer.Timer()
+
+
+    #Attempt to Analyze
+    try:
+        t.start()
+
+        #Read the input image
+        src_img = cv.imread( image_file ) 
+
+        #Extract the name of the original image from its path
+        result_name = image_file.split("/")[-1].split(".")[0]
+
+        #If needed, scale image
+        if scale_value != 1.0:
+            height, width = src_img.shape[:2]
+            src_img = cv.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv.INTER_LINEAR)
+
+
+        #Calculate the rx scores for the image
+        rx_scores = spc.rx(src_img)
+
+        #Calculate the reference bands
+        #rx_bands = src_img.shape[-1]       #Removed and integrated into chi function in order to save of memory usage
+
+        #Apply a threshold to the rx scores using the chi-square percent point function
+        rx_chi = chi2.ppf( chi_threshold, src_img.shape[-1])
+
+        #Create a mask with the threshold values
+        rx_mask = (1 * (rx_scores > rx_chi))
+
+        #Apply the mask to the raw rx_scores
+        rx_mask = rx_mask * rx_scores
+
+        #Percentage of anomalies above the annomaly_threshold
+        stats = ((rx_mask >= anomaly_threshold).sum() / rx_mask.size ) * 100.0
+
+        #Flag the image as a Result (R) or Other (O)
+        if np.max(rx_mask) >= anomaly_threshold:
+            flag = 'R'
+        else:
+            flag = 'O'
+
+
+        #Apply a colormap
+        heatmap = cv.applyColorMap( rx_mask.astype(np.uint8), colormap_value )
+
+        #Return the resulting heatmap       #NOTE*** LOOK INTO RETURNING A LIST OF THE RESULTING IMAGES (ie RX_MASK, RX_SCORES, HEATMAP)
+        #return heatmap
+
+        t.stop()
+
+        #return { 'name': result_name, 'heatmap': heatmap, 'time': t.get_time(1000), 'stats': stats, 'flag': flag }
+        
+        
+
+        #Display results and save analysis results to the correct folder
+        if np.max(rx_mask) >= anomaly_threshold : 
+            print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-R', result_name, t.get_time(1000), stats) )
+            cv.imwrite(os.path.join( "Result", result_name + "_result.jpeg"), heatmap)
+            
+
+        else:
+            print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-O', result_name, t.get_time(1000), stats) )
+            cv.imwrite(os.path.join( "Other", result_name + "_other.jpeg"), heatmap)
+
+    except OSError as e:
+        print("OS error: {0}".format(e))
+    except ValueError as e:
+        print("Value error: {0}".format(e))
+    except TypeError as e:
+        print("Type error: {0}".format(e))
+    #except:
+    #    print("Unexpected error:", sys.exc_info()[0])
+
+
     
 
