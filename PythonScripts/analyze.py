@@ -10,7 +10,6 @@ import timer    #Timer class
 import error    #ExceptionHandler
 
 e = error.ExceptionHandler()
-t = timer.Timer()
 
 def openFolder(folderPath, threshold):
     for filename in glob.glob('*.png'):
@@ -18,6 +17,7 @@ def openFolder(folderPath, threshold):
     pass
 
 def openFile(filePath, threshold):
+    t = timer.Timer()
     t.start()
     cv.namedWindow('Image', cv.WINDOW_KEEPRATIO)       #WINDOW_NORMAL --> allows the user to adjust the window size, WINDOW_KEEPRATIO --> allows the user to adjust the window size while maintaining the image ratio
     img = cv.imread(filePath)
@@ -32,9 +32,10 @@ def readArgs(args):
 
     parser = ArgumentParser()
 
-    parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="PATH", default=None)
-    parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="PATH", default=None)
-    parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1 for finding anomalies", default=0.2)
+    parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
+    parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
+    parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1 for finding anomalies", default=0.2, metavar="threshold")
+    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
     args = parser.parse_args()
     if args.folderPath != None:
         openFolder(args.folderPath, args.pixThreshold)
@@ -46,10 +47,14 @@ def readArgs(args):
 
 def main():
 
-
+    try:
+        args = sys.argv
+        readArgs(args)
+    except Exception as e:
+        print("exception handled in analyze.py: \n")
+        print(e + "\n")
     #Save the arguments passed into the python script
-    args = sys.argv
-    readArgs(args)
+
 
     #print("\nElapsed time: %f ms" % (t.get_time() * 1000))
 
