@@ -141,7 +141,6 @@ else:
 		pixel8 = hsv_img[y+1, x+1]
 		
 		hue, sat, value = hsv_img[y,x]
-		print(hue, sat, value)
 		# Filter based on HSV values of local pixels
 		if (((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) or ((pixel1 >= lower_brown).all() and (pixel1 <= upper_brown).all())) and \
 			(((pixel2 >= lower_green).all() and (pixel2 <= upper_green).all()) or ((pixel2 >= lower_brown).all() and (pixel2 <= upper_brown).all())) and \
@@ -154,7 +153,7 @@ else:
 			print("Green/brown")
 			continue
 		# Filter if all pixels have low saturation and high value
-		elif (((pixel1[1] <= 20) and (pixel1[2]>=220)) and \
+		if (((pixel1[1] <= 20) and (pixel1[2]>=220)) and \
 			((pixel2[1] <= 20) and (pixel2[2]>=220)) and \
 			((pixel3[1] <= 20) and (pixel3[2]>=220)) and \
 			((pixel4[1] <= 20) and (pixel4[2]>=220)) and \
@@ -164,7 +163,14 @@ else:
 			((pixel8[1] <= 20) and (pixel8[2]>=220))):
 			print("Value/Saturation")
 			continue
-		else:
+		
+		close = False
+		for j in corners:
+			x2, y2 = j.ravel()
+			dist = np.linalg.norm(np.array(y,x)-np.array(y2,x2))
+			if dist<10 and dist != 0:
+				close = True
+		if close:
 			cv2.circle(proc2_img, (x,y), 3, 255, 10)
 	cv2.namedWindow('shi', window_property)
 	#cv2.resizeWindow('shi', window_init_width, window_init_height)
