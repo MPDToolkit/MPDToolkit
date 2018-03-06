@@ -19,8 +19,8 @@ colormap_value = cv2.COLORMAP_JET
 
 window_property = cv2.WINDOW_KEEPRATIO
 
-window_init_width = 1600
-window_init_height = 900
+window_init_width = 1920
+window_init_height = 1080
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -117,20 +117,44 @@ else:
 	proc2_img = cv2.bilateralFilter(proc2_img, 9, 100, 100)
 
 	# Shi-Tomasi
+	# Green pixels
+	lower_green = np.array([31, 48, 91])
+	upper_green = np.array([51, 68, 171])
+	
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
-	corners = cv2.goodFeaturesToTrack(gray, 25, 0.01, 10)
+	corners = cv2.goodFeaturesToTrack(gray, 100, 0.02, 10)
 	corners = np.int0(corners)
 	for i in corners:
 		x, y = i.ravel()
-		cv2.circle(proc2_img, (x,y), 3, 255, -1)
+		# Indexing into an opencv image is backwards
+		pixel1 = img[y-1, x-1]
+		pixel2 = img[y-1, x]
+		pixel3 = img[y-1, x+1]
+		pixel4 = img[y, x-1]
+		pixel5 = img[y, x+1]
+		pixel6 = img[y+1, x-1]
+		pixel7 = img[y+1, x]
+		pixel8 = img[y+1, x+1]
+		# check for local
+		if ((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) and \
+			((pixel2 >= lower_green).all() and (pixel2 <= upper_green).all()) and \
+			((pixel3 >= lower_green).all() and (pixel3 <= upper_green).all()) and \
+			((pixel4 >= lower_green).all() and (pixel4 <= upper_green).all()) and \
+			((pixel5 >= lower_green).all() and (pixel5 <= upper_green).all()) and \
+			((pixel6 >= lower_green).all() and (pixel6 <= upper_green).all()) and \
+			((pixel7 >= lower_green).all() and (pixel7 <= upper_green).all()) and \
+			((pixel8 >= lower_green).all() and (pixel8 <= upper_green).all()):
+			continue
+		else:
+			cv2.circle(proc2_img, (x,y), 3, 255, -1)
 	cv2.namedWindow('shi', window_property)
-	cv2.resizeWindow('shi', window_init_width, window_init_height)
+	#cv2.resizeWindow('shi', window_init_width, window_init_height)
 	cv2.imshow('shi',proc2_img)
 	cv2.waitKey(0)
 
 	# Filter based on HSV values of local pixels
-
-
+	
+	
 	# Filter out outliers
 
 
