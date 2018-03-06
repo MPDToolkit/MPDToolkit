@@ -91,11 +91,11 @@ total.start()
 if multithread:
     with Pool(num_threads) as p:
         #result_list.append( p.map(rxd.analyze, img_list) )
-        p.map(rxd.analyze, img_list)
+        p.map(rxd.RXD, img_list)
 
 else:
     for i in range(0, len(img_list)):
-        rx_img = rxd.analyze(img_list[i])
+        rx_img = rxd.RXD(img_list[i])
         #result_list.append( rxd.analyze(img_list[i]) )
 total.stop()
 

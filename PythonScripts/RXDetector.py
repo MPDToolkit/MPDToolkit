@@ -21,12 +21,12 @@ import timer
         
 #----------------------------------------------------Analyze Image----------------------------------------------------
 
-def analyze( image_file, argv=None ):
+def RXD( image_file, threshold=90.0 ):
     
     #Analysis Variables
     scale_value = 1.0
     chi_threshold = 0.999
-    anomaly_threshold = 90.0
+    anomaly_threshold = threshold
     
     #Output Variables
     colormap_value = cv.COLORMAP_JET
@@ -71,7 +71,7 @@ def analyze( image_file, argv=None ):
 
         #Flag the image as a Result (R) or Other (O)
         if np.max(rx_mask) >= anomaly_threshold:
-            flag = 'R'
+            flag = 'D'
         else:
             flag = 'O'
 
@@ -79,24 +79,21 @@ def analyze( image_file, argv=None ):
         #Apply a colormap
         heatmap = cv.applyColorMap( rx_mask.astype(np.uint8), colormap_value )
 
-        #Return the resulting heatmap       #NOTE*** LOOK INTO RETURNING A LIST OF THE RESULTING IMAGES (ie RX_MASK, RX_SCORES, HEATMAP)
-        #return heatmap
-
         t.stop()
 
-        #return { 'name': result_name, 'heatmap': heatmap, 'time': t.get_time(1000), 'stats': stats, 'flag': flag }
+        return result_name, heatmap, t.get_time(1000), stats, flag
         
         
 
-        #Display results and save analysis results to the correct folder
-        if np.max(rx_mask) >= anomaly_threshold : 
-            print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-R', result_name, t.get_time(1000), stats) )
-            cv.imwrite(os.path.join( "Result", result_name + "_result.jpeg"), heatmap)
-            
-
-        else:
-            print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-O', result_name, t.get_time(1000), stats) )
-            cv.imwrite(os.path.join( "Other", result_name + "_other.jpeg"), heatmap)
+        ##Display results and save analysis results to the correct folder
+        #if np.max(rx_mask) >= anomaly_threshold : 
+        #    print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-D', result_name, t.get_time(1000), stats) )
+        #    cv.imwrite(os.path.join( "Result", result_name + "_result.jpg"), heatmap)
+        #    
+#
+        #else:
+        #    print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-O', result_name, t.get_time(1000), stats) )
+        #    cv.imwrite(os.path.join( "Other", result_name + "_other.jpg"), heatmap)
 
     except OSError as e:
         print("OS error: {0}".format(e))
@@ -104,8 +101,8 @@ def analyze( image_file, argv=None ):
         print("Value error: {0}".format(e))
     except TypeError as e:
         print("Type error: {0}".format(e))
-    #except:
-    #    print("Unexpected error:", sys.exc_info()[0])
+    except Exception as e:
+        print("Unexpected error: {0}".format(e))
 
 
     
