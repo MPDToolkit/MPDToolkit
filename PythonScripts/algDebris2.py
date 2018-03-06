@@ -8,10 +8,11 @@
 
 
 import sys
+import math
 import cv2 as cv
 import numpy as np
 import scipy as sp
-import skimage as ski
+#import skimage as ski
 from scipy.stats import chi2
 import matplotlib.pyplot as plt
 
@@ -112,11 +113,11 @@ if scale_value != 1:
 perprocess_img = cv.GaussianBlur(src_img, (5,5), 0)
 
 #cv.imshow('blur_img', blur_img)
-
+#perprocess_img = cv.erode( perprocess_img, (51,51), iterations = 1 )
 perprocess_img = cv.dilate( perprocess_img, (5,5), iterations = 1)
 
 #Use bilateral filtering to preserve edges
-preprocess_img = cv.bilateralFilter(src_img, 9, 75, 75)
+preprocess_img = cv.bilateralFilter(src_img, 5, 20, 1000)
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -124,19 +125,53 @@ preprocess_img = cv.bilateralFilter(src_img, 9, 75, 75)
 #Apply Canny edge detection
 #Threshold values are variable in this example
 def edgeDetect(arg):
-    low_threshold = cv.getTrackbarPos('Low', 'edge_img')
-    high_threshold = low_threshold * 2.0 #cv.getTrackbarPos('High', 'edge_img')
+	low_threshold = cv.getTrackbarPos('Low', 'edge_img')
+	high_threshold = low_threshold * 2.0 #(cv.getTrackbarPos('Low', 'edge_img') / 10.0)*2.0
+	rho = cv.getTrackbarPos('rho', 'edge_img') / 10.0
 
-    edge_img = cv.Canny(preprocess_img, low_threshold, high_threshold)
-    cv.imshow('edge_img', edge_img)
+	mll = cv.getTrackbarPos('MinLineLength', 'edge_img')
+	mld = cv.getTrackbarPos('MaxLineDistance', 'edge_img')
 
+
+	edge_img = cv.Canny(preprocess_img, low_threshold, high_threshold)
+	cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
+
+	if rho == 0:
+		rho = 0.01
+
+	#lines = cv.HoughLines(edge_img, rho, np.pi / 180, 150)
+	plines = cv.HoughLinesP(edge_img, rho, np.pi / 180, 50, None, mll, mld)
+
+	# Draw the lines
+	if plines is not None:
+		for i in range(0, len(plines)):
+			l = plines[i][0]
+			cv.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv.LINE_AA)
+	
+	cv.imshow('edge_img', cdst)
+	
 
 cv.namedWindow('edge_img', window_property)
 cv.resizeWindow('edge_img', window_init_width, window_init_height)
-cv.createTrackbar('Low', 'edge_img', 100, 1024, edgeDetect)
-#cv.createTrackbar('High', 'edge_img', 0, 1024, edgeDetect)
-edge_img = cv.Canny(preprocess_img, 100, 200)
-cv.imshow('edge_img', edge_img)
+cv.createTrackbar('Low', 'edge_img', 200, 1000, edgeDetect)
+cv.createTrackbar('rho', 'edge_img', 10, 100, edgeDetect)
+
+cv.createTrackbar('MinLineLength', 'edge_img', 10, 1000, edgeDetect)
+cv.createTrackbar('MaxLineDistance', 'edge_img', 5, 1000, edgeDetect)
+
+edge_img = cv.Canny(preprocess_img, 200, 400)
+cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
+
+plines = cv.HoughLinesP(edge_img, 1.0, np.pi / 180, 50, None, 10, 5)
+
+# Draw the lines
+if plines is not None:
+	for i in range(0, len(plines)):
+		l = plines[i][0]
+		cv.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv.LINE_AA)
+
+cv.imshow('edge_img', cdst)
+
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -168,7 +203,8 @@ print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 
 cv.namedWindow("src_img", window_property)
 cv.resizeWindow('src_img', window_init_width, window_init_height)
-cv.imshow("src_img", src_img)
+#cv.imshow("src_img", src_img)
+cv.imshow("src_img", preprocess_img)
 
 
 #--------------------------------------------------------------------------------------------------------
