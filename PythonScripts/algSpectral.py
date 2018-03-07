@@ -158,9 +158,9 @@ cv.imshow("src_img", src_img)
 #***    REMOVE IN FINAL RELEASE
 
 #Debug display image
-cv.namedWindow("rx_scores", window_property)
-cv.resizeWindow('rx_scores', window_init_width, window_init_height)
-cv.imshow("rx_scores", cv.applyColorMap( rx_scores.astype(np.uint8), colormap_value ))
+#cv.namedWindow("rx_scores", window_property)
+#cv.resizeWindow('rx_scores', window_init_width, window_init_height)
+#cv.imshow("rx_scores", cv.applyColorMap( rx_scores.astype(np.uint8), colormap_value ))
 
 #***
 
