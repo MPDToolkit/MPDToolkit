@@ -112,13 +112,13 @@ def run(img):
 
 
     #RXD Debug
-    if rx[4] == 'R': 
-        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-R', rx[0], rx[2], rx[3]) )
+    if rx[4] == 'D': 
+        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "Detected", rx[0], rx[2], rx[3]) )
         #print(os.path.join( detected_folder, rx[0] + "_detected.jpeg"))
         cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])  
 
     else:
-        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-O', rx[0], rx[2], rx[3]) )
+        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "Other", rx[0], rx[2], rx[3]) )
         cv.imwrite(os.path.join( other_folder, rx[0] + "_other.jpg"), rx[1])
 
 
