@@ -9,7 +9,7 @@
 
 import sys
 import math
-import cv2 as cv
+import cv2 as cv, cv2
 import numpy as np
 import scipy as sp
 #import skimage as ski
@@ -83,7 +83,9 @@ if scale_value != 1:
     height, width = src_img.shape[:2]
     src_img = cv.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv.INTER_LINEAR)
 
-
+height, width = src_img.shape[:2]
+avg_dim = ((width+height)/2)
+avg_dim = int((avg_dim/3))
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 #Algorithm Steps
@@ -107,17 +109,15 @@ if scale_value != 1:
 #--------------------------------------------------------------------------------------------------------
 
 
-#blur_img = cv.bilateralFilter(src_img, 5, 75, 75)
 
 #Algorithm uses Gaussian blur
-perprocess_img = cv.GaussianBlur(src_img, (5,5), 0)
+pre_img = cv.GaussianBlur(src_img, (5,5), 0)
 
 #cv.imshow('blur_img', blur_img)
 #perprocess_img = cv.erode( perprocess_img, (51,51), iterations = 1 )
-perprocess_img = cv.dilate( perprocess_img, (5,5), iterations = 1)
+pre_img = cv.dilate( pre_img, (5,5), iterations = 1)
 
-#Use bilateral filtering to preserve edges
-preprocess_img = cv.bilateralFilter(src_img, 5, 20, 1000)
+pre_img = cv.bilateralFilter(pre_img, 9, 2, 2)
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -125,52 +125,97 @@ preprocess_img = cv.bilateralFilter(src_img, 5, 20, 1000)
 #Apply Canny edge detection
 #Threshold values are variable in this example
 def edgeDetect(arg):
-	low_threshold = cv.getTrackbarPos('Low', 'edge_img')
-	high_threshold = low_threshold * 2.0 #(cv.getTrackbarPos('Low', 'edge_img') / 10.0)*2.0
-	rho = cv.getTrackbarPos('rho', 'edge_img') / 10.0
 
-	mll = cv.getTrackbarPos('MinLineLength', 'edge_img')
-	mld = cv.getTrackbarPos('MaxLineDistance', 'edge_img')
+	low_threshold = cv.getTrackbarPos('th1', 'edge_img')
+	high_threshold = cv.getTrackbarPos('th2', 'edge_img')
 
-
-	edge_img = cv.Canny(preprocess_img, low_threshold, high_threshold)
-	cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
-
-	if rho == 0:
-		rho = 0.01
-
-	#lines = cv.HoughLines(edge_img, rho, np.pi / 180, 150)
-	plines = cv.HoughLinesP(edge_img, rho, np.pi / 180, 50, None, mll, mld)
-
-	# Draw the lines
-	if plines is not None:
-		for i in range(0, len(plines)):
-			l = plines[i][0]
-			cv.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv.LINE_AA)
+	clr = cv.getTrackbarPos('bilat Color', 'edge_img')
+	dist = cv.getTrackbarPos('bilat Distance', 'edge_img')
+	d = cv.getTrackbarPos('Kernel', 'edge_img')
 	
-	cv.imshow('edge_img', cdst)
 	
+	pre_img = cv.GaussianBlur(src_img, (5,5), 0)
+	pre_img = cv.dilate( pre_img, (5,5), iterations = 1)
+	pre_img = cv.bilateralFilter(pre_img, 9, clr, dist)
+
+	edge_img = cv.Canny(pre_img, low_threshold, high_threshold)
+	mask_img = cv.bitwise_or(pre_img, pre_img, mask=edge_img)
+
+	lines = cv2.HoughLines(edge_img, 1, float(np.pi / 180.0), avg_dim)    #avg_dim
+	#plines = cv2.HoughLinesP(edge_img, 1.0, float(np.pi / 180.0), 50, None, 30, 2)
+
+	#
+	if lines is not None:
+		for i in range(0, len(lines)):
+			rho = lines[i][0][0]
+			theta = lines[i][0][1]
+			a = math.cos(theta)
+			b = math.sin(theta)
+			x0 = a * rho
+			y0 = b * rho
+			pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+			pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+			cv2.line(pre_img, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+
+	#if plines is not None:
+	#    for i in range(0, len(plines)):
+	#        l = plines[i][0]
+	#        #cv2.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv2.LINE_AA)
+	#        cv2.line(pre_img, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv2.LINE_AA)
+#
+
+	
+	cv.imshow('edge_img', edge_img)
+	cv.imshow('Blur', pre_img)
+	cv.imshow('Mask', mask_img)
 
 cv.namedWindow('edge_img', window_property)
 cv.resizeWindow('edge_img', window_init_width, window_init_height)
-cv.createTrackbar('Low', 'edge_img', 200, 1000, edgeDetect)
-cv.createTrackbar('rho', 'edge_img', 10, 100, edgeDetect)
 
-cv.createTrackbar('MinLineLength', 'edge_img', 10, 1000, edgeDetect)
-cv.createTrackbar('MaxLineDistance', 'edge_img', 5, 1000, edgeDetect)
+cv.namedWindow("Blur", window_property)
+cv.resizeWindow('Blur', window_init_width, window_init_height)
 
-edge_img = cv.Canny(preprocess_img, 200, 400)
-cdst = cv.cvtColor(edge_img, cv.COLOR_GRAY2BGR)
+cv.namedWindow("Mask", window_property)
+cv.resizeWindow('Mask', window_init_width, window_init_height)
 
-plines = cv.HoughLinesP(edge_img, 1.0, np.pi / 180, 50, None, 10, 5)
 
-# Draw the lines
-if plines is not None:
-	for i in range(0, len(plines)):
-		l = plines[i][0]
-		cv.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv.LINE_AA)
+cv.createTrackbar('th1', 'edge_img', 50, 1000, edgeDetect)
+cv.createTrackbar('th2', 'edge_img', 100, 1000, edgeDetect)
 
-cv.imshow('edge_img', cdst)
+cv.createTrackbar('bilat Color', 'edge_img', 2, 1000, edgeDetect)
+cv.createTrackbar('bilat Distance', 'edge_img', 2, 10, edgeDetect)
+cv.createTrackbar('Kernel', 'edge_img', 0, 100, edgeDetect)
+
+edge_img = cv.Canny(pre_img, 50, 100)
+mask_img = cv.bitwise_or(pre_img, pre_img, mask=edge_img)
+
+lines = cv2.HoughLines(edge_img, 1, float(np.pi / 180.0), avg_dim)    #avg_dim
+#plines = cv2.HoughLinesP(edge_img, 1.0, float(np.pi / 180.0), 50, None, 30, 2)
+
+#
+if lines is not None:
+	for i in range(0, len(lines)):
+		rho = lines[i][0][0]
+		theta = lines[i][0][1]
+		a = math.cos(theta)
+		b = math.sin(theta)
+		x0 = a * rho
+		y0 = b * rho
+		pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+		pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+		cv2.line(pre_img, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+
+#if plines is not None:
+#	for i in range(0, len(plines)):
+#		l = plines[i][0]
+#		#cv2.line(cdst, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv2.LINE_AA)
+#		cv2.line(pre_img, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv2.LINE_AA)
+#
+
+
+cv.imshow('edge_img', edge_img)
+cv.imshow('Blur', pre_img)
+cv.imshow('Mask', mask_img)
 
 
 #--------------------------------------------------------------------------------------------------------
@@ -201,10 +246,10 @@ print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 #--------------------------------------------------------------------------------------------------------
 
 
-cv.namedWindow("src_img", window_property)
-cv.resizeWindow('src_img', window_init_width, window_init_height)
+#cv.namedWindow("src_img", window_property)
+#cv.resizeWindow('src_img', window_init_width, window_init_height)
 #cv.imshow("src_img", src_img)
-cv.imshow("src_img", preprocess_img)
+#cv.imshow("src_img", pre_img)
 
 
 #--------------------------------------------------------------------------------------------------------

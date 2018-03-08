@@ -10,12 +10,9 @@ from argparse import ArgumentParser
 import glob
 
 import timer    #Timer class
-import error    #ExceptionHandler
 
 #Algorithm Libraries
 from RXDetector import RXD
-
-e = error.ExceptionHandler()
 
 #Global Variables
 img_list = []
@@ -23,8 +20,7 @@ job_path = str()        #<-- Don't remove
 parser = ArgumentParser()
 extensions = (".jpg", ".jpeg", ".png")
 
-
-detected_folder = "Detected"
+detected_folder = "Result"
 other_folder = "Other"
 copy_folder = "Copy"    
 
@@ -36,11 +32,11 @@ total_time = timer.Timer()
 
 def openFolder(path):
     if __name__ == '__main__':
-        #Check for user error
+        #Check if argument is a file or a directory
         if os.path.isfile(path):    
             openFile(path)
             return
-        else:                
+        else:                      
             global copy_folder
             copy_folder = os.path.join( path, copy_folder)   
 
@@ -50,6 +46,7 @@ def openFolder(path):
                 ext = os.path.splitext(file)[-1]
                 if ext.lower() in extensions:
                     img_list.append(file)
+
 
         #Update the global job_path variable
         global job_path
@@ -71,34 +68,31 @@ def openFolder(path):
         #Analyze the images
         args = parser.parse_args()
 
-    if __name__ == '__main__': 
-        total_time.start()
+    if __name__ == '__main__': total_time.start()
 
     if int(args.procNum) > 1:
-        if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.
+        if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.    
             with Pool(int(args.procNum)) as p:
                 p.map(run, img_list)
     else:
         for i in range(0, len(img_list)):
             run(img_list[i])
 
-    if __name__ == '__main__': 
-        total_time.stop()
+    if __name__ == '__main__': total_time.stop()
 
-    if __name__ == '__main__':    #Replace with writing to log file
+    if __name__ == '__main__':    
         #Display time
         print("\n{0} image(s) analyzed\n".format(len(img_list)))
         print("Average elapsed time: {0:.3f} ms".format( total_time.get_time(1000) / len(img_list) ) )
         print("Total elapsed time: {0:.3f} sec\n".format( total_time.get_time() ) )
 
+
+
+
 #--------------------------------------------------------------------------------------------------------
 
 #This is not supported in the full release
 def openFile(path):
-    #Check for user error
-    if os.path.isdir(path):    
-        openFolder(path)
-        return 
 
     rx = RXD(path)
 
@@ -129,7 +123,7 @@ def readArgs(args):
 
 #Analyze the given image (img)
 def run(img):
-
+    
     #Call the algorithms
     rx = RXD(img)
 
@@ -149,10 +143,12 @@ def run(img):
     if rx[4] == 'D': 
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", rx[0], rx[2], rx[3]) )
         cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])  
+        #print(os.path.join( detected_folder, rx[0] + "_detected.jpeg"))
 
     else:
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", rx[0], rx[2], rx[3]) )
         cv.imwrite(os.path.join( other_folder, rx[0] + "_other.jpg"), rx[1])
+        #print(os.path.join( detected_folder, rx[0] + "_detected.jpeg"))
 
 
 
@@ -168,7 +164,7 @@ def main():
         except Exception as e:
             print("exception handled in analyze.py: \n")
             print(e + "\n")
-   
+    
     return 0
 
 
