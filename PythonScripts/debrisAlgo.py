@@ -69,6 +69,7 @@ if scale_value != 1:
 #--------------------------------------------------------------------------------------------------------
 height, width = img.shape[:2]
 avg_dim = (((width+height)//2)//3)*2
+print("avg_dim " + str(avg_dim))
 # Gaussian Blur
 proc_img = cv2.GaussianBlur(img, (5,5), 0)
 
@@ -105,6 +106,7 @@ if lines is not None:
 	cv2.waitKey(0)
 
 else:
+	src2 = img
 	# if no edges detected
 	# Gaussian Blur
 	proc2_img = cv2.GaussianBlur(img, (5,5), 0)
@@ -123,9 +125,11 @@ else:
 	upper_brown = np.array([187, 33, 266])
 	
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
-	corners = cv2.goodFeaturesToTrack(gray, 100, 0.02, 10)
+	corners = cv2.goodFeaturesToTrack(gray, 50, 0.02, 10)
 	corners = np.int0(corners)
 	hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+	
+	kept_corners = []
 	
 	for i in corners:
 		x, y = i.ravel()
@@ -167,17 +171,19 @@ else:
 		close = False
 		for j in corners:
 			x2, y2 = j.ravel()
-			dist = np.linalg.norm(np.array(y,x)-np.array(y2,x2))
-			if dist<10 and dist != 0:
+			dist = np.linalg.norm(np.array(x,y)-np.array(x2,y2))
+			if dist<20 and dist != 0:
 				close = True
+				break
 		if close:
-			cv2.circle(proc2_img, (x,y), 3, 255, 10)
+			cv2.circle(src2, (x,y), 3, 255, 10)
+			kept_corners.append(i)
+	
+	
 	cv2.namedWindow('shi', window_property)
 	#cv2.resizeWindow('shi', window_init_width, window_init_height)
-	cv2.imshow('shi',proc2_img)
+	cv2.imshow('shi',src2)
 	cv2.waitKey(0)
-	
-	# Filter out outliers
 
 
 	# Generate line segments (shape generation)
