@@ -1,0 +1,11 @@
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\bin\Release\AnamolyDetector.exe.config
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\bin\Release\AnamolyDetector.exe
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\bin\Release\AnamolyDetector.pdb
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.batchName.resources
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.MainForm.resources
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.ProcessForm.resources
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.Properties.Resources.resources
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.csproj.GenerateResource.Cache
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.csproj.CoreCompileInputs.cache
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.exe
+C:\Users\BRADY\Source\Repos\CSCE4822\AnamolyDetector\AnamolyDetector\obj\Release\AnamolyDetector.pdb
