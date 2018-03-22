@@ -1,0 +1,12 @@
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.batchName.resources
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.MainForm.resources
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.ProcessForm.resources
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.Properties.Resources.resources
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.GenerateResource.Cache
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
+C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache

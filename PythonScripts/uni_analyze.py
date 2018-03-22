@@ -31,42 +31,42 @@ total_time = timer.Timer()
 #--------------------------------------------------------------------------------------------------------
 
 def openFolder(path):
-    if __name__ == '__main__':
-        #Check if argument is a file or a directory
-        if os.path.isfile(path):    
-            openFile(path)
-            return
-        else:                      
-            global copy_folder
-            copy_folder = os.path.join( path, copy_folder)   
+    #if __name__ == '__main__':
+    #Check if argument is a file or a directory
+    if os.path.isfile(path):    
+        openFile(path)
+        return
+    else:                      
+        global copy_folder
+        copy_folder = os.path.join( path, copy_folder)   
 
-            #Looks in the copy folder and adds the correct file types to the image list
-            #This is a case insensitive version
-            for file in glob.glob(os.path.join(copy_folder, '*')):
-                ext = os.path.splitext(file)[-1]
-                if ext.lower() in extensions:
-                    img_list.append(file)
+        #Looks in the copy folder and adds the correct file types to the image list
+        #This is a case insensitive version
+        for file in glob.glob(os.path.join( path, '*')):
+            ext = os.path.splitext(file)[-1]
+            if ext.lower() in extensions:
+                img_list.append(file)
 
 
-        #Update the global job_path variable
-        global job_path
-        job_path = path
+    #Update the global job_path variable
+    global job_path
+    job_path = path
 
-        global detected_folder
-        global other_folder
+    global detected_folder
+    global other_folder
 
-        #Create the output directory if it does not exist
-        if not os.path.exists(os.path.join( job_path, detected_folder)):
-            os.makedirs(os.path.join( job_path,detected_folder))
+    #Create the output directory if it does not exist
+    if not os.path.exists(os.path.join( job_path, detected_folder)):
+        os.makedirs(os.path.join( job_path,detected_folder))
 
-        if not os.path.exists(os.path.join( job_path, other_folder)):
-            os.makedirs(os.path.join( job_path, other_folder))
+    if not os.path.exists(os.path.join( job_path, other_folder)):
+        os.makedirs(os.path.join( job_path, other_folder))
 
-        detected_folder = os.path.join( job_path,detected_folder)
-        other_folder = os.path.join( job_path, other_folder)
+    detected_folder = os.path.join( job_path, detected_folder)
+    other_folder = os.path.join( job_path, other_folder)
 
-        #Analyze the images
-        args = parser.parse_args()
+    #Analyze the images
+    args = parser.parse_args()
 
     if __name__ == '__main__': total_time.start()
 
@@ -107,17 +107,17 @@ def openFile(path):
 #--------------------------------------------------------------------------------------------------------    
 
 def readArgs(args):
-    if __name__ == '__main__':
-        parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
-        parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
-        parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
-        parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
+    #if __name__ == '__main__':
+    parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
+    parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
+    parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
+    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
 
-        args = parser.parse_args()
-        if args.folderPath != None:
-            openFolder(args.folderPath)
-        elif args.filePath != None:
-            openFile(args.filePath)
+    args = parser.parse_args()
+    if args.folderPath != None:
+        openFolder(args.folderPath)
+    elif args.filePath != None:
+        openFile(args.filePath)
         
 #--------------------------------------------------------------------------------------------------------
 
@@ -158,12 +158,12 @@ def run(img):
 #--------------------------------------------------------------------------------------------------------
 
 def main():
-    if __name__ == '__main__':
-        try:
-            readArgs(sys.argv)
-        except Exception as e:
-            print("exception handled in analyze.py: \n")
-            print(e + "\n")
+    #if __name__ == '__main__':
+    try:
+        readArgs(sys.argv)
+    except Exception as e:
+        print("exception handled in analyze.py: \n")
+        print(e + "\n")
     
     return 0
 
