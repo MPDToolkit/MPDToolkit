@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import scipy as sp
 import spectral as spc
+from scipy.spatial import distance
 import math
 
 import copy
@@ -69,6 +70,7 @@ if scale_value != 1:
     img = cv2.resize( img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv2.INTER_LINEAR)
 
 #--------------------------------------------------------------------------------------------------------
+#Line Detector
 #--------------------------------------------------------------------------------------------------------
 height, width = img.shape[:2]
 avg_dim = (((width+height)//2)//3)*2
@@ -88,8 +90,9 @@ proc_img = cv2.bilateralFilter(proc_img, 9, 75, 75)
 # Low sensitivity Hough transform
 dst = cv2.Canny(proc_img, 100, 0)
 cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
-lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), avg_dim)
 
+lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), int(avg_dim/5))
+#print(lines)
 if lines is not None:
 	for i in range(0, len(lines)):
 		rho = lines[i][0][0]
@@ -129,11 +132,11 @@ else:
 	proc2_img = cv2.bilateralFilter(proc2_img, 9, 100, 100)
 
 	# Shi-Tomasi
-	# Green and brown HSV values
+	# Green and brown HSV values 
 	lower_green = np.array([33, 87, 78])
 	upper_green = np.array([53, 107, 158])
 	lower_brown = np.array([167, 13, 186])
-	upper_brown = np.array([187, 33, 266])
+	upper_brown = np.array([179, 33, 255])
 	
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
 
@@ -184,9 +187,13 @@ else:
 		close = False
 		for j in corners:
 			x2, y2 = j.ravel()
-			dist = np.linalg.norm(np.array(x,y)-np.array(x2,y2))
-			if dist < 10 and dist != 0:
+			pix1 = (x , y, 0)
+			pix2 = (x2, y2, 0)
+			dist = distance.euclidean(pix1, pix2)
+			
+			if dist < 25 and dist != 0:
 				close = True
+				break
 		if close:
 			cv2.circle(src, (x,y), 3, 255, 10)
 			kept_corners.append(i)
@@ -195,11 +202,13 @@ else:
 		x, y = i.ravel()
 		for j in kept_corners:
 			x2, y2 = j.ravel()
-			dist = np.linalg.norm(np.array(x,y)-np.array(x2,y2))
-			if dist < 10 and dist != 0 and ((x,y),(x2,y2)) not in connected_pairs and ((x2,y2),(x,y)) not in connected_pairs:
+			pix1 = (x , y, 0)
+			pix2 = (x2, y2, 0)
+			dist = distance.euclidean(pix1, pix2)
+			if dist < 25 and dist != 0 and ((x,y),(x2,y2)) not in connected_pairs and ((x2,y2),(x,y)) not in connected_pairs:
 				cv2.line(src, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
 				connected_pairs.append(((x,y),(x2,y2)))
-	print(connected_pairs)
+	#print(connected_pairs)
 	cv2.namedWindow('shi', window_property)
 	cv2.resizeWindow('shi', window_init_width, window_init_height)
 	cv2.imshow('shi',src)
