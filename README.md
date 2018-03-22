@@ -3,6 +3,7 @@ Missing Person Detection Tool
 
 
 ## Python Setup
+Running install.sh with sudo should install all of these packages for you.
 * Python 3.6.4
   * https://www.python.org
 * OpenCV
