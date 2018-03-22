@@ -42,7 +42,7 @@ namespace AnamolyDetector
             {
                 string str = str_path.Split('\\').Last<string>();
 
-                if (str.StartsWith("Batch_"))
+                if (str.StartsWith("Batch_") && !str.EndsWith(")"))
                 {
                     if (ct < Convert.ToInt32(str.Split('_')[1]))
                     {
@@ -63,6 +63,7 @@ namespace AnamolyDetector
             if (curr.ShowDialog() == DialogResult.OK)
             {
                 String batchName = curr.getText();
+                
                 currentBatch = batchesDirectory + "\\" + batchName;
 
                 String copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
@@ -79,6 +80,31 @@ namespace AnamolyDetector
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
+
+                    if (openFileDialog1.FileNames.Length > 1000)
+                    {
+                        String text = "It is not recommended to run more than 1000 files. Speed is not guaranteed.";
+                        DialogResult result = MessageBox.Show(text, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                        if (result.Equals(DialogResult.No))
+                        {
+                            return;
+                        }
+                    }
+
+                    int i = 0;
+                    if (Directory.Exists(currentBatch))
+                    {
+                        i++;
+                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
+                        {
+                            i++;
+                        }
+                        
+                         currentBatch = currentBatch + " (" + i.ToString() + ")";
+                    }
+                        
+
                     //Only create the directories when a file has been selected
                     Directory.CreateDirectory(currentBatch);
                     Directory.CreateDirectory(copyDir);
@@ -87,9 +113,11 @@ namespace AnamolyDetector
 
                     String path;
                     int fileCt = 0;
+
+
                     foreach (String file in openFileDialog1.FileNames)
                     {
-                        if (file.EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
                         {
                             path = Path.Combine(copyDir, Path.GetFileName(file));
                             System.IO.File.Copy(file, path, true);
@@ -120,6 +148,31 @@ namespace AnamolyDetector
 
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
+                    String[] FileNames = Directory.GetFiles(folderBrowserDialog1.SelectedPath);
+
+                    if (FileNames.Length > 1000)
+                    {
+                        String text = "It is not recommended to run more than 1000 files. Speed is not guaranteed.";
+                        DialogResult result = MessageBox.Show(text, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                        if (result.Equals(DialogResult.No))
+                        {
+                            return;
+                        }
+                    }
+
+                    int i = 0;
+                    if (Directory.Exists(currentBatch))
+                    {
+                        i++;
+                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
+                        {
+                            i++;
+                        }
+
+                        currentBatch = currentBatch + " (" + i.ToString() + ")";
+                    }
+
                     //Only create the directories when a folder has been selected
                     Directory.CreateDirectory(currentBatch);
                     Directory.CreateDirectory(copyDir);
@@ -128,7 +181,6 @@ namespace AnamolyDetector
 
                     String path;
 
-                    String[] FileNames = Directory.GetFiles(folderBrowserDialog1.SelectedPath);
                     int fileCt = 0;
                     foreach (String file in FileNames)
                     {
@@ -173,6 +225,11 @@ namespace AnamolyDetector
 
 
             }
+        }
+
+        public String getCurrentBatchPath()
+        {
+            return currentBatch;
         }
     }
 }

@@ -29,6 +29,10 @@ namespace AnamolyDetector
         private void menuBtnSelectResults_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog selectFolderDialog = new FolderBrowserDialog();
+
+            selectFolderDialog.RootFolder = Environment.SpecialFolder.Desktop;
+            selectFolderDialog.SelectedPath = @Environment.CurrentDirectory;//Path.Combine(Environment.CurrentDirectory, "..\\Batches");
+
             if (selectFolderDialog.ShowDialog() == DialogResult.OK)
             {
                 String path = selectFolderDialog.SelectedPath;
