@@ -5,9 +5,6 @@ import scipy as sp
 import spectral as spc
 import math
 
-import copy
-
-
 import timer    #Custom Timer class
 
 #========================================================================================================
@@ -22,8 +19,8 @@ colormap_value = cv2.COLORMAP_JET
 
 window_property = cv2.WINDOW_KEEPRATIO
 
-window_init_width = 1600
-window_init_height = 900
+window_init_width = 750#1600
+window_init_height = 500#900
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -71,56 +68,50 @@ if scale_value != 1:
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 height, width = img.shape[:2]
-avg_dim = (((width+height)//2)//3)*2
+avg_dim = (((width+height)//2)//3)#*2
 
-# create copy of original img
-line_check = copy.deepcopy(img)
 # Gaussian Blur
-proc_img = cv2.GaussianBlur(line_check, (5,5), 0)
-
+proc_img = cv2.GaussianBlur(img, (5,5), 0)
 
 # Kernel Dilation
 proc_img = cv2.dilate(proc_img, (5,5), iterations=1)
 
 # Bilateral Blur
-proc_img = cv2.bilateralFilter(proc_img, 9, 75, 75)
+proc_img = cv2.bilateralFilter(proc_img, 9, 2, 2)     #75, 75
 
 # Low sensitivity Hough transform
-dst = cv2.Canny(proc_img, 100, 0)
+dst = cv2.Canny(proc_img, 50, 100)   # 100, 0
 cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
-lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), avg_dim)
 
+lines = cv2.HoughLines(dst, 1, float(np.pi / 180.0), avg_dim)    
+
+#
 if lines is not None:
-	for i in range(0, len(lines)):
-		rho = lines[i][0][0]
-		theta = lines[i][0][1]
-		a = math.cos(theta)
-		b = math.sin(theta)
-		x0 = a * rho
-		y0 = b * rho
-		pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
-		pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
-		cv2.line(proc_img, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
-	# canny
-	cv2.namedWindow("s", window_property)
-	cv2.resizeWindow('s', window_init_width, window_init_height)
-	cv2.imshow('s',dst)
-	# hough
-	cv2.namedWindow("dst", window_property)
-	cv2.resizeWindow('dst', window_init_width, window_init_height)
-	cv2.imshow('dst',proc_img)
-	cv2.waitKey(0)
+    for i in range(0, len(lines)):
+        rho = lines[i][0][0]
+        theta = lines[i][0][1]
+        a = math.cos(theta)
+        b = math.sin(theta)
+        x0 = a * rho
+        y0 = b * rho
+        pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+        pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+        cv2.line(proc_img, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+
+    # canny
+    cv2.namedWindow("s", window_property)
+    cv2.resizeWindow('s', window_init_width, window_init_height)
+    cv2.imshow('s',dst)
+    # hough
+    cv2.namedWindow("dst", window_property)
+    cv2.resizeWindow('dst', window_init_width, window_init_height)
+    cv2.imshow('dst',proc_img)
+    cv2.waitKey(0)
 
 else:
-
-	# more copies of the original img
-	src = copy.deepcopy(img)
-	corner_check = copy.deepcopy(img)
-	img_copy = copy.deepcopy(img)
 	# if no edges detected
 	# Gaussian Blur
-	proc2_img = cv2.GaussianBlur(corner_check, (5,5), 0)
-
+	proc2_img = cv2.GaussianBlur(img, (5,5), 0)
 
 	# Erosion
 	proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
@@ -136,16 +127,13 @@ else:
 	upper_brown = np.array([187, 33, 266])
 	
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
-
-	corners = cv2.goodFeaturesToTrack(gray, 50, 0.02, 10)
+	corners = cv2.goodFeaturesToTrack(gray, 100, 0.02, 10)
 	corners = np.int0(corners)
-	hsv_img = cv2.cvtColor(img_copy, cv2.COLOR_BGR2HSV)
-	
-	kept_corners = []
+	hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	
 	for i in corners:
 		x, y = i.ravel()
-
+		
 		# Indexing into an opencv image is height, width
 		pixel1 = hsv_img[y-1, x-1]
 		pixel2 = hsv_img[y-1, x]
@@ -166,8 +154,7 @@ else:
 			(((pixel6 >= lower_green).all() and (pixel6 <= upper_green).all()) or ((pixel6 >= lower_brown).all() and (pixel6 <= upper_brown).all())) and \
 			(((pixel7 >= lower_green).all() and (pixel7 <= upper_green).all()) or ((pixel7 >= lower_brown).all() and (pixel7 <= upper_brown).all())) and \
 			(((pixel8 >= lower_green).all() and (pixel8 <= upper_green).all()) or ((pixel8 >= lower_brown).all() and (pixel8 <= upper_brown).all())):
-
-
+			print("Green/brown")
 			continue
 		# Filter if all pixels have low saturation and high value
 		if (((pixel1[1] <= 20) and (pixel1[2]>=220)) and \
@@ -178,33 +165,29 @@ else:
 			((pixel6[1] <= 20) and (pixel6[2]>=220)) and \
 			((pixel7[1] <= 20) and (pixel7[2]>=220)) and \
 			((pixel8[1] <= 20) and (pixel8[2]>=220))):
-
+			print("Value/Saturation")
 			continue
 		
 		close = False
 		for j in corners:
 			x2, y2 = j.ravel()
-			dist = np.linalg.norm(np.array(x,y)-np.array(x2,y2))
-			if dist < 10 and dist != 0:
+			dist = np.linalg.norm(np.array(y,x)-np.array(y2,x2))
+			if dist<10 and dist != 0:
 				close = True
 		if close:
-			cv2.circle(src, (x,y), 3, 255, 10)
-			kept_corners.append(i)
-	connected_pairs = []
-	for i in kept_corners:
-		x, y = i.ravel()
-		for j in kept_corners:
-			x2, y2 = j.ravel()
-			dist = np.linalg.norm(np.array(x,y)-np.array(x2,y2))
-			if dist < 10 and dist != 0 and ((x,y),(x2,y2)) not in connected_pairs and ((x2,y2),(x,y)) not in connected_pairs:
-				cv2.line(src, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
-				connected_pairs.append(((x,y),(x2,y2)))
-	print(connected_pairs)
+			cv2.circle(proc2_img, (x,y), 3, 255, 10)
 	cv2.namedWindow('shi', window_property)
-	cv2.resizeWindow('shi', window_init_width, window_init_height)
-	cv2.imshow('shi',src)
+	#cv2.resizeWindow('shi', window_init_width, window_init_height)
+	cv2.imshow('shi',proc2_img)
 	cv2.waitKey(0)
+	
+	# Filter out outliers
 
+
+	# Generate line segments (shape generation)
+
+
+	# Classify
 
 #Stop the timer
 #t.stop()
