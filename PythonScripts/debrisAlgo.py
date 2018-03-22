@@ -197,6 +197,7 @@ else:
 		if close:
 			cv2.circle(src, (x,y), 3, 255, 10)
 			kept_corners.append(i)
+	#TODO create objects to group pixesl together
 	connected_pairs = []
 	for i in kept_corners:
 		x, y = i.ravel()
