@@ -1,3 +1,7 @@
+#--------------------------------------------------------------------------------------------------------
+# Copy of analyze.py used for testing. outputs to CLI, rather than a file
+#--------------------------------------------------------------------------------------------------------
+
 import sys
 import os
 import cv2 as cv
@@ -22,7 +26,7 @@ extensions = (".jpg", ".jpeg", ".png")
 
 detected_folder = "Result"
 other_folder = "Other"
-copy_folder = "Copy"    
+copy_folder = "Copy"
 
 #Analysis Parameters
 total_time = timer.Timer()
@@ -33,12 +37,12 @@ total_time = timer.Timer()
 def openFolder(path):
     #if __name__ == '__main__':
     #Check if argument is a file or a directory
-    if os.path.isfile(path):    
+    if os.path.isfile(path):
         openFile(path)
         return
-    else:                      
+    else:
         global copy_folder
-        copy_folder = os.path.join( path, copy_folder)   
+        copy_folder = os.path.join( path, copy_folder)
 
         #Looks in the copy folder and adds the correct file types to the image list
         #This is a case insensitive version
@@ -71,7 +75,7 @@ def openFolder(path):
     if __name__ == '__main__': total_time.start()
 
     if int(args.procNum) > 1:
-        if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.    
+        if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.
             with Pool(int(args.procNum)) as p:
                 p.map(run, img_list)
     else:
@@ -80,7 +84,7 @@ def openFolder(path):
 
     if __name__ == '__main__': total_time.stop()
 
-    if __name__ == '__main__':    
+    if __name__ == '__main__':
         #Display time
         print("\n{0} image(s) analyzed\n".format(len(img_list)))
         print("Average elapsed time: {0:.3f} ms".format( total_time.get_time(1000) / len(img_list) ) )
@@ -96,15 +100,15 @@ def openFile(path):
 
     rx = RXD(path)
 
-    if rx[4] == 'D': 
+    if rx[4] == 'D':
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", rx[0], rx[2], rx[3]) )
-        cv.imwrite( rx[0] + "_detected.jpg", rx[1])  
+        cv.imwrite( rx[0] + "_detected.jpg", rx[1])
 
     else:
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", rx[0], rx[2], rx[3]) )
         cv.imwrite( rx[0] + "_other.jpg", rx[1])
 
-#--------------------------------------------------------------------------------------------------------    
+#--------------------------------------------------------------------------------------------------------
 
 def readArgs(args):
     #if __name__ == '__main__':
@@ -118,12 +122,12 @@ def readArgs(args):
         openFolder(args.folderPath)
     elif args.filePath != None:
         openFile(args.filePath)
-        
+
 #--------------------------------------------------------------------------------------------------------
 
 #Analyze the given image (img)
 def run(img):
-    
+
     #Call the algorithms
     rx = RXD(img)
 
@@ -140,9 +144,9 @@ def run(img):
 
 
     #RXD Debug
-    if rx[4] == 'D': 
+    if rx[4] == 'D':
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", rx[0], rx[2], rx[3]) )
-        cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])  
+        cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])
         #print(os.path.join( detected_folder, rx[0] + "_detected.jpeg"))
 
     else:
@@ -164,7 +168,7 @@ def main():
     except Exception as e:
         print("exception handled in analyze.py: \n")
         print(e + "\n")
-    
+
     return 0
 
 
