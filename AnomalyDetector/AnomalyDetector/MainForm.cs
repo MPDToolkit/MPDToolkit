@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnomalyDetector;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace AnamolyDetector
     public partial class MainForm : Form
     {
         public string selectResultsFolder = "";
+        public List<String> currentImages = new List<String>();
 
         public MainForm()
         {
@@ -28,7 +30,7 @@ namespace AnamolyDetector
 
         private void menuBtnSelectResults_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog selectFolderDialog = new FolderBrowserDialog();
+            /*FolderBrowserDialog selectFolderDialog = new FolderBrowserDialog();
 
             selectFolderDialog.RootFolder = Environment.SpecialFolder.Desktop;
             selectFolderDialog.SelectedPath = @Environment.CurrentDirectory;//Path.Combine(Environment.CurrentDirectory, "..\\Batches");
@@ -46,7 +48,12 @@ namespace AnamolyDetector
                 }
                 pictureBox1.ImageLocation =  FullFileNames[0];
                 checkedListBox.DataSource = fileNames;
-            }
+            }*/
+            resultDialog results = new resultDialog();
+            results.ShowDialog();
+
+            selectResultsFolder = results.getSelected();
+            this.loadImages();
         }
 
         private void checkedListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -59,5 +66,27 @@ namespace AnamolyDetector
             pictureBox1.ImageLocation = itemFullPath;
             //TODO set pictureBox2.ImageLocation to the item's detected path
         }
+
+        private Boolean checkImages(String image)
+        {
+            String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Batches");
+            if (File.Exists(System.IO.Path.Combine(Path, "Results", image)))
+                return true;
+            return false;
+        }
+
+        private void loadImages()
+        {
+            Console.WriteLine(selectResultsFolder);
+            String combined = System.IO.Path.Combine(selectResultsFolder, "Copy");
+            string[] temp = Directory.GetFiles(combined);
+            for (int i = 0; i < temp.Length; i++)
+               if (checkImages(temp[i]))
+                   currentImages.Add(Path.GetFileName(temp[i]));
+
+            checkedListBox.DataSource = currentImages;
+        }
+
+
     }
 }

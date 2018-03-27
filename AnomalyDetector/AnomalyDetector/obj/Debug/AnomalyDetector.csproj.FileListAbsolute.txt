@@ -22,3 +22,4 @@ C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\A
 C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
 C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
 C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
+C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
