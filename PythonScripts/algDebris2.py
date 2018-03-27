@@ -1,4 +1,5 @@
-#   Missing Person Detection Tool 
+#old algorithm
+#   Missing Person Detection Tool
 #
 #
 # References:
@@ -62,7 +63,7 @@ t.start()
 
 #Read the source image
 try:
-    src_img = cv.imread(args[1]) 
+    src_img = cv.imread(args[1])
 except OSError as e:
     print("OS error: {0}".format(e))
 except ValueError as e:
@@ -92,12 +93,12 @@ avg_dim = int((avg_dim/3))
 
 #Blur img
 #Morphological operations
-#Edge detection     
+#Edge detection
 
 #IF positive results --> #Classification decision
 
 #ELSE
-#Blur img                                    
+#Blur img
 #Morphological operations
 #Shi-Tomasi corner detection
 #Local HSV Filtering
@@ -132,8 +133,8 @@ def edgeDetect(arg):
 	clr = cv.getTrackbarPos('bilat Color', 'edge_img')
 	dist = cv.getTrackbarPos('bilat Distance', 'edge_img')
 	d = cv.getTrackbarPos('Kernel', 'edge_img')
-	
-	
+
+
 	pre_img = cv.GaussianBlur(src_img, (5,5), 0)
 	pre_img = cv.dilate( pre_img, (5,5), iterations = 1)
 	pre_img = cv.bilateralFilter(pre_img, 9, clr, dist)
@@ -164,7 +165,7 @@ def edgeDetect(arg):
 	#        cv2.line(pre_img, (l[0], l[1]), (l[2], l[3]), (0,0,255), 3, cv2.LINE_AA)
 #
 
-	
+
 	cv.imshow('edge_img', edge_img)
 	cv.imshow('Blur', pre_img)
 	cv.imshow('Mask', mask_img)
@@ -220,7 +221,7 @@ cv.imshow('Mask', mask_img)
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-    
+
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
@@ -263,7 +264,7 @@ print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 
 
 #Wait until a key is pressed
-cv.waitKey(0)   
+cv.waitKey(0)
 
 
 #========================================================================================================

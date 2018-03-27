@@ -1,3 +1,4 @@
+#old_algorithm
 import sys
 import cv2
 import numpy as np
@@ -48,7 +49,7 @@ if len(args) <= 1:
 
 #Read the source image
 try:
-    img = cv2.imread(args[1]) 
+    img = cv2.imread(args[1])
 except OSError as e:
     print("OS error: {0}".format(e))
 except ValueError as e:
@@ -83,7 +84,7 @@ proc_img = cv2.bilateralFilter(proc_img, 9, 2, 2)     #75, 75
 dst = cv2.Canny(proc_img, 50, 100)   # 100, 0
 cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
 
-lines = cv2.HoughLines(dst, 1, float(np.pi / 180.0), avg_dim)    
+lines = cv2.HoughLines(dst, 1, float(np.pi / 180.0), avg_dim)
 
 #
 if lines is not None:
@@ -125,15 +126,15 @@ else:
 	upper_green = np.array([53, 107, 158])
 	lower_brown = np.array([167, 13, 186])
 	upper_brown = np.array([187, 33, 266])
-	
+
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
 	corners = cv2.goodFeaturesToTrack(gray, 100, 0.02, 10)
 	corners = np.int0(corners)
 	hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-	
+
 	for i in corners:
 		x, y = i.ravel()
-		
+
 		# Indexing into an opencv image is height, width
 		pixel1 = hsv_img[y-1, x-1]
 		pixel2 = hsv_img[y-1, x]
@@ -143,7 +144,7 @@ else:
 		pixel6 = hsv_img[y+1, x-1]
 		pixel7 = hsv_img[y+1, x]
 		pixel8 = hsv_img[y+1, x+1]
-		
+
 		hue, sat, value = hsv_img[y,x]
 		# Filter based on HSV values of local pixels
 		if (((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) or ((pixel1 >= lower_brown).all() and (pixel1 <= upper_brown).all())) and \
@@ -167,7 +168,7 @@ else:
 			((pixel8[1] <= 20) and (pixel8[2]>=220))):
 			print("Value/Saturation")
 			continue
-		
+
 		close = False
 		for j in corners:
 			x2, y2 = j.ravel()
@@ -180,7 +181,7 @@ else:
 	#cv2.resizeWindow('shi', window_init_width, window_init_height)
 	cv2.imshow('shi',proc2_img)
 	cv2.waitKey(0)
-	
+
 	# Filter out outliers
 
 
@@ -195,4 +196,3 @@ else:
 
 cv2.destroyAllWindows()
 exit()
-

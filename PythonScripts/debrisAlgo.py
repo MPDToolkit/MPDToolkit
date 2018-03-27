@@ -52,7 +52,7 @@ if len(args) <= 1:
 
 #Read the source image
 try:
-    img = cv2.imread(args[1]) 
+    img = cv2.imread(args[1])
 except OSError as e:
     print("OS error: {0}".format(e))
 except ValueError as e:
@@ -91,7 +91,7 @@ proc_img = cv2.bilateralFilter(proc_img, 9, 75, 75)
 dst = cv2.Canny(proc_img, 100, 0)
 cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
 
-lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), int(avg_dim/5))
+lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), int(avg_dim/2))
 #print(lines)
 if lines is not None:
 	for i in range(0, len(lines)):
@@ -129,23 +129,23 @@ else:
 	proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
 
 	# Stronger Bilateral Blur
-	proc2_img = cv2.bilateralFilter(proc2_img, 9, 100, 100)
+	proc2_img = cv2.bilateralFilter(proc2_img, 16, 200, 500)
 
 	# Shi-Tomasi
-	# Green and brown HSV values 
+	# Green and brown HSV values
 	lower_green = np.array([33, 87, 78])
 	upper_green = np.array([53, 107, 158])
 	lower_brown = np.array([167, 13, 186])
 	upper_brown = np.array([179, 33, 255])
-	
+
 	gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
 
 	corners = cv2.goodFeaturesToTrack(gray, 50, 0.02, 10)
 	corners = np.int0(corners)
 	hsv_img = cv2.cvtColor(img_copy, cv2.COLOR_BGR2HSV)
-	
+
 	kept_corners = []
-	
+
 	for i in corners:
 		x, y = i.ravel()
 
@@ -158,7 +158,7 @@ else:
 		pixel6 = hsv_img[y+1, x-1]
 		pixel7 = hsv_img[y+1, x]
 		pixel8 = hsv_img[y+1, x+1]
-		
+
 		hue, sat, value = hsv_img[y,x]
 		# Filter based on HSV values of local pixels
 		if (((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) or ((pixel1 >= lower_brown).all() and (pixel1 <= upper_brown).all())) and \
@@ -183,15 +183,15 @@ else:
 			((pixel8[1] <= 20) and (pixel8[2]>=220))):
 
 			continue
-		
+
 		close = False
 		for j in corners:
 			x2, y2 = j.ravel()
 			pix1 = (x , y, 0)
 			pix2 = (x2, y2, 0)
 			dist = distance.euclidean(pix1, pix2)
-			
-			if dist < 25 and dist != 0:
+
+			if dist < 75 and dist != 0:
 				close = True
 				break
 		if close:
@@ -206,7 +206,7 @@ else:
 			pix1 = (x , y, 0)
 			pix2 = (x2, y2, 0)
 			dist = distance.euclidean(pix1, pix2)
-			if dist < 25 and dist != 0 and ((x,y),(x2,y2)) not in connected_pairs and ((x2,y2),(x,y)) not in connected_pairs:
+			if dist < 75 and dist != 0 and ((x,y),(x2,y2)) not in connected_pairs and ((x2,y2),(x,y)) not in connected_pairs:
 				cv2.line(src, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
 				connected_pairs.append(((x,y),(x2,y2)))
 	#print(connected_pairs)
@@ -222,4 +222,3 @@ else:
 
 cv2.destroyAllWindows()
 exit()
-
