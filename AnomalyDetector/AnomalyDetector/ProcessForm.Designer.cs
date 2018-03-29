@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.terminateAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.btnSelectFolder = new System.Windows.Forms.Button();
@@ -38,40 +35,15 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblPercent = new System.Windows.Forms.Label();
             this.filesSelected = new System.Windows.Forms.Label();
-            this.menuStrip1.SuspendLayout();
+            this.infoLog = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(842, 33);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "Menu";
-            // 
-            // menuToolStripMenuItem
-            // 
-            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.terminateAnalysisToolStripMenuItem});
-            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
-            this.menuToolStripMenuItem.Text = "Menu";
-            // 
-            // terminateAnalysisToolStripMenuItem
-            // 
-            this.terminateAnalysisToolStripMenuItem.Name = "terminateAnalysisToolStripMenuItem";
-            this.terminateAnalysisToolStripMenuItem.Size = new System.Drawing.Size(241, 30);
-            this.terminateAnalysisToolStripMenuItem.Text = "Terminate Analysis";
             // 
             // btnAnalyze
             // 
-            this.btnAnalyze.Location = new System.Drawing.Point(645, 285);
+            this.btnAnalyze.Location = new System.Drawing.Point(436, 159);
+            this.btnAnalyze.Margin = new System.Windows.Forms.Padding(2);
             this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Size = new System.Drawing.Size(171, 45);
+            this.btnAnalyze.Size = new System.Drawing.Size(114, 29);
             this.btnAnalyze.TabIndex = 1;
             this.btnAnalyze.Text = "Analyze";
             this.btnAnalyze.UseVisualStyleBackColor = true;
@@ -79,9 +51,10 @@
             // 
             // btnSelectFile
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(219, 46);
+            this.btnSelectFile.Location = new System.Drawing.Point(146, 30);
+            this.btnSelectFile.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(171, 45);
+            this.btnSelectFile.Size = new System.Drawing.Size(114, 29);
             this.btnSelectFile.TabIndex = 2;
             this.btnSelectFile.Text = "Select File";
             this.btnSelectFile.UseVisualStyleBackColor = true;
@@ -89,9 +62,10 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(24, 46);
+            this.btnSelectFolder.Location = new System.Drawing.Point(16, 30);
+            this.btnSelectFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelectFolder.Name = "btnSelectFolder";
-            this.btnSelectFolder.Size = new System.Drawing.Size(171, 45);
+            this.btnSelectFolder.Size = new System.Drawing.Size(114, 29);
             this.btnSelectFolder.TabIndex = 3;
             this.btnSelectFolder.Text = "Select Folder";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
@@ -100,42 +74,59 @@
             // lblProgressBar
             // 
             this.lblProgressBar.AutoSize = true;
-            this.lblProgressBar.Location = new System.Drawing.Point(21, 126);
+            this.lblProgressBar.Location = new System.Drawing.Point(14, 82);
+            this.lblProgressBar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblProgressBar.Name = "lblProgressBar";
-            this.lblProgressBar.Size = new System.Drawing.Size(72, 20);
+            this.lblProgressBar.Size = new System.Drawing.Size(128, 13);
             this.lblProgressBar.TabIndex = 4;
-            this.lblProgressBar.Text = "Progress";
+            this.lblProgressBar.Text = "Waiting for file selection...";
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(24, 160);
+            this.progressBar1.Location = new System.Drawing.Point(16, 104);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(794, 31);
+            this.progressBar1.Size = new System.Drawing.Size(530, 20);
+            this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 5;
             // 
             // lblPercent
             // 
             this.lblPercent.AutoSize = true;
-            this.lblPercent.Location = new System.Drawing.Point(780, 126);
+            this.lblPercent.Location = new System.Drawing.Point(520, 82);
+            this.lblPercent.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPercent.Name = "lblPercent";
-            this.lblPercent.Size = new System.Drawing.Size(36, 20);
+            this.lblPercent.Size = new System.Drawing.Size(24, 13);
             this.lblPercent.TabIndex = 6;
             this.lblPercent.Text = "0 %";
             // 
             // filesSelected
             // 
             this.filesSelected.AutoSize = true;
-            this.filesSelected.Location = new System.Drawing.Point(522, 58);
+            this.filesSelected.Location = new System.Drawing.Point(433, 38);
+            this.filesSelected.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.filesSelected.Name = "filesSelected";
-            this.filesSelected.Size = new System.Drawing.Size(133, 20);
+            this.filesSelected.Size = new System.Drawing.Size(90, 13);
             this.filesSelected.TabIndex = 7;
             this.filesSelected.Text = "No Files Selected";
             // 
+            // infoLog
+            // 
+            this.infoLog.Location = new System.Drawing.Point(16, 141);
+            this.infoLog.Multiline = true;
+            this.infoLog.Name = "infoLog";
+            this.infoLog.ReadOnly = true;
+            this.infoLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.infoLog.Size = new System.Drawing.Size(398, 46);
+            this.infoLog.TabIndex = 8;
+            this.infoLog.TabStop = false;
+            // 
             // ProcessForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 351);
+            this.ClientSize = new System.Drawing.Size(564, 199);
+            this.Controls.Add(this.infoLog);
             this.Controls.Add(this.filesSelected);
             this.Controls.Add(this.lblPercent);
             this.Controls.Add(this.progressBar1);
@@ -143,24 +134,17 @@
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.btnAnalyze);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(864, 407);
-            this.MinimumSize = new System.Drawing.Size(864, 407);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(580, 274);
+            this.MinimumSize = new System.Drawing.Size(580, 238);
             this.Name = "ProcessForm";
             this.Text = "ProcessForm";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem terminateAnalysisToolStripMenuItem;
         private System.Windows.Forms.Button btnAnalyze;
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.Button btnSelectFolder;
@@ -168,5 +152,6 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblPercent;
         private System.Windows.Forms.Label filesSelected;
+        private System.Windows.Forms.TextBox infoLog;
     }
 }

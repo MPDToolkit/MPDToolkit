@@ -8,27 +8,35 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace AnamolyDetector
 {
+
+
     public partial class ProcessForm : Form
     {
         private string workingDirectory;
         private string batchesDirectory;
         private string currentBatch;
-        private string nextBatchName;   //The next default batch name
+        private int fileCt = 0;
+        private Process backendProcess;
+        private string copyDir;
+        private string detDir;
+        private string othDir;
+        private int completed_files_ct = 0;
+        private string infoLogStr;
+
+
         private List<string> batch_names = new List<string>();
 
         public ProcessForm()
         {
             InitializeComponent();
             workingDirectory = Environment.CurrentDirectory;
-            batchesDirectory = Path.Combine(workingDirectory, "..\\Batches");     //Use this if we are using an installer
-            //batchesDirectory = Path.Combine(workingDirectory, "\\Batches");
-            Console.Out.WriteLine(batchesDirectory);
-            
-            
+            //batchesDirectory = Path.Combine(workingDirectory, "..\\Batches");     //Use this if we are using an installer
+            batchesDirectory = Path.Combine(workingDirectory, "Batches");
 
         }
 
@@ -52,7 +60,6 @@ namespace AnamolyDetector
             }
 
             ct++;
-            //nextBatchName = "Batch_" + ct.ToString();
 
             return "Batch_" + ct.ToString();
         }
@@ -66,9 +73,12 @@ namespace AnamolyDetector
                 
                 currentBatch = batchesDirectory + "\\" + batchName;
 
-                String copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                String detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                String othDir = batchesDirectory + "\\" + batchName + "\\Other";
+                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
+                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
+                othDir = batchesDirectory + "\\" + batchName + "\\Other";
+
+                //Update the window title
+                this.Text = batchName;
 
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -107,12 +117,13 @@ namespace AnamolyDetector
 
                     //Only create the directories when a file has been selected
                     Directory.CreateDirectory(currentBatch);
+                    File.Create(currentBatch + "\\batch_log.txt");
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
 
                     String path;
-                    int fileCt = 0;
+                    //int fileCt = 0;
 
 
                     foreach (String file in openFileDialog1.FileNames)
@@ -126,6 +137,8 @@ namespace AnamolyDetector
                     }
 
                     filesSelected.Text = "Files Selected: " + fileCt;
+                    lblProgressBar.Text = "Ready to analyze...";
+                    lblProgressBar.Update();
                 }
             }
         }
@@ -141,10 +154,12 @@ namespace AnamolyDetector
                 String batchName = curr.getText();
                 currentBatch = batchesDirectory + "\\" + batchName;
 
-                String copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                String detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                String othDir = batchesDirectory + "\\" + batchName + "\\Other";
+                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
+                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
+                othDir = batchesDirectory + "\\" + batchName + "\\Other";
 
+                //Update the window title
+                this.Text = batchName;
 
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -175,13 +190,12 @@ namespace AnamolyDetector
 
                     //Only create the directories when a folder has been selected
                     Directory.CreateDirectory(currentBatch);
+                    File.Create(currentBatch + "\\batch_log.txt");
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
-
+                    
                     String path;
-
-                    int fileCt = 0;
                     foreach (String file in FileNames)
                     {
                         if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
@@ -193,37 +207,127 @@ namespace AnamolyDetector
                     }
 
                     filesSelected.Text = "Files Selected: " + fileCt;
+                    lblProgressBar.Text = "Ready to analyze...";
+                    lblProgressBar.Update();
                 }
             }
         }
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            String backendPath = workingDirectory + "\\bin\\dist\\analyze\\analyze.exe";
-            String backendArgs = "-F " + currentBatch;
+            //Disable buttons
+            btnSelectFolder.Enabled = false;
+            btnSelectFile.Enabled = false;
+            btnAnalyze.Enabled = false;
+
+            //Inform user that images are being analyzed
+            lblProgressBar.Text = "Analyzing...";
+            lblProgressBar.Update();
+
+            int num_threads = 1;
+            String backendPath = @"C:\Users\Omega\AppData\Local\Programs\Python\Python36\python.exe";
+            String backendArgs = workingDirectory + "\\bin\\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
 
             if(currentBatch != null)
             {
                 ProcessStartInfo startConfig = new ProcessStartInfo(backendPath, backendArgs);
                 startConfig.UseShellExecute = false;
                 startConfig.RedirectStandardOutput = true;
-                startConfig.RedirectStandardError = false;
+                startConfig.RedirectStandardError = true;
                 startConfig.CreateNoWindow = true;
 
-                Process backendProcess = new Process();
-                backendProcess = Process.Start(startConfig);
+                //Process backendProcess = new Process();
+                backendProcess = new Process { StartInfo = startConfig };
 
-               
+                backendProcess.OutputDataReceived += redirectHandler;
+                backendProcess.ErrorDataReceived += redirectHandler;
+                backendProcess.EnableRaisingEvents = true;
 
-                //Progess bar updates
-                List<String> completedFiles = new List<string>();
-                while (!backendProcess.HasExited)
+                //Create a background thread for the progress bar 
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += new DoWorkEventHandler(run_analyze);
+                worker.RunWorkerAsync(this);
+                
+            }
+
+
+        }
+
+        private void run_analyze(object sernder, DoWorkEventArgs e)
+        {
+            //Start the python process
+            backendProcess.Start();
+            backendProcess.BeginOutputReadLine();
+            backendProcess.BeginErrorReadLine();
+
+            while (!backendProcess.HasExited)
+            {
+                try
                 {
-                    
+                    if (InvokeRequired)
+                    {
+                        Invoke(new Change(OnChange), "Analyzing...", completed_files_ct, fileCt);
+                    }
+
+                    //Wait a bit to reduce cpu load
+                    Thread.Sleep(100);
                 }
+                catch
+                {
+                    Console.Out.WriteLine("Error");
+                    return;
+                }
+                
+            }
 
+            //Finalize the progress bar and percentage
+            try
+            {
+                Invoke(new Change(OnChange), null, completed_files_ct, fileCt);
+            }
+            catch
+            {
+                Console.Out.WriteLine("Error");
+                return;
+            }
+            
+            
+        }
 
+        // this code updates the status while a background thread works
+        private delegate void Change(string status, int complete, int total);
+        private void OnChange(string status, int complete, int total)
+        {
+            if (status == null)
+            {
+                
+                lblProgressBar.Text = "Finished...";
+                //progressBar1.Visible = false;
+                //progressBar1.Value = 0;
+            }
+            else
+            {
+                progressBar1.Visible = true;
+                progressBar1.Minimum = 0;
+                //progressBar1.Maximum = total;
+                progressBar1.Value = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100);
+                progressBar1.Update();
+                lblPercent.Text = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100).ToString() + " %";
+                lblProgressBar.Text = status;
 
+                //Update infoLog
+                infoLog.Text = infoLogStr;
+
+            }
+        }
+
+        public void redirectHandler(object sendingProcess, DataReceivedEventArgs line)
+        {
+            // Collect the sort command output. 
+            if (!String.IsNullOrEmpty(line.Data))
+            {
+                completed_files_ct++;
+                infoLogStr += line.Data + "\r\n";
             }
         }
 
