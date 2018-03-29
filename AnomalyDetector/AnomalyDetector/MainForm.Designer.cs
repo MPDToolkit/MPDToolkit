@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,21 +49,22 @@
             this.menuBtnNewAnalysis});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(2104, 40);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip.Size = new System.Drawing.Size(1581, 33);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu";
             // 
             // menuBtnSelectResults
             // 
             this.menuBtnSelectResults.Name = "menuBtnSelectResults";
-            this.menuBtnSelectResults.Size = new System.Drawing.Size(246, 36);
+            this.menuBtnSelectResults.Size = new System.Drawing.Size(185, 29);
             this.menuBtnSelectResults.Text = "Select Results Folder";
             this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
             // 
             // menuBtnNewAnalysis
             // 
             this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
-            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(216, 36);
+            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(164, 29);
             this.menuBtnNewAnalysis.Text = "Run New Analysis";
             this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
             // 
@@ -72,18 +72,20 @@
             // 
             this.checkedListBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.checkedListBox.FormattingEnabled = true;
-            this.checkedListBox.Location = new System.Drawing.Point(1831, 3);
+            this.checkedListBox.Location = new System.Drawing.Point(1376, 2);
+            this.checkedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(270, 1075);
+            this.checkedListBox.Size = new System.Drawing.Size(203, 872);
             this.checkedListBox.TabIndex = 2;
+            this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(908, 1075);
+            this.pictureBox1.Size = new System.Drawing.Size(683, 872);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -91,10 +93,10 @@
             // pictureBox2
             // 
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(917, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(689, 2);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(908, 1075);
+            this.pictureBox2.Size = new System.Drawing.Size(683, 872);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
@@ -109,22 +111,24 @@
             this.tableLayoutPanel1.Controls.Add(this.checkedListBox, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 40);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 33);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(2104, 1081);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1581, 876);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2104, 1121);
+            this.ClientSize = new System.Drawing.Size(1581, 909);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(2130, 1192);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(1603, 965);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.menuStrip.ResumeLayout(false);
