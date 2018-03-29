@@ -184,7 +184,7 @@ namespace AnamolyDetector
                     int fileCt = 0;
                     foreach (String file in FileNames)
                     {
-                        if (file.EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
                         {
                             path = Path.Combine(copyDir, Path.GetFileName(file));
                             System.IO.File.Copy(file, path, true);

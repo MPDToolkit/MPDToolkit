@@ -30,25 +30,6 @@ namespace AnamolyDetector
 
         private void menuBtnSelectResults_Click(object sender, EventArgs e)
         {
-            /*FolderBrowserDialog selectFolderDialog = new FolderBrowserDialog();
-
-            selectFolderDialog.RootFolder = Environment.SpecialFolder.Desktop;
-            selectFolderDialog.SelectedPath = @Environment.CurrentDirectory;//Path.Combine(Environment.CurrentDirectory, "..\\Batches");
-
-            if (selectFolderDialog.ShowDialog() == DialogResult.OK)
-            {
-                String path = selectFolderDialog.SelectedPath;
-                selectResultsFolder = path;
-                String[] FullFileNames = Directory.GetFiles(path); //path + filename
-                List<string> fileNames = new List<string>(); // filename
-                
-                foreach (var file in FullFileNames)
-                {
-                    fileNames.Add(Path.GetFileName(file));
-                }
-                pictureBox1.ImageLocation =  FullFileNames[0];
-                checkedListBox.DataSource = fileNames;
-            }*/
             resultDialog results = new resultDialog();
             results.ShowDialog();
 
@@ -72,17 +53,19 @@ namespace AnamolyDetector
             String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Batches");
             if (File.Exists(System.IO.Path.Combine(Path, "Results", image)))
                 return true;
+
             return false;
         }
 
         private void loadImages()
         {
-            Console.WriteLine(selectResultsFolder);
             String combined = System.IO.Path.Combine(selectResultsFolder, "Copy");
             string[] temp = Directory.GetFiles(combined);
-            for (int i = 0; i < temp.Length; i++)
+
+            for (int i = 0; i < temp.Length; i++)  //Ensure images have results and are of right format
                if (checkImages(temp[i]))
-                   currentImages.Add(Path.GetFileName(temp[i]));
+                    if (temp[i].ToLower().EndsWith(".jpg") || temp[i].EndsWith(".jpeg") || temp[i].EndsWith(".png"))
+                        currentImages.Add(Path.GetFileName(temp[i]));
 
             checkedListBox.DataSource = currentImages;
         }
