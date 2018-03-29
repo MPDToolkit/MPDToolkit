@@ -21,9 +21,6 @@ Running install.sh with sudo should install all of these packages for you.
 * Scikit-Learn
   * pip install scikit-learn
   * http://scikit-learn.org/stable/
-* PyInstaller
-  * pip install pyinstaller
-  * http://www.pyinstaller.org/
 * Spectral (SPy)
   * pip install spectral
     * http://www.spectralpython.net
