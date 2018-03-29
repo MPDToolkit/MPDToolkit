@@ -35,15 +35,13 @@ window_init_height = 900
 #Get the arguments passed into the python script
 def main():
 	args = sys.argv
-	
+
 	#Check if an image was provided
 	if len(args) <= 1:
 		print("Argument error: No input image")
 		exit()
-
     #--------------------------------------------------------------------------------------------------------
     #--------------------------------------------------------------------------------------------------------
-
 
     #Start the timer
     #t.start()
@@ -62,11 +60,11 @@ def main():
 		print("Type error: {0}".format(e))
 	except:
 		print("Unexpected error:", sys.exc_info()[0])
-	DXD(img)
+	DebrisDetect(img)
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-def DXD(img):
-	pass
+def DebrisDetect(img_path, heatmap = None):
+	img = cv2.imread(img_path)
 	#If needed, scale image
 	if scale_value != 1:
 		height, width = img.shape[:2]
@@ -91,7 +89,7 @@ def DXD(img):
     # Low sensitivity Hough transform
 	dst = cv2.Canny(proc_img, 100, 0)
 	cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
-	
+
 	lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), int(avg_dim/2))
     #print(lines)
 	if lines is not None:
@@ -123,7 +121,7 @@ def DXD(img):
 		# if no edges detected
 		# Gaussian Blur
 		proc2_img = cv2.GaussianBlur(corner_check, (5,5), 0)
-		
+
 		# Erosion
 		proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
 
@@ -155,7 +153,7 @@ def DXD(img):
 			pixel6 = hsv_img[y+1, x-1]
 			pixel7 = hsv_img[y+1, x]
 			pixel8 = hsv_img[y+1, x+1]
-			
+
 			hue, sat, value = hsv_img[y,x]
 			# Filter based on HSV values of local pixels
 			if (((pixel1 >= lower_green).all() and (pixel1 <= upper_green).all()) or ((pixel1 >= lower_brown).all() and (pixel1 <= upper_brown).all())) and \
@@ -215,7 +213,6 @@ def DXD(img):
 							break
 		if any(len(t) > 3 for t in connected_pairs):
 			# TODO something here if we find debris
-			print("Contains debris")
 		cv2.namedWindow('shi', window_property)
 		cv2.resizeWindow('shi', window_init_width, window_init_height)
 		cv2.imshow('shi',src)
@@ -224,6 +221,5 @@ def DXD(img):
 	#t.stop()
 	#print("Elapsed time: {0} ms".format(t.get_time(1000)) )
 	cv2.destroyAllWindows()
+	return heatmap
 	exit()
-
-main()
