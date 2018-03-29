@@ -12,8 +12,19 @@ using System.Windows.Forms;
 
 namespace AnamolyDetector
 {
+     //Global Settings
+    public struct Settings
+    {
+        bool FirstRun;
+        string PythonPath;
+        string BatchesPath;
+        string BinPath;
+    }
+
     public partial class MainForm : Form
     {
+        public Settings settings = new Settings();     //Values read from the 'settings.ini'
+        public string settingsPath = @"settings.ini";
         public string selectResultsFolder = "";
         public List<String> currentImages = new List<String>();
 
@@ -21,6 +32,46 @@ namespace AnamolyDetector
         {
             InitializeComponent();
         }
+
+        
+
+        private void ReadSettings()
+        {
+            string[] entries = File.ReadAllLines(settingsPath);
+
+            foreach(string str in entries)
+            {
+                string[] opt = str.Split(':');
+                switch (opt[0])
+                {
+                    case "PythonPath":
+                        {
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            break;
+                        }
+                }
+
+
+
+
+            }
+
+
+        }
+
+        //Update the settings.ini
+        private void UpdateSettings()
+        {
+
+
+
+        }
+
 
         private void menuBtnNewAnalysis_Click(object sender, EventArgs e)
         {

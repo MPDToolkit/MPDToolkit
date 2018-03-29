@@ -21,7 +21,7 @@ namespace AnomalyDetector
 
         public void LoadBatches()
         {
-            String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Batches");
+            String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches");
             String[] directories = System.IO.Directory.GetDirectories(Path);
 
             for (int i = 0; i < directories.Length; i++)
@@ -32,7 +32,7 @@ namespace AnomalyDetector
         {
             
             String temp = listBox1.GetItemText(listBox1.SelectedItem);
-            Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Batches", temp);
+            Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
             this.Close();
         }
 
