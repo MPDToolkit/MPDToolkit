@@ -110,11 +110,11 @@ def openFile(path):
 
     if rx[4] == 'D': 
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", rx[0], rx[2], rx[3]) )
-        cv.imwrite( rx[0] + "_detected.jpg", rx[1])  
+        cv.imwrite( rx[0] + ".jpg", rx[1])  
 
     else:
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", rx[0], rx[2], rx[3]) )
-        cv.imwrite( rx[0] + "_other.jpg", rx[1])
+        cv.imwrite( rx[0] + ".jpg", rx[1])
 
 #--------------------------------------------------------------------------------------------------------    
 
@@ -158,14 +158,14 @@ def run(img):
         sys.stdout.flush()
 #        log_file.write("{0} {1} {2:.3f}_ms {3:.6f}_%\n".format( "-d-", rx[0], rx[2], rx[3]) )
 #        log_file.flush()
-        cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])  
+        cv.imwrite(os.path.join( detected_folder, rx[0] + ".jpg"), rx[1])  
 
     else:
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", rx[0], rx[2], rx[3]) )
         sys.stdout.flush()
 #        log_file.write("{0} {1} {2:.3f}_ms {3:.6f}_%\n".format( "-d-", rx[0], rx[2], rx[3]) )
 #        log_file.flush()
-        cv.imwrite(os.path.join( other_folder, rx[0] + "_other.jpg"), rx[1])
+        cv.imwrite(os.path.join( other_folder, rx[0] + ".jpg"), rx[1])
 
     #timer.time.sleep(0.050)
 

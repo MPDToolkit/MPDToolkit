@@ -20,6 +20,7 @@ namespace AnamolyDetector
         private string workingDirectory;
         private string batchesDirectory;
         private string currentBatch;
+        private string pythonPath;
         private int fileCt = 0;
         private Process backendProcess;
         private string copyDir;
@@ -31,12 +32,15 @@ namespace AnamolyDetector
 
         private List<string> batch_names = new List<string>();
 
-        public ProcessForm()
+        public ProcessForm(Settings settings)
         {
             InitializeComponent();
+
             workingDirectory = Environment.CurrentDirectory;
             //batchesDirectory = Path.Combine(workingDirectory, "..\\Batches");     //Use this if we are using an installer
             batchesDirectory = Path.Combine(workingDirectory, "Batches");
+
+            pythonPath = settings.PythonPath;
 
         }
 
@@ -66,10 +70,10 @@ namespace AnamolyDetector
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
-            batchName curr = new batchName(getNextBatchName());
-            if (curr.ShowDialog() == DialogResult.OK)
+            batchName bn = new batchName(getNextBatchName());
+            if (bn.ShowDialog() == DialogResult.OK)
             {
-                String batchName = curr.getText();
+                string batchName = bn.getText();
                 
                 currentBatch = batchesDirectory + "\\" + batchName;
 
@@ -82,7 +86,7 @@ namespace AnamolyDetector
 
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 openFileDialog1.Filter = "image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png|All files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
                 openFileDialog1.RestoreDirectory = true;
@@ -90,16 +94,9 @@ namespace AnamolyDetector
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-
                     if (openFileDialog1.FileNames.Length > 1000)
                     {
-                        String text = "It is not recommended to run more than 1000 files. Speed is not guaranteed.";
-                        DialogResult result = MessageBox.Show(text, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                        if (result.Equals(DialogResult.No))
-                        {
-                            return;
-                        }
+                        if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;          
                     }
 
                     int i = 0;
@@ -109,29 +106,27 @@ namespace AnamolyDetector
                         while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
                         {
                             i++;
-                        }
-                        
+                        }         
                          currentBatch = currentBatch + " (" + i.ToString() + ")";
                     }
-                        
 
-                    //Only create the directories when a file has been selected
+
+                    //Only create the directories when a folder has been selected
                     Directory.CreateDirectory(currentBatch);
-                    File.Create(currentBatch + "\\batch_log.txt");
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
 
-                    String path;
-                    //int fileCt = 0;
+                    File.Create(currentBatch + @"\batch_log.txt");
+                    File.Create(currentBatch + @"\checkbox.ini");
 
-
-                    foreach (String file in openFileDialog1.FileNames)
+                    string path;
+                    foreach (string file in openFileDialog1.FileNames)
                     {
                         if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
                         {
                             path = Path.Combine(copyDir, Path.GetFileName(file));
-                            System.IO.File.Copy(file, path, true);
+                            File.Copy(file, path, true);
                             fileCt++;
                         }
                     }
@@ -147,11 +142,11 @@ namespace AnamolyDetector
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
-            batchName curr = new batchName(getNextBatchName());
-            if (curr.ShowDialog() == DialogResult.OK)
+            batchName bn = new batchName(getNextBatchName());
+            if (bn.ShowDialog() == DialogResult.OK)
             {
 
-                String batchName = curr.getText();
+                String batchName = bn.getText();
                 currentBatch = batchesDirectory + "\\" + batchName;
 
                 copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
@@ -167,13 +162,7 @@ namespace AnamolyDetector
 
                     if (FileNames.Length > 1000)
                     {
-                        String text = "It is not recommended to run more than 1000 files. Speed is not guaranteed.";
-                        DialogResult result = MessageBox.Show(text, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                        if (result.Equals(DialogResult.No))
-                        {
-                            return;
-                        }
+                        if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
                     }
 
                     int i = 0;
@@ -184,28 +173,30 @@ namespace AnamolyDetector
                         {
                             i++;
                         }
-
                         currentBatch = currentBatch + " (" + i.ToString() + ")";
                     }
 
                     //Only create the directories when a folder has been selected
                     Directory.CreateDirectory(currentBatch);
-                    File.Create(currentBatch + "\\batch_log.txt");
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
-                    
-                    String path;
-                    foreach (String file in FileNames)
+
+                    File.Create(currentBatch + @"\batch_log.txt");
+                    File.Create(currentBatch + @"\checkbox.ini");
+
+                    string path;
+                    foreach (string file in FileNames)
                     {
                         if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
                         {
                             path = Path.Combine(copyDir, Path.GetFileName(file));
-                            System.IO.File.Copy(file, path, true);
+                            File.Copy(file, path, true);
                             fileCt++;
                         }
                     }
 
+                    //Update labels on the form
                     filesSelected.Text = "Files Selected: " + fileCt;
                     lblProgressBar.Text = "Ready to analyze...";
                     lblProgressBar.Update();
@@ -225,23 +216,22 @@ namespace AnamolyDetector
             lblProgressBar.Update();
 
             int num_threads = 1;
-            String backendPath = @"C:\Users\Omega\AppData\Local\Programs\Python\Python36\python.exe";
-            String backendArgs = workingDirectory + "\\bin\\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
+            string pythonArgs = workingDirectory + "\\bin\\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
 
             if(currentBatch != null)
             {
-                ProcessStartInfo startConfig = new ProcessStartInfo(backendPath, backendArgs);
+                ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
                 startConfig.UseShellExecute = false;
                 startConfig.RedirectStandardOutput = true;
                 startConfig.RedirectStandardError = true;
                 startConfig.CreateNoWindow = true;
 
-                //Process backendProcess = new Process();
                 backendProcess = new Process { StartInfo = startConfig };
 
+                //Create output handlers
                 backendProcess.OutputDataReceived += redirectHandler;
                 backendProcess.ErrorDataReceived += redirectHandler;
-                backendProcess.EnableRaisingEvents = true;
+                //backendProcess.EnableRaisingEvents = true;
 
                 //Create a background thread for the progress bar 
                 BackgroundWorker worker = new BackgroundWorker();
@@ -249,17 +239,16 @@ namespace AnamolyDetector
                 worker.RunWorkerAsync(this);
                 
             }
-
-
         }
 
-        private void run_analyze(object sernder, DoWorkEventArgs e)
+        private void run_analyze(object sender, DoWorkEventArgs e)
         {
             //Start the python process
             backendProcess.Start();
             backendProcess.BeginOutputReadLine();
             backendProcess.BeginErrorReadLine();
 
+            //Updates progress bar 
             while (!backendProcess.HasExited)
             {
                 try
@@ -324,14 +313,14 @@ namespace AnamolyDetector
         public void redirectHandler(object sendingProcess, DataReceivedEventArgs line)
         {
             // Collect the sort command output. 
-            if (!String.IsNullOrEmpty(line.Data))
+            if (!string.IsNullOrEmpty(line.Data))
             {
                 completed_files_ct++;
                 infoLogStr += line.Data + "\r\n";
             }
         }
 
-        public String getCurrentBatchPath()
+        public string getCurrentBatchPath()
         {
             return currentBatch;
         }

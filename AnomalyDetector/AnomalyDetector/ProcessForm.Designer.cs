@@ -51,7 +51,7 @@
             // 
             // btnSelectFile
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(146, 30);
+            this.btnSelectFile.Location = new System.Drawing.Point(146, 22);
             this.btnSelectFile.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(114, 29);
@@ -62,7 +62,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(16, 30);
+            this.btnSelectFolder.Location = new System.Drawing.Point(16, 22);
             this.btnSelectFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(114, 29);
@@ -74,7 +74,7 @@
             // lblProgressBar
             // 
             this.lblProgressBar.AutoSize = true;
-            this.lblProgressBar.Location = new System.Drawing.Point(14, 82);
+            this.lblProgressBar.Location = new System.Drawing.Point(14, 76);
             this.lblProgressBar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblProgressBar.Name = "lblProgressBar";
             this.lblProgressBar.Size = new System.Drawing.Size(128, 13);
@@ -83,7 +83,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(16, 104);
+            this.progressBar1.Location = new System.Drawing.Point(16, 98);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(530, 20);
@@ -93,7 +93,7 @@
             // lblPercent
             // 
             this.lblPercent.AutoSize = true;
-            this.lblPercent.Location = new System.Drawing.Point(520, 82);
+            this.lblPercent.Location = new System.Drawing.Point(520, 76);
             this.lblPercent.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPercent.Name = "lblPercent";
             this.lblPercent.Size = new System.Drawing.Size(24, 13);
@@ -103,7 +103,7 @@
             // filesSelected
             // 
             this.filesSelected.AutoSize = true;
-            this.filesSelected.Location = new System.Drawing.Point(433, 38);
+            this.filesSelected.Location = new System.Drawing.Point(433, 30);
             this.filesSelected.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.filesSelected.Name = "filesSelected";
             this.filesSelected.Size = new System.Drawing.Size(90, 13);
@@ -112,12 +112,12 @@
             // 
             // infoLog
             // 
-            this.infoLog.Location = new System.Drawing.Point(16, 141);
+            this.infoLog.Location = new System.Drawing.Point(16, 134);
             this.infoLog.Multiline = true;
             this.infoLog.Name = "infoLog";
             this.infoLog.ReadOnly = true;
             this.infoLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infoLog.Size = new System.Drawing.Size(398, 46);
+            this.infoLog.Size = new System.Drawing.Size(398, 53);
             this.infoLog.TabIndex = 8;
             this.infoLog.TabStop = false;
             // 
