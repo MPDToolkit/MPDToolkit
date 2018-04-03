@@ -401,9 +401,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:AnomalySetup"
+        "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{23EB07C0-41DE-47C9-9DDB-37E0D933D10C}"
+        "PackageCode" = "8:{B300A1F6-DFB8-4318-A95B-A5BFEC0AC3A1}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"

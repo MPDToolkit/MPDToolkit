@@ -27,7 +27,6 @@ C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.batchName.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.MainForm.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.ProcessForm.resources
