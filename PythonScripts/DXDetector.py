@@ -21,7 +21,7 @@ window_init_height = 900
 
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-
+"""
 #Get the arguments passed into the python script
 def main():
 	args = sys.argv
@@ -40,7 +40,6 @@ def main():
     #--------------------------------------------------------------------------------------------------------
 
     #Read the source image
-	"""
 	try:
 		img = cv2.imread(args[1])
 	except OSError as e:
@@ -52,8 +51,8 @@ def main():
 	except:
 		print("Unexpected error:", sys.exc_info()[0])
 	DebrisDetect(img)
-	"""
 	DebrisDetect(args[1])
+"""
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 def DebrisDetect(img_path, heatmap = None):
@@ -61,6 +60,9 @@ def DebrisDetect(img_path, heatmap = None):
 	t = timer.Timer()
 	
 	img = cv2.imread(img_path)
+	# Name of the original file
+	result_name = img_path.split("/")[-1].split(".")[0]
+	
 	#If needed, scale image
 	if scale_value != 1:
 		height, width = img.shape[:2]
@@ -105,8 +107,7 @@ def DebrisDetect(img_path, heatmap = None):
 				cv2.line(heatmap, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 			#Stop the timer
 			t.stop()
-			print("Elapsed time: {0} ms".format(t.get_time(1000)) )
-			return heatmap
+			return result_name, heatmap, t.get_time(1000), 'D'
 		else:
 			for i in range(0, len(lines)):
 				rho = lines[i][0][0]
@@ -120,8 +121,7 @@ def DebrisDetect(img_path, heatmap = None):
 				cv2.line(line_check, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 			#Stop the timer
 			t.stop()
-			print("Elapsed time: {0} ms".format(t.get_time(1000)) )
-			return line_check
+			return result_name, line_check, t.get_time(1000), 'D'
 
 	# Otherwise, corner detection
 	else:
@@ -266,16 +266,14 @@ def DebrisDetect(img_path, heatmap = None):
 		
 		# If any of the polygons have more than 3 connected circles, then we have a hit
 		if any(len(t) > 3 for t in connected_pairs):
-			# Draw the circles and lines
+			#Stop the timer
+			t.stop()
 			if heatmap is not None:
-				#Stop the timer
-				t.stop()
-				print("Elapsed time: {0} ms".format(t.get_time(1000)) )
-				return heatmap_copy
+				return result_name, heatmap_copy, t.get_time(1000), 'D'
 			else:
-				#Stop the timer
-				t.stop()
-				print("Elapsed time: {0} ms".format(t.get_time(1000)) )
-				return src
-
+				return result_name, src, t.get_time(1000), 'D'
+		
+		else:
+			t.stop()
+			return result_name, heatmap, t.get_time(1000), 'O'
 	exit()
