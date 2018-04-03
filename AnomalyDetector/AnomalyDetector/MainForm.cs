@@ -23,6 +23,7 @@ namespace AnamolyDetector
         public string PythonPath;
         public string BatchesPath;
         public string BinPath;
+        public bool NewImageWindow;
     }
 
 
@@ -35,9 +36,13 @@ namespace AnamolyDetector
         public List<String> currentImages = new List<String>();
         public List<string> checked_images = new List<string>();
 
+        public Process proc_orig_image;
+        public Process proc_detect_image;
+
         public MainForm()
         {
             InitializeComponent();
+
 
             //Read settings.ini
             ReadSettings();
@@ -46,6 +51,7 @@ namespace AnamolyDetector
 
             //Update settings.ini
             UpdateSettings();
+
         }
 
 
@@ -106,6 +112,14 @@ namespace AnamolyDetector
                             break;
                         }
 
+                    case "NewImageWindow":
+                        {
+                            settings.NewImageWindow = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
+                            this.checkBoxNewWindow.Checked = settings.NewImageWindow;
+
+                            break;
+                        }
+
                     default:
                         {
                             break;
@@ -125,7 +139,8 @@ namespace AnamolyDetector
                     "RunPOST=" + settings.RunPOST.ToString(),
                     "PythonPath=" + settings.PythonPath,
                     "BatchesPath=" + settings.BatchesPath,
-                    "BinPath=" + settings.BinPath
+                    "BinPath=" + settings.BinPath,
+                    "NewImageWindow=" + settings.NewImageWindow
                 });
         }
 
@@ -189,6 +204,9 @@ namespace AnamolyDetector
             proc_form.Show();
         }
 
+
+
+
         private void menuBtnSelectResults_Click(object sender, EventArgs e)
         {
             resultDialog results = new resultDialog();
@@ -203,18 +221,35 @@ namespace AnamolyDetector
                 pictureBox1.ImageLocation = "";
                 pictureBox2.ImageLocation = "";
             }
-            
         }
 
         private void checkedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //find image with selected checkbox item and show it in pictureBoxes 
-            if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+            if (!settings.NewImageWindow)
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                    pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
 
-            if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0)==true)
-                pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
-
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                    pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+            }
+            else
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                {
+                    //pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+                    Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
+                }
+                   
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                {
+                    //pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+                    Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
+                }
+                    
+            }
         }
 
         private bool checkImages(string image, int val)
@@ -272,6 +307,37 @@ namespace AnamolyDetector
                 UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
             }
         }
-        
+
+        private void checkBoxNewWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.NewImageWindow = checkBoxNewWindow.Checked;
+            UpdateSettings();
+
+            if (!settings.NewImageWindow)
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                    pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                    pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+            }
+            else
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                {
+                    //pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+                    Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
+                }
+
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                {
+                    //pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+                    Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
+                }
+
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.menuBtnTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -49,8 +49,7 @@
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBtnSelectResults,
-            this.menuBtnNewAnalysis,
-            this.menuBtnTest});
+            this.menuBtnNewAnalysis});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -132,7 +131,18 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1161, 553);
             this.tableLayoutPanel1.TabIndex = 3;
-            
+            // 
+            // checkBoxNewWindow
+            // 
+            this.checkBoxNewWindow.AutoSize = true;
+            this.checkBoxNewWindow.Location = new System.Drawing.Point(951, 4);
+            this.checkBoxNewWindow.Name = "checkBoxNewWindow";
+            this.checkBoxNewWindow.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.checkBoxNewWindow.Size = new System.Drawing.Size(198, 19);
+            this.checkBoxNewWindow.TabIndex = 4;
+            this.checkBoxNewWindow.Text = "Open in Images New Window";
+            this.checkBoxNewWindow.UseVisualStyleBackColor = true;
+            this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
             // 
             // MainForm
             // 
@@ -140,14 +150,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1161, 579);
+            this.Controls.Add(this.checkBoxNewWindow);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
             this.ForeColor = System.Drawing.SystemColors.Menu;
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.Margin = new System.Windows.Forms.Padding(1);
             this.MinimumSize = new System.Drawing.Size(967, 618);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -168,6 +180,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ToolStripMenuItem menuBtnTest;
+        private System.Windows.Forms.CheckBox checkBoxNewWindow;
     }
 }

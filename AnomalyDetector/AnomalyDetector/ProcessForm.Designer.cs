@@ -125,6 +125,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(564, 199);
             this.Controls.Add(this.infoLog);
             this.Controls.Add(this.filesSelected);
@@ -135,9 +137,9 @@
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.btnAnalyze);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(580, 274);
             this.MinimumSize = new System.Drawing.Size(580, 238);
             this.Name = "ProcessForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProcessForm";
             this.ResumeLayout(false);
             this.PerformLayout();
