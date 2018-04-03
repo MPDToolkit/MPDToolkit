@@ -68,7 +68,7 @@ namespace AnamolyDetector
                 {
                     case "FirstRun":
                         {
-                            settings.RunPOST = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : true;
+                            settings.FirstRun = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : true;
                             break;
                         }
 
