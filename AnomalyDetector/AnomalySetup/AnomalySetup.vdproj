@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D6ED254EDAC648C085690DD071858E1E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E02C16A423194453A4A628013ABA880E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -273,6 +279,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6ED254EDAC648C085690DD071858E1E"
+            {
+            "SourcePath" = "8:..\\IncludeFiles\\DXDetector.py"
+            "TargetName" = "8:DXDetector.py"
+            "Tag" = "8:"
+            "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E02C16A423194453A4A628013ABA880E"
             {
             "SourcePath" = "8:..\\IncludeFiles\\installPythonPackages.bat"
@@ -403,7 +429,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{B300A1F6-DFB8-4318-A95B-A5BFEC0AC3A1}"
+        "PackageCode" = "8:{2B5B6C83-8C54-4DD7-8A00-3F9D29F13B27}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"

@@ -43,7 +43,7 @@ def RXD( image_file, threshold=90.0 ):
         src_img = cv.imread( image_file ) 
 
         #Extract the name of the original image from its path
-        result_name = image_file.split("/")[-1].split(".")[0]
+        result_name = os.path.split(image_file)[1].split(".")[0]
 
         #If needed, scale image
         if scale_value != 1.0:

@@ -117,8 +117,8 @@ namespace AnamolyDetector
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
 
-                    File.Create(currentBatch + @"\batch_log.txt");
-                    File.Create(currentBatch + @"\checkbox.ini");
+                    File.Create(currentBatch + @"\batch_log.txt").Close();
+                    File.Create(currentBatch + @"\checkbox.ini").Close();
 
                     string path;
                     foreach (string file in openFileDialog1.FileNames)
@@ -182,8 +182,8 @@ namespace AnamolyDetector
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
 
-                    File.Create(currentBatch + @"\batch_log.txt");
-                    File.Create(currentBatch + @"\checkbox.ini");
+                    File.Create(currentBatch + @"\batch_log.txt").Close();
+                    File.Create(currentBatch + @"\checkbox.ini").Close();
 
                     string path;
                     foreach (string file in FileNames)
@@ -216,7 +216,7 @@ namespace AnamolyDetector
             lblProgressBar.Update();
 
             int num_threads = 1;
-            string pythonArgs = workingDirectory + "\\bin\\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
+            string pythonArgs = workingDirectory + @"\bin\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
 
             if(currentBatch != null)
             {
