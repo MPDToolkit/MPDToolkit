@@ -40,6 +40,7 @@ def main():
     #--------------------------------------------------------------------------------------------------------
 
     #Read the source image
+	"""
 	try:
 		img = cv2.imread(args[1])
 	except OSError as e:
@@ -51,6 +52,8 @@ def main():
 	except:
 		print("Unexpected error:", sys.exc_info()[0])
 	DebrisDetect(img)
+	"""
+	DebrisDetect(args[1])
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 def DebrisDetect(img_path, heatmap = None):
@@ -209,10 +212,10 @@ def DebrisDetect(img_path, heatmap = None):
 			hue, sat, value = hsv_img[y,x]
 			
 			# Filter based on HSV values of local pixels vs the green and brown HSV values
-			if all((pixel >= lower_green.all() and pixel <= upper_green.all()) or (pixel >= lower_brown.all() and pixel <= upper_brown.all()) for pixel in pixels):
+			if all(((pixel >= lower_green).all() and (pixel <= upper_green).all()) or ((pixel >= lower_brown).all() and (pixel <= upper_brown).all()) for pixel in pixels):
 				continue
 			# Filter if all pixels have low saturation and high value
-			if all((pixel <= 20 and pixel >= 220) for pixel in pixels):
+			if all((pixel[1] <= 20 and pixel[2] >= 220) for pixel in pixels):
 				continue
 			
 			# Look for corners that are near other corners - finding outliers
