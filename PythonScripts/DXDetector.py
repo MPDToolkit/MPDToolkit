@@ -250,10 +250,6 @@ def DebrisDetect(img_path, heatmap = None):
 				pix2 = (x2, y2, 0)
 				dist = distance.euclidean(pix1, pix2)
 				if dist < 75 and dist != 0:
-					if heatmap is not None:
-						cv2.line(heatmap_copy, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
-					else:
-						cv2.line(src, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
 					for k in connected_pairs:
 						if (x,y) in k and (x2,y2) in k:
 							break;
@@ -269,8 +265,20 @@ def DebrisDetect(img_path, heatmap = None):
 			#Stop the timer
 			t.stop()
 			if heatmap is not None:
+				for poly in connected_pairs:
+					if len(poly) > 3:
+						init_point = poly[0]
+						for point in poly:
+							if point is not init_point:
+								cv2.line(heatmap_copy, init_point, point, (0,0,255), 1, cv2.LINE_AA)
 				return result_name, heatmap_copy, t.get_time(1000), 'D'
 			else:
+				for poly in connected_pairs:
+					if len(poly) > 3:
+						init_point = poly[0]
+						for point in poly:
+							if point is not init_point:
+								cv2.line(src, init_point, point, (0,0,255), 1, cv2.LINE_AA)
 				return result_name, src, t.get_time(1000), 'D'
 		
 		else:
