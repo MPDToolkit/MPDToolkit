@@ -35,6 +35,11 @@ total_time = timer.Timer()
 
 def openFolder(path):
     if __name__ == '__main__':
+        global job_path
+        job_path = path
+
+        global detected_folder
+        global other_folder
         #Check for user error
         if os.path.isfile(path):
             openFile(path)
@@ -57,11 +62,7 @@ def openFolder(path):
                         img_list.append(file)
 
         #Update the global job_path variable
-        global job_path
-        job_path = path
 
-        global detected_folder
-        global other_folder
 
         #Create the output directory if it does not exist
         if not os.path.exists(os.path.join( job_path, detected_folder)):
@@ -150,7 +151,7 @@ def run(img):
     if rx[4] == 'D' or dx[3] == 'D':
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", img_name, run_time, rx_stats) )
         cv.imwrite(os.path.join( detected_folder, img_name + "_detected.jpg"), final_heatmap)
-	
+
     else:
         print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", img_name, run_time, rx_stats) )
         cv.imwrite(os.path.join( other_folder, img_name + "_other.jpg"), final_heatmap)
