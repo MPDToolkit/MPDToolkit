@@ -133,26 +133,21 @@ def run(img):
     rx = RXD(img)
     dx = DebrisDetect(img, rx[1])
 
-
-
-    #Merge Results
-
-
-
     #Print merged results for frontend to read
-
-
+    run_time = rx[2] + dx[2]
+    img_name = rx[0]
+    rx_stats = rx[3]
+    final_heatmap = dx[1]
     #Append run info to the log file
 
-
     #RXD Debug
-    if rx[4] == 'D':
-        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", rx[0], rx[2], rx[3]) )
-        cv.imwrite(os.path.join( detected_folder, rx[0] + "_detected.jpg"), rx[1])
-
+    if rx[4] == 'D' or dx[3] == 'D':
+        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-d-", img_name, run_time, rx_stats) )
+        cv.imwrite(os.path.join( detected_folder, img_name + "_detected.jpg"), final_heatmap)
+	
     else:
-        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", rx[0], rx[2], rx[3]) )
-        cv.imwrite(os.path.join( other_folder, rx[0] + "_other.jpg"), rx[1])
+        print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( "-o-", img_name, run_time, rx_stats) )
+        cv.imwrite(os.path.join( other_folder, img_name + "_other.jpg"), final_heatmap)
 
 
 
@@ -168,7 +163,6 @@ def main():
         except Exception as e:
             print("exception handled in analyze.py: \n")
             print(str(e) + "\n")
-
     return 0
 
 
