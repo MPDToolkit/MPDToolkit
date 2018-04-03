@@ -46,10 +46,16 @@ def openFolder(path):
 
             #Looks in the copy folder and adds the correct file types to the image list
             #This is a case insensitive version
-            for file in glob.glob(os.path.join(copy_folder, '*')):
-                ext = os.path.splitext(file)[-1]
-                if ext.lower() in extensions:
-                    img_list.append(file)
+            if os.path.exists(os.path.join( job_path, copy_folder)):
+                for file in glob.glob(os.path.join(copy_folder, '*')):
+                    ext = os.path.splitext(file)[-1]
+                    if ext.lower() in extensions:
+                        img_list.append(file)
+            else:
+                for file in glob.glob(os.path.join(path, '*')):
+                    ext = os.path.splitext(file)[-1]
+                    if ext.lower() in extensions:
+                        img_list.append(file)
 
         #Update the global job_path variable
         global job_path
