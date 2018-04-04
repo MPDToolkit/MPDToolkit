@@ -36,4 +36,3 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\An
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache
