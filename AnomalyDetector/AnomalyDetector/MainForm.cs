@@ -37,6 +37,8 @@ namespace AnamolyDetector
         public List<string> checked_images = new List<string>();
         public int previousSelectedIndex = 0;
 
+        public bool allow_checked = false;
+
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
@@ -412,22 +414,32 @@ namespace AnamolyDetector
 
         private void checkedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (checkedListBox.GetItemChecked(e.Index))     //User unchecked an image
+            if(allow_checked)
             {
-                checked_images.Remove(checkedListBox.Items[e.Index].ToString());
-                
 
-                //Update the checkbox.ini
-                UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
+                if (checkedListBox.GetItemChecked(e.Index))     //User unchecked an image
+                {
+                    checked_images.Remove(checkedListBox.Items[e.Index].ToString());
+
+
+                    //Update the checkbox.ini
+                    UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
+                }
+                else    //User checked an image
+                {
+                    if (!checked_images.Contains(checkedListBox.Items[e.Index].ToString()))
+                        checked_images.Add(checkedListBox.Items[e.Index].ToString());
+
+                    //Update the checkbox.ini
+                    UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
+                }
             }
-            else    //User checked an image
+            else
             {
-                if(!checked_images.Contains(checkedListBox.Items[e.Index].ToString()))
-                    checked_images.Add(checkedListBox.Items[e.Index].ToString());
-
-                //Update the checkbox.ini
-                UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
+                e.NewValue = e.CurrentValue;
             }
+
+            allow_checked = false;
         }
 
         //===================================================================================================================
@@ -466,5 +478,12 @@ namespace AnamolyDetector
             }
         }
 
+        private void checkedListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Space)
+                allow_checked = true;
+            
+        }
     }
 }
