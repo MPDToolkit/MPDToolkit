@@ -85,7 +85,7 @@
             this.checkedListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 1);
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(173, 548);
-            this.checkedListBox.TabIndex = 2;
+            this.checkedListBox.TabIndex = 1;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             this.checkedListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkedListBox_KeyDown);
@@ -146,6 +146,7 @@
             this.checkBoxNewWindow.Padding = new System.Windows.Forms.Padding(10, 2, 0, 0);
             this.checkBoxNewWindow.Size = new System.Drawing.Size(232, 24);
             this.checkBoxNewWindow.TabIndex = 4;
+            this.checkBoxNewWindow.TabStop = false;
             this.checkBoxNewWindow.Text = "Open in Images New Window";
             this.checkBoxNewWindow.UseVisualStyleBackColor = false;
             this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);

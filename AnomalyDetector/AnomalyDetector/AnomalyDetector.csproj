@@ -58,7 +58,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -127,7 +127,6 @@
     <EmbeddedResource Include="resultDialog.resx">
       <DependentUpon>resultDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AnomalyDetector_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
