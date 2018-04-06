@@ -36,3 +36,16 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\An
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.batchName.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.MainForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.ProcessForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.Properties.Resources.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.GenerateResource.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache

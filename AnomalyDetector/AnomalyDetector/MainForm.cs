@@ -242,6 +242,9 @@ namespace AnamolyDetector
                 previousSelectedIndex = 0;
 
                 selectResultsFolder = results.getSelected();
+
+                this.Text = selectResultsFolder;
+
                 this.loadImages();
 
                 //Allows the user to view a batch folder that is currently being analyzed
@@ -279,6 +282,10 @@ namespace AnamolyDetector
 
             }
         }
+
+        //===================================================================================================================
+        //-------------------------------------------------------------------------------------------------------------------
+        //===================================================================================================================
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {

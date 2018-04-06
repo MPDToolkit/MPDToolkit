@@ -15,31 +15,31 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_07E1E898C4354A40BE75644F6BAE36B3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_496071A112314EA58AE467C580516CBA"
+        "MsmKey" = "8:_393F697A695040FFAFAF61CEA471F23D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F2E197C02B147CDA824A25B91D24CB7"
+        "MsmKey" = "8:_545FB6C154234A2FB5C26F63048ACAC4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6FADB72FAF0E4F1E8068E2F1019A32C1"
+        "MsmKey" = "8:_6E511892A9CD43B7A6D7F9BCE8A5CD3B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_793683F19D6A4774934D85A21B990AE1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,38 +51,44 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8C3DE0A5D44F4846A904E09C5EFA67E4"
+        "MsmKey" = "8:_9AED2DA5208646758DBFAE567FA2B854"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D6ED254EDAC648C085690DD071858E1E"
+        "MsmKey" = "8:_B7C5E2B5B41F434C93A441D7EA4A8AEA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E02C16A423194453A4A628013ABA880E"
+        "MsmKey" = "8:_CCBE638C288549728484A13DEAC01C09"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E991B38257774393A6D008EF12F3315A"
+        "MsmKey" = "8:_EE536C8939D2464C9D7BCF54492B9C89"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_86035EE44569465C510BF323562E21C1"
+        "MsmKey" = "8:_F2AA8FB2D68B454EA0C371AC9201BF37"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_86035EE44569465C510BF323562E21C1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -103,6 +109,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -119,6 +141,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -148,30 +186,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07E1E898C4354A40BE75644F6BAE36B3"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_393F697A695040FFAFAF61CEA471F23D"
             {
-            "SourcePath" = "8:..\\IncludeFiles\\settings.ini"
-            "TargetName" = "8:settings.ini"
-            "Tag" = "8:"
-            "Folder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_496071A112314EA58AE467C580516CBA"
-            {
-            "SourcePath" = "8:..\\IncludeFiles\\RXDetector.py"
-            "TargetName" = "8:RXDetector.py"
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\DXDetector.py"
+            "TargetName" = "8:DXDetector.py"
             "Tag" = "8:"
             "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
             "Condition" = "8:"
@@ -188,9 +206,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F2E197C02B147CDA824A25B91D24CB7"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_545FB6C154234A2FB5C26F63048ACAC4"
             {
-            "SourcePath" = "8:..\\IncludeFiles\\checkPythonPackages.bat"
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\checkPythonVersion.bat"
+            "TargetName" = "8:checkPythonVersion.bat"
+            "Tag" = "8:"
+            "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E511892A9CD43B7A6D7F9BCE8A5CD3B"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\checkPythonPackages.bat"
             "TargetName" = "8:checkPythonPackages.bat"
             "Tag" = "8:"
             "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
@@ -208,9 +246,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FADB72FAF0E4F1E8068E2F1019A32C1"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_793683F19D6A4774934D85A21B990AE1"
             {
-            "SourcePath" = "8:..\\IncludeFiles\\analyze.py"
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\analyze.py"
             "TargetName" = "8:analyze.py"
             "Tag" = "8:"
             "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
@@ -259,72 +297,92 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8C3DE0A5D44F4846A904E09C5EFA67E4"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9AED2DA5208646758DBFAE567FA2B854"
             {
-            "SourcePath" = "8:..\\IncludeFiles\\checkPythonVersion.bat"
-            "TargetName" = "8:checkPythonVersion.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6ED254EDAC648C085690DD071858E1E"
-            {
-            "SourcePath" = "8:..\\IncludeFiles\\DXDetector.py"
-            "TargetName" = "8:DXDetector.py"
-            "Tag" = "8:"
-            "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E02C16A423194453A4A628013ABA880E"
-            {
-            "SourcePath" = "8:..\\IncludeFiles\\installPythonPackages.bat"
-            "TargetName" = "8:installPythonPackages.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E991B38257774393A6D008EF12F3315A"
-            {
-            "SourcePath" = "8:..\\IncludeFiles\\timer.py"
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\timer.py"
             "TargetName" = "8:timer.py"
             "Tag" = "8:"
             "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B7C5E2B5B41F434C93A441D7EA4A8AEA"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\parameters.ini"
+            "TargetName" = "8:parameters.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCBE638C288549728484A13DEAC01C09"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\RXDetector.py"
+            "TargetName" = "8:RXDetector.py"
+            "Tag" = "8:"
+            "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE536C8939D2464C9D7BCF54492B9C89"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\settings.ini"
+            "TargetName" = "8:settings.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F2AA8FB2D68B454EA0C371AC9201BF37"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\installPythonPackages.bat"
+            "TargetName" = "8:installPythonPackages.bat"
+            "Tag" = "8:"
+            "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -354,6 +412,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_857E9E3F60F34857AF4CE107A8AA8A85"
+                    {
+                    "Name" = "8:Anomaly Detector"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_7899C08F77C44470B9C034D53B005990"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_6CE002842CB54BC29B10DCCC58A2F05A"
@@ -429,13 +498,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{7BC83FB0-CCF5-4D92-8EAA-7B050C3867AE}"
+        "PackageCode" = "8:{326BD72A-5531-4222-BA36-AE2FC59F7A9A}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:MPDT"
         "ARPHELPTELEPHONE" = "8:"
@@ -549,9 +618,9 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C08A142243B048E3AE0C9CD6FF12EFCF"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_67B6C72231974C278AB061D90E9A3F3A"
             {
-            "Name" = "8:Anomaly Detector - Shortcut"
+            "Name" = "8:Anomaly Detector"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -559,6 +628,20 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
             "Folder" = "8:_BA591C6FD0974B9BAFFAF7903687F02D"
+            "WorkingFolder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D432678E247C42D19BAD205DF6244D74"
+            {
+            "Name" = "8:Anomaly Detector"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
+            "Folder" = "8:_857E9E3F60F34857AF4CE107A8AA8A85"
             "WorkingFolder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
             "Icon" = "8:"
             "Feature" = "8:"

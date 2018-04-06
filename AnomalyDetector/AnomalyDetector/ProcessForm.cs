@@ -234,15 +234,15 @@ namespace AnamolyDetector
             lblProgressBar.Update();
 
             int num_threads = 1;
-            string pythonArgs = workingDirectory + @"\bin\analyze.py -F " + currentBatch + " -p " + num_threads.ToString();
+            string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
 
             if(currentBatch != null)
             {
                 ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
                 startConfig.UseShellExecute = false;
-                startConfig.RedirectStandardOutput = true;
-                startConfig.RedirectStandardError = true;
-                startConfig.CreateNoWindow = true;
+                startConfig.RedirectStandardOutput = false;
+                startConfig.RedirectStandardError = false;
+                startConfig.CreateNoWindow = false;
 
                 backendProcess = new Process { StartInfo = startConfig };
 
@@ -267,8 +267,8 @@ namespace AnamolyDetector
         {
             //Start the python process
             backendProcess.Start();
-            backendProcess.BeginOutputReadLine();
-            backendProcess.BeginErrorReadLine();
+            //backendProcess.BeginOutputReadLine();
+            //backendProcess.BeginErrorReadLine();
 
             //Updates progress bar 
             while (!backendProcess.HasExited)
