@@ -40,22 +40,22 @@ namespace AnamolyDetector
             InitializeComponent();
 
             workingDirectory = Environment.CurrentDirectory;
-            //batchesDirectory = Path.Combine(workingDirectory, "..\\Batches");     //Use this if we are using an installer
             batchesDirectory = Path.Combine(workingDirectory, "Batches");
 
             pythonPath = settings.PythonPath;
-
         }
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
+        //Computes the next default batch name
         private string getNextBatchName()
         {
             string[] batch_paths = Directory.GetDirectories(batchesDirectory);
             int ct = 0;
 
+            //Finds the latest default batch name
             foreach (string str_path in batch_paths)
             {
                 string str = str_path.Split('\\').Last<string>();
@@ -68,8 +68,7 @@ namespace AnamolyDetector
                     }
                 }
             }
-
-            ct++;
+            ct++;   //Increment default name by 1
 
             return "Batch_" + ct.ToString();
         }
@@ -89,13 +88,14 @@ namespace AnamolyDetector
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
+            //get the next default batch name
             batchName bn = new batchName(getNextBatchName());
+
+            //Prompt user to select a batch name
             if (bn.ShowDialog() == DialogResult.OK)
             {
-                string batchName = bn.getText();
-                
+                string batchName = bn.getText();           
                 currentBatch = batchesDirectory + "\\" + batchName;
-
                 copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
                 detDir = batchesDirectory + "\\" + batchName + "\\Detected";
                 othDir = batchesDirectory + "\\" + batchName + "\\Other";
@@ -103,21 +103,24 @@ namespace AnamolyDetector
                 //Update the window title
                 this.Text = batchName;
 
+                //Setup the file selection window
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
                 openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 openFileDialog1.Filter = "image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png|All files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
                 openFileDialog1.RestoreDirectory = true;
                 openFileDialog1.Multiselect = true;
 
+                //Prompt user to select an image(s)
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
+                    //Number of selected images exceeds the limit performance is guaranteed
                     if (openFileDialog1.FileNames.Length > 1000)
                     {
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;          
                     }
 
+                    //Handles case where batch name already exists
                     int i = 0;
                     if (Directory.Exists(currentBatch))
                     {
@@ -135,10 +138,10 @@ namespace AnamolyDetector
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
-
                     File.Create(currentBatch + @"\batch_log.txt").Close();
                     File.Create(currentBatch + @"\checkbox.ini").Close();
 
+                    //Extracts the valid images from the selected image(s)
                     string path;
                     foreach (string file in openFileDialog1.FileNames)
                     {
@@ -150,6 +153,7 @@ namespace AnamolyDetector
                         }
                     }
 
+                    //Updates labels on the form
                     filesSelected.Text = "Files Selected: " + fileCt;
                     lblProgressBar.Text = "Ready to analyze...";
                     lblProgressBar.Update();
@@ -165,13 +169,14 @@ namespace AnamolyDetector
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
+            //Get the next default batch name
             batchName bn = new batchName(getNextBatchName());
+
+            //Prompt user to select a batch name
             if (bn.ShowDialog() == DialogResult.OK)
             {
-
                 String batchName = bn.getText();
                 currentBatch = batchesDirectory + "\\" + batchName;
-
                 copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
                 detDir = batchesDirectory + "\\" + batchName + "\\Detected";
                 othDir = batchesDirectory + "\\" + batchName + "\\Other";
@@ -179,15 +184,18 @@ namespace AnamolyDetector
                 //Update the window title
                 this.Text = batchName;
 
+                //Prompt user to select a directory of images
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
                     String[] FileNames = Directory.GetFiles(folderBrowserDialog1.SelectedPath);
 
+                    //Number of selected images exceeds the limit performance is guaranteed
                     if (FileNames.Length > 1000)
                     {
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
                     }
 
+                    //Handles case where batch name already exists
                     int i = 0;
                     if (Directory.Exists(currentBatch))
                     {
@@ -204,10 +212,10 @@ namespace AnamolyDetector
                     Directory.CreateDirectory(copyDir);
                     Directory.CreateDirectory(detDir);
                     Directory.CreateDirectory(othDir);
-
                     File.Create(currentBatch + @"\batch_log.txt").Close();
                     File.Create(currentBatch + @"\checkbox.ini").Close();
 
+                    //Extracts the valid images from the selected image(s)
                     string path;
                     foreach (string file in FileNames)
                     {
@@ -279,26 +287,26 @@ namespace AnamolyDetector
             backendProcess.BeginOutputReadLine();
             backendProcess.BeginErrorReadLine();
 
+            //Wait for backend to finish, then clean up
             backendProcess.WaitForExit();
-            backendProcess.Dispose();
-            
+            backendProcess.Dispose();       
         }
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
-        // this code updates the status while a background thread works
+        //Update progress of the backend
         private delegate void Change(string status, int complete, int total);
         private void OnChange(string status, int complete, int total)
         {
-                
+            //Update progress form based on the given conditions        
             if (!string.IsNullOrEmpty(status))
             {
                 string[] opt = status.Split(' ');
                 switch (opt[0])
                 {
-                    case "-i-":
+                    case "-i-":     //Initialization of backend completed
                         {
                             progressBar1.Visible = true;
                             progressBar1.Minimum = 0;
@@ -309,7 +317,7 @@ namespace AnamolyDetector
                             break;
                         }
 
-                    case "-d-":
+                    case "-d-":     //Image flagged as detected
                         {
                             completed_files_ct++;
                             progressBar1.Visible = true;
@@ -322,7 +330,7 @@ namespace AnamolyDetector
                             break;
                         }
 
-                    case "-o-":
+                    case "-o-":     //Image flagged as other
                         {
                             completed_files_ct++;
                             progressBar1.Visible = true;
@@ -336,19 +344,19 @@ namespace AnamolyDetector
                             break;
                         }
 
-                    case "-f-":
+                    case "-f-":     //Backend has finished
                         {
                             lblProgressBar.Text = "Finished...";
                             break;
                         }
 
-                    case "-e-":
+                    case "-e-":     //An error in the backend has occurred
                         {
                             lblProgressBar.Text = "Error Detected...";
                             break;
                         }
 
-                    default:
+                    default:        //Backend has printed something unexpected/multiple print statements following an above case
                         {
                             //infoLog.Text += "An unexpected string has been detected...";
                             break;
@@ -357,7 +365,6 @@ namespace AnamolyDetector
 
                 //Update infoLog
                 //infoLog.Text = infoLogStr;
-                //infoLog.Text += "\r\n" + status;
                 infoLog.AppendText(status + "\r\n");
             }
            
