@@ -32,6 +32,36 @@ total_time = timer.Timer()
 
 
 #--------------------------------------------------------------------------------------------------------
+#Outputs backend stsatus to the frontend
+def status(flag, in_str=None):
+
+    if flag is None or in_str is None:
+        return
+
+    if flag == '-i-':	#Initialization
+        print("{0} {1}".format( flag, in_str ))
+
+    if flag == '-d-':	#Detected
+        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+
+    if flag == '-o-':	#Other
+        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+
+
+    if flag == '-f-':   #Finished
+        print('-f- Finished Image Analysis...\n')
+        print("\n{0} image(s) analyzed\n".format( in_str[1] ))
+        print("Average elapsed time: {0:.3f} ms".format( (in_str[0] * 1000) / in_str[1] ) )
+        print("Total elapsed time: {0:.3f} sec\n".format( in_str[0] ) )
+
+    if flag == '-e-':	#Error
+        print('-e- ')
+        print("Exception occurred in analyze.py: \n")
+        print( in_str + "\n")
+
+    sys.stdout.flush()
+
+#--------------------------------------------------------------------------------------------------------
 
 def openFolder(path):
     #if __name__ == '__main__':
@@ -78,6 +108,8 @@ def openFolder(path):
         #Analyze the images
         args = parser.parse_args()
         total_time.start()
+        status('-i-', 'Initialization completed')
+        status('-i-', 'Beginning Image Analysis...')
 
     if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.
         if int(args.procNum) > 1:
@@ -90,7 +122,9 @@ def openFolder(path):
     if __name__ == '__main__':
         total_time.stop()
 
-    #if __name__ == '__main__':    #Replace with writing to log file
+    if __name__ == '__main__':    #Replace with writing to log file
+        status('-f-', [ total_time.get_time(), len(img_list) ] )
+		
         #Display time
         #print("\n{0} image(s) analyzed\n".format(len(img_list)))
         #print("Average elapsed time: {0:.3f} ms".format( total_time.get_time(1000) / len(img_list) ) )
@@ -146,17 +180,22 @@ def run(img):
     final_heatmap = dx[1]
     #Append run info to the log file
 
+
     #RXD Debug
     if rx[4] == 'D' or dx[3] == 'D':
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-d-", img_name, run_time, rx_stats) )
-        print(os.path.join( detected_folder, img_name + ".jpg"))
-        sys.stdout.flush()
+        #print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-d-", img_name, run_time, rx_stats) )
+        #sys.stdout.flush()
+        results_str = [ rx[0], rx[2] + dx[2], rx[3] ]
+        status('-d-', results_str)
+
         cv.imwrite(os.path.join( detected_folder, img_name + ".jpg"), final_heatmap)
 
     else:
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-o-", img_name, run_time, rx_stats) )
-        print(os.path.join( other_folder, img_name + ".jpg"))
-        sys.stdout.flush()
+        #print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-o-", img_name, run_time, rx_stats) )
+        #sys.stdout.flush()
+        results_str = [ rx[0], rx[2] + dx[2], rx[3] ]
+        status( '-o-', results_str)
+
         cv.imwrite(os.path.join( other_folder, img_name + ".jpg"), final_heatmap)
 
 
@@ -171,8 +210,9 @@ def main():
     try:
         readArgs(sys.argv)
     except Exception as e:
-        print("exception handled in analyze.py: \n")
-        print(str(e) + "\n")
+        #print("exception handled in analyze.py: \n")
+        #print(str(e) + "\n")
+        status('-e-', str(e) )
     return 0
 
 

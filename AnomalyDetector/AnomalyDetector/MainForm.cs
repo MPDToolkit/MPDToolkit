@@ -26,18 +26,32 @@ namespace AnamolyDetector
         public bool NewImageWindow;
     }
 
+    //Global Parameters
+    public struct Parameters
+    {
+
+    }
+
+
 
     public partial class MainForm : Form
     {
+        //Settings
         public Settings settings = new Settings();     //Values read from the 'settings.ini'
         public string settingsPath = @"settings.ini";
 
+        //Parameters
+
+
+        //Result viewing variables
         public string selectResultsFolder = "";
         public List<String> currentImages = new List<String>();
         public List<string> checked_images = new List<string>();
         public int previousSelectedIndex = 0;
-
         public bool allow_checked = false;
+
+        public Process proc_img1;
+        public Process proc_img2;
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
@@ -50,7 +64,7 @@ namespace AnamolyDetector
             //Read settings.ini
             ReadSettings();
 
-            if(settings.RunPOST) POST();
+            if(settings.RunPOST) POST();    //Should be redundant given the new installer
 
             //Update settings.ini
             UpdateSettings();
@@ -73,6 +87,9 @@ namespace AnamolyDetector
                     case "FirstRun":
                         {
                             settings.FirstRun = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : true;
+
+                            //TODO***RESET ALL PATH STRINGS
+
                             break;
                         }
 
@@ -134,7 +151,7 @@ namespace AnamolyDetector
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------Update Settings File------------------------------------------------
         //===================================================================================================================
 
         //Update the settings.ini
@@ -153,7 +170,7 @@ namespace AnamolyDetector
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------Read Checkbox File--------------------------------------------------
         //===================================================================================================================
 
         //Reads the checkbox.ini found in each batch folder
@@ -164,7 +181,7 @@ namespace AnamolyDetector
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------Update Checkbox File-------------------------------------------------
         //===================================================================================================================
 
         //Updates the checkbox.ini found in each batch folder
@@ -174,7 +191,7 @@ namespace AnamolyDetector
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------POST----------------------------------------------------------
         //===================================================================================================================
 
         //Power On Self Test
@@ -221,6 +238,42 @@ namespace AnamolyDetector
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
+        private void displayImages()
+        {
+            //Display initial image in list
+            if (!settings.NewImageWindow)
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                    pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                    pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+
+                pictureBox1.Update();
+                pictureBox2.Update();
+
+            }
+            else
+            {
+                //find image with selected checkbox item and show it in pictureBoxes 
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
+                {
+                    Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
+                }
+
+                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
+                {
+                    Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
+                }
+            }
+
+        }
+
+        //===================================================================================================================
+        //-------------------------------------------------Analysis Btn Click------------------------------------------------
+        //===================================================================================================================
+
         private void menuBtnNewAnalysis_Click(object sender, EventArgs e)
         {
             ProcessForm proc_form = new ProcessForm(settings);
@@ -228,7 +281,7 @@ namespace AnamolyDetector
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------Results Btn Click-------------------------------------------------
         //===================================================================================================================
 
         private void menuBtnSelectResults_Click(object sender, EventArgs e)
@@ -245,8 +298,10 @@ namespace AnamolyDetector
 
                 selectResultsFolder = results.getSelected();
 
+                //Update form title to the path of the batch being viewed
                 this.Text = selectResultsFolder;
 
+                //Load the detected images
                 this.loadImages();
 
                 //Allows the user to view a batch folder that is currently being analyzed
@@ -256,32 +311,9 @@ namespace AnamolyDetector
                 //watcher.Created += Watcher_Created;
                 watcher.Changed += Watcher_Changed;
 
-
-                //Display initial image in list
-                if (!settings.NewImageWindow)
-                {
-                    //find image with selected checkbox item and show it in pictureBoxes 
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                        pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
-
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                        pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
-                }
-                else
-                {
-                    //find image with selected checkbox item and show it in pictureBoxes 
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                    {
-                        Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
-                    }
-
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                    {
-                        Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
-                    }
-
-                }
-
+                //Display currently selected images
+                displayImages();
+                
             }
         }
 
@@ -309,44 +341,21 @@ namespace AnamolyDetector
 
         
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------Selected Index Changed-------------------------------------------------
         //===================================================================================================================
 
         private void checkedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(previousSelectedIndex != checkedListBox.SelectedIndex)   //Prevents multiple images from being open when checking an image that is currently selected
+            //Prevents multiple images from being open when checking an image that is currently selected
+            if (previousSelectedIndex != checkedListBox.SelectedIndex)
             {
                 previousSelectedIndex = checkedListBox.SelectedIndex;
-
-                if (!settings.NewImageWindow)
-                {
-                    //find image with selected checkbox item and show it in pictureBoxes 
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                        pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
-
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                        pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
-                }
-                else
-                {
-                    //find image with selected checkbox item and show it in pictureBoxes 
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                    {
-                        Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
-                    }
-
-                    if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                    {
-                        Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
-                    }
-
-                }
-            }    
-                
+                displayImages();
+            }           
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------Check Images----------------------------------------------------
         //===================================================================================================================
 
         private bool checkImages(string image, int val)
@@ -355,11 +364,12 @@ namespace AnamolyDetector
                 return (File.Exists(Path.Combine(selectResultsFolder, "Copy", image)));
             if(val == 1)
                 return (File.Exists(Path.Combine(selectResultsFolder, "Detected", image)));
+
             return false;
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------Load Images-----------------------------------------------------
         //===================================================================================================================
 
         private void loadImages()
@@ -370,10 +380,12 @@ namespace AnamolyDetector
             String combined = System.IO.Path.Combine(selectResultsFolder, "Detected");
             string[] temp = Directory.GetFiles(combined);
 
+            //Reset current images and checkbox
             currentImages.Clear();
             checkedListBox.Items.Clear();
 
-            for (int i = 0; i < temp.Length; i++)  //Ensure images have results and are of right format
+            //Ensure images have results and are of right format
+            for (int i = 0; i < temp.Length; i++)  
                  if (temp[i].ToLower().EndsWith(".jpg") || temp[i].EndsWith(".jpeg") || temp[i].EndsWith(".png"))
                     currentImages.Add(Path.GetFileName(temp[i]));
             
@@ -384,10 +396,12 @@ namespace AnamolyDetector
                 //Checks previously checked images
                 if (checked_images.Contains(checkedListBox.Items[i].ToString()))
                 {
+                    allow_checked = true;   //Give permission to check image box
                     checkedListBox.SetItemChecked(i, true);
                 }
             }
 
+            //Set the initially selected index
             if (checkedListBox.Items.Count > 0)
             {
                 if (settings.NewImageWindow)
@@ -414,18 +428,20 @@ namespace AnamolyDetector
 
         private void checkedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            //Check permission
             if(allow_checked)
             {
-
-                if (checkedListBox.GetItemChecked(e.Index))     //User unchecked an image
+                //User unchecked an image
+                if (checkedListBox.GetItemChecked(e.Index))     
                 {
                     checked_images.Remove(checkedListBox.Items[e.Index].ToString());
-
 
                     //Update the checkbox.ini
                     UpdateCheckbox(selectResultsFolder, checked_images.ToArray());
                 }
-                else    //User checked an image
+
+                //User checked an image
+                else
                 {
                     if (!checked_images.Contains(checkedListBox.Items[e.Index].ToString()))
                         checked_images.Add(checkedListBox.Items[e.Index].ToString());
@@ -436,14 +452,16 @@ namespace AnamolyDetector
             }
             else
             {
+                //Revert checkbox state if permission was denied
                 e.NewValue = e.CurrentValue;
             }
 
+            //Revoke permission
             allow_checked = false;
         }
 
         //===================================================================================================================
-        //-------------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------New Window Checked Changed-------------------------------------------
         //===================================================================================================================
 
         private void checkBoxNewWindow_CheckedChanged(object sender, EventArgs e)
@@ -451,39 +469,18 @@ namespace AnamolyDetector
             settings.NewImageWindow = checkBoxNewWindow.Checked;
             UpdateSettings();
 
-            if (!settings.NewImageWindow)
-            {
-                //find image with selected checkbox item and show it in pictureBoxes 
-                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                    pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
-
-                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                    pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
-            }
-            else
-            {
-                //find image with selected checkbox item and show it in pictureBoxes 
-                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
-                {
-                    //pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
-                    Process.Start(Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString()));
-                }
-
-                if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
-                {
-                    //pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
-                    Process.Start(Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString()));
-                }
-
-            }
+            displayImages();
+            checkedListBox.Focus();     //Set focus back to the checkbox
         }
+
+        //===================================================================================================================
+        //-------------------------------------------------------------------------------------------------------------------
+        //===================================================================================================================
 
         private void checkedListBox_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Space)
-                allow_checked = true;
-            
+                allow_checked = true;   
         }
     }
 }

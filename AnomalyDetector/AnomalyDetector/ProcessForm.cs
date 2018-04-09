@@ -78,6 +78,15 @@ namespace AnamolyDetector
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
+        private void createDirectories()
+        {
+
+        }
+
+        //===================================================================================================================
+        //-------------------------------------------------------------------------------------------------------------------
+        //===================================================================================================================
+
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
             batchName bn = new batchName(getNextBatchName());
@@ -230,7 +239,7 @@ namespace AnamolyDetector
             btnAnalyze.Enabled = false;
 
             //Inform user that images are being analyzed
-            lblProgressBar.Text = "Analyzing...";
+            lblProgressBar.Text = "Initializing...";
             lblProgressBar.Update();
 
             int num_threads = 1;
@@ -240,16 +249,16 @@ namespace AnamolyDetector
             {
                 ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
                 startConfig.UseShellExecute = false;
-                startConfig.RedirectStandardOutput = false;
-                startConfig.RedirectStandardError = false;
-                startConfig.CreateNoWindow = false;
+                startConfig.RedirectStandardOutput = true;
+                startConfig.RedirectStandardError = true;
+                startConfig.CreateNoWindow = true;
 
                 backendProcess = new Process { StartInfo = startConfig };
 
                 //Create output handlers
                 backendProcess.OutputDataReceived += redirectHandler;
                 backendProcess.ErrorDataReceived += redirectHandler;
-                //backendProcess.EnableRaisingEvents = true;
+                backendProcess.EnableRaisingEvents = true;
 
                 //Create a background thread for the progress bar 
                 BackgroundWorker worker = new BackgroundWorker();
@@ -267,41 +276,11 @@ namespace AnamolyDetector
         {
             //Start the python process
             backendProcess.Start();
-            //backendProcess.BeginOutputReadLine();
-            //backendProcess.BeginErrorReadLine();
+            backendProcess.BeginOutputReadLine();
+            backendProcess.BeginErrorReadLine();
 
-            //Updates progress bar 
-            while (!backendProcess.HasExited)
-            {
-                try
-                {
-                    if (InvokeRequired)
-                    {
-                        Invoke(new Change(OnChange), "Analyzing...", completed_files_ct, fileCt);
-                    }
-
-                    //Wait a bit to reduce cpu load
-                    Thread.Sleep(100);
-                }
-                catch
-                {
-                    Console.Out.WriteLine("Error");
-                    return;
-                }
-                
-            }
-
-            //Finalize the progress bar and percentage
-            try
-            {
-                Invoke(new Change(OnChange), null, completed_files_ct, fileCt);
-            }
-            catch
-            {
-                Console.Out.WriteLine("Error");
-                return;
-            }
-            
+            backendProcess.WaitForExit();
+            backendProcess.Dispose();
             
         }
 
@@ -313,27 +292,75 @@ namespace AnamolyDetector
         private delegate void Change(string status, int complete, int total);
         private void OnChange(string status, int complete, int total)
         {
-            if (status == null)
-            {
                 
-                lblProgressBar.Text = "Finished...";
-                //progressBar1.Visible = false;
-                //progressBar1.Value = 0;
-            }
-            else
+            if (!string.IsNullOrEmpty(status))
             {
-                progressBar1.Visible = true;
-                progressBar1.Minimum = 0;
-                //progressBar1.Maximum = total;
-                progressBar1.Value = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100);
-                progressBar1.Update();
-                lblPercent.Text = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100).ToString() + " %";
-                lblProgressBar.Text = status;
+                string[] opt = status.Split(' ');
+                switch (opt[0])
+                {
+                    case "-i-":
+                        {
+                            progressBar1.Visible = true;
+                            progressBar1.Minimum = 0;
+                            progressBar1.Value = 0;
+                            progressBar1.Update();
+                            lblPercent.Text = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100).ToString() + " %";
+                            lblProgressBar.Text = "Analyzing...";
+                            break;
+                        }
+
+                    case "-d-":
+                        {
+                            completed_files_ct++;
+                            progressBar1.Visible = true;
+                            progressBar1.Minimum = 0;
+                            //progressBar1.Maximum = total;
+                            progressBar1.Value = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100);
+                            progressBar1.Update();
+                            lblPercent.Text = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100).ToString() + " %";
+                            lblProgressBar.Text = "Analyzing...";
+                            break;
+                        }
+
+                    case "-o-":
+                        {
+                            completed_files_ct++;
+                            progressBar1.Visible = true;
+                            progressBar1.Minimum = 0;
+                            //progressBar1.Maximum = total;
+                            progressBar1.Value = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100);
+                            progressBar1.Update();
+                            lblPercent.Text = Convert.ToInt32(((double)completed_files_ct / (double)fileCt) * 100).ToString() + " %";
+                            lblProgressBar.Text = "Analyzing...";
+
+                            break;
+                        }
+
+                    case "-f-":
+                        {
+                            lblProgressBar.Text = "Finished...";
+                            break;
+                        }
+
+                    case "-e-":
+                        {
+                            lblProgressBar.Text = "Error Detected...";
+                            break;
+                        }
+
+                    default:
+                        {
+                            //infoLog.Text += "An unexpected string has been detected...";
+                            break;
+                        }
+                }
 
                 //Update infoLog
-                infoLog.Text = infoLogStr;
-
+                //infoLog.Text = infoLogStr;
+                //infoLog.Text += "\r\n" + status;
+                infoLog.AppendText(status + "\r\n");
             }
+           
         }
 
         //===================================================================================================================
@@ -345,8 +372,8 @@ namespace AnamolyDetector
             // Collect the sort command output. 
             if (!string.IsNullOrEmpty(line.Data))
             {
-                completed_files_ct++;
                 infoLogStr += line.Data + "\r\n";
+                Invoke(new Change(OnChange), line.Data, completed_files_ct, fileCt);
             }
         }
 

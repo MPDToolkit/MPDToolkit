@@ -149,6 +149,7 @@
   <ItemGroup>
     <Content Include="Resources\analyze.py" />
     <Content Include="Resources\DXDetector.py" />
+    <None Include="Resources\installPythonPackages.vbs" />
     <Content Include="Resources\RXDetector.py" />
     <Content Include="Resources\timer.py" />
   </ItemGroup>
