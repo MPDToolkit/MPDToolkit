@@ -1,4 +1,4 @@
-﻿namespace AnamolyDetector
+﻿namespace AnomalyDetector
 {
     partial class ProcessForm
     {

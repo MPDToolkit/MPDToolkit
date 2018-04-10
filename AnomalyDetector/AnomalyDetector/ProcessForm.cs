@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace AnamolyDetector
+namespace AnomalyDetector
 {
 
 

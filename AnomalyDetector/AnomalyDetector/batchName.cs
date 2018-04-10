@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AnamolyDetector
+namespace AnomalyDetector
 {
     public partial class batchName : Form
     {

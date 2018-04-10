@@ -92,6 +92,12 @@
     <Compile Include="ParametersForm.Designer.cs">
       <DependentUpon>ParametersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PythonCheckForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PythonCheckForm.Designer.cs">
+      <DependentUpon>PythonCheckForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="resultDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PythonCheckForm.resx">
+      <DependentUpon>PythonCheckForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="resultDialog.resx">
       <DependentUpon>resultDialog.cs</DependentUpon>
     </EmbeddedResource>
