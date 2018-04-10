@@ -33,3 +33,6 @@
 
 #pycache files
 *.pyc
+
+#Visual studio BULLSHIT
+.vs/*
