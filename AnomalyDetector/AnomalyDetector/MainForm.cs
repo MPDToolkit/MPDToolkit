@@ -103,13 +103,10 @@ namespace AnomalyDetector
                         {
                             settings.PythonPath = opt[1];
                            
-                            if (string.IsNullOrEmpty(settings.PythonPath))
+                            if (string.IsNullOrEmpty(settings.PythonPath) || !File.Exists(settings.PythonPath))
                             {
-                                //Check the default python3 install location
-                                if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python36\python.exe")))
-                                {
-                                    settings.PythonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python36\python.exe");
-                                }
+                                settings.FirstRun = true;
+                                
                             }
                             break;
                         }
@@ -197,9 +194,14 @@ namespace AnomalyDetector
         //Power On Self Test
         private void POST()
         {
+            //Disable button while the program checks for python
+            menuBtnNewAnalysis.Enabled = false;
+
             PythonCheckForm py = new PythonCheckForm(settings);
             py.ShowDialog();
+            settings = py.GetSettings();
 
+            //Test if python is installed
             if (py.DialogResult == DialogResult.No)
             {
                 menuBtnNewAnalysis.Enabled = false;
@@ -207,8 +209,10 @@ namespace AnomalyDetector
             }
             else
             {
+                menuBtnNewAnalysis.Enabled = true;
                 settings.FirstRun = false;
             }
+           
             UpdateSettings();
         }
 
