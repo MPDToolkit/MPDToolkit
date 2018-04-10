@@ -524,13 +524,6 @@
         }
         "LaunchCondition"
         {
-            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_48E768118C5B45E1A629519765D46C43"
-            {
-            "Name" = "8:Python"
-            "Condition" = "8:LOCAL64 == null AND LOCAL32 == null AND GLOBAL64 ==null AND GLOBAL32 == null"
-            "Message" = "8:Python 3.6.4 must be installed on the system. Would you like to download and install python at this time?"
-            "InstallUrl" = "8:https://www.python.org/downloads/release/python-364/"
-            }
         }
         "Locator"
         {
@@ -605,7 +598,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{E79AC540-DA44-4444-8BCB-905A3B80437F}"
+        "PackageCode" = "8:{4F1CD7F6-624B-4099-8140-4305261B8B62}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -1154,7 +1147,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B94A19D2B1E4001BA70800E8ACD0795"
             {
-            "SourcePath" = "8:..\\AnomalyDetector\\obj\\Debug\\AnomalyDetector.exe"
+            "SourcePath" = "8:..\\AnomalyDetector\\obj\\Release\\AnomalyDetector.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"

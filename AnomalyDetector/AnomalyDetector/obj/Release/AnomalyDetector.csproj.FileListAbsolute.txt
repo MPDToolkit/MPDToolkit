@@ -23,3 +23,4 @@ F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\An
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.csproj.CoreCompileInputs.cache
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.exe
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.pdb
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.ParametersForm.resources
