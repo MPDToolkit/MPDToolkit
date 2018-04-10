@@ -63,6 +63,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BC3061214C0245A9B03CD719901283AC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CCBE638C288549728484A13DEAC01C09"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -163,6 +169,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_68E613A05DF34886A4A879D770E732B7"
+            {
+            "Name" = "8:installPythonPackages.vbs"
+            "Condition" = "8:"
+            "Object" = "8:_BC3061214C0245A9B03CD719901283AC"
+            "FileType" = "3:4"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_11184552_E31D_45E7_8BEC_CBE327C7A141"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -337,6 +357,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BC3061214C0245A9B03CD719901283AC"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\installPythonPackages.vbs"
+            "TargetName" = "8:installPythonPackages.vbs"
+            "Tag" = "8:"
+            "Folder" = "8:_5643BD2CE245434EB5DC936C0BCB8AC9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCBE638C288549728484A13DEAC01C09"
             {
             "SourcePath" = "8:..\\AnomalyDetector\\Resources\\RXDetector.py"
@@ -484,9 +524,76 @@
         }
         "LaunchCondition"
         {
+            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_48E768118C5B45E1A629519765D46C43"
+            {
+            "Name" = "8:Python"
+            "Condition" = "8:LOCAL64 == null AND LOCAL32 == null AND GLOBAL64 ==null AND GLOBAL32 == null"
+            "Message" = "8:Python 3.6.4 must be installed on the system. Would you like to download and install python at this time?"
+            "InstallUrl" = "8:https://www.python.org/downloads/release/python-364/"
+            }
         }
         "Locator"
         {
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_762EFD827A67439A82FB8933668E3CD5"
+            {
+            "Name" = "8:Local32"
+            "Folder" = "8:%LocalAppData%\\Programs\\Python36-32"
+            "Depth" = "2:0"
+            "FileName" = "8:python.exe"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:LOCAL32"
+            }
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_B0642D21374F40459368FEAB1DE82BEE"
+            {
+            "Name" = "8:Global32"
+            "Folder" = "8:%ProgramFiles(x86)%\\Python 3.6"
+            "Depth" = "2:0"
+            "FileName" = "8:python.exe"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:GLOBAL32"
+            }
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_B3EF1E60C6EC4B9BB3BEC2FB5ED6D30F"
+            {
+            "Name" = "8:Local64"
+            "Folder" = "8:%LocalAppData%\\Programs\\Python36"
+            "Depth" = "2:0"
+            "FileName" = "8:python.exe"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:LOCAL64"
+            }
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_E156669FC8BD4016B747D7AA59692677"
+            {
+            "Name" = "8:Global64"
+            "Folder" = "8:%ProgramFiles%\\Python 3.6"
+            "Depth" = "2:0"
+            "FileName" = "8:python.exe"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:GLOBAL64"
+            }
         }
         "MsiBootstrapper"
         {
@@ -498,7 +605,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{326BD72A-5531-4222-BA36-AE2FC59F7A9A}"
+        "PackageCode" = "8:{E79AC540-DA44-4444-8BCB-905A3B80437F}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"

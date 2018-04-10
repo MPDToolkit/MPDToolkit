@@ -40,10 +40,11 @@
             // 
             // btnAnalyze
             // 
+            this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAnalyze.BackColor = System.Drawing.Color.LightGray;
             this.btnAnalyze.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAnalyze.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.btnAnalyze.Location = new System.Drawing.Point(436, 155);
+            this.btnAnalyze.Location = new System.Drawing.Point(432, 167);
             this.btnAnalyze.Margin = new System.Windows.Forms.Padding(2);
             this.btnAnalyze.Name = "btnAnalyze";
             this.btnAnalyze.Size = new System.Drawing.Size(114, 33);
@@ -94,16 +95,19 @@
             // 
             // progressBar1
             // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.progressBar1.Location = new System.Drawing.Point(16, 98);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(530, 20);
+            this.progressBar1.Size = new System.Drawing.Size(530, 31);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 5;
             // 
             // lblPercent
             // 
+            this.lblPercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPercent.AutoSize = true;
             this.lblPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.lblPercent.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -116,6 +120,7 @@
             // 
             // filesSelected
             // 
+            this.filesSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.filesSelected.AutoSize = true;
             this.filesSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.filesSelected.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -128,13 +133,16 @@
             // 
             // infoLog
             // 
+            this.infoLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.infoLog.BackColor = System.Drawing.Color.LightGray;
-            this.infoLog.Location = new System.Drawing.Point(16, 134);
+            this.infoLog.Location = new System.Drawing.Point(16, 144);
             this.infoLog.Multiline = true;
             this.infoLog.Name = "infoLog";
             this.infoLog.ReadOnly = true;
             this.infoLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infoLog.Size = new System.Drawing.Size(398, 53);
+            this.infoLog.Size = new System.Drawing.Size(398, 80);
             this.infoLog.TabIndex = 8;
             this.infoLog.TabStop = false;
             // 
@@ -143,7 +151,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(564, 199);
+            this.ClientSize = new System.Drawing.Size(564, 236);
             this.Controls.Add(this.infoLog);
             this.Controls.Add(this.filesSelected);
             this.Controls.Add(this.lblPercent);
@@ -153,7 +161,7 @@
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.btnAnalyze);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(580, 238);
+            this.MinimumSize = new System.Drawing.Size(580, 275);
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProcessForm";
