@@ -32,65 +32,99 @@ total_time = timer.Timer()
 
 
 #--------------------------------------------------------------------------------------------------------
+#Outputs backend stsatus to the frontend
+def status(flag, in_str=None):
+
+    if flag is None or in_str is None:
+        return
+
+    if flag == '-i-':	#Initialization
+        print("{0} {1}".format( flag, in_str ))
+
+    if flag == '-d-':	#Detected
+        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+
+    if flag == '-o-':	#Other
+        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+
+
+    if flag == '-f-':   #Finished
+        print('-f- Finished Image Analysis...\n')
+        print("\n{0} image(s) analyzed\n".format( in_str[1] ))
+        print("Average elapsed time: {0:.3f} ms".format( (in_str[0] * 1000) / in_str[1] ) )
+        print("Total elapsed time: {0:.3f} sec\n".format( in_str[0] ) )
+
+    if flag == '-e-':	#Error
+        print('-e- ')
+        print("Exception occurred in analyze.py: \n")
+        print( in_str + "\n")
+
+    sys.stdout.flush()
+
+#--------------------------------------------------------------------------------------------------------
 
 def openFolder(path):
-    if __name__ == '__main__':
-        global job_path
-        job_path = path
+    #if __name__ == '__main__':
+    global job_path
+    job_path = path
 
-        #Check for user error
-        if os.path.isfile(path):
-            openFile(path)
-            return
+    #Check for user error
+    if os.path.isfile(path):
+        openFile(path)
+        return
+    else:
+        global copy_folder
+        copy_folder = os.path.join( path, copy_folder)
+
+        #Looks in the copy folder and adds the correct file types to the image list
+        #This is a case insensitive version
+        if os.path.exists(copy_folder):
+            for file in glob.glob(os.path.join(copy_folder, '*')):
+                ext = os.path.splitext(file)[-1]
+                if ext.lower() in extensions:
+                    img_list.append(file)
         else:
-            global copy_folder
-            copy_folder = os.path.join( path, copy_folder)
+            for file in glob.glob(os.path.join(path, '*')):
+                ext = os.path.splitext(file)[-1]
+                if ext.lower() in extensions:
+                    img_list.append(file)
 
-            #Looks in the copy folder and adds the correct file types to the image list
-            #This is a case insensitive version
-            if os.path.exists(copy_folder):
-                for file in glob.glob(os.path.join(copy_folder, '*')):
-                    ext = os.path.splitext(file)[-1]
-                    if ext.lower() in extensions:
-                        img_list.append(file)
-            else:
-                for file in glob.glob(os.path.join(path, '*')):
-                    ext = os.path.splitext(file)[-1]
-                    if ext.lower() in extensions:
-                        img_list.append(file)
+    #Update the global job_path variable
+    global detected_folder
+    global other_folder
 
-        #Update the global job_path variable
-        global detected_folder
-        global other_folder
+    #Create the output directory if it does not exist
+    if not os.path.exists(os.path.join( job_path, detected_folder)):
+        os.makedirs(os.path.join( job_path, detected_folder))
 
-        #Create the output directory if it does not exist
-        if not os.path.exists(os.path.join( job_path, detected_folder)):
-            os.makedirs(os.path.join( job_path, detected_folder))
+    if not os.path.exists(os.path.join( job_path, other_folder)):
+        os.makedirs(os.path.join( job_path, other_folder))
 
-        if not os.path.exists(os.path.join( job_path, other_folder)):
-            os.makedirs(os.path.join( job_path, other_folder))
+    detected_folder = os.path.join( job_path, detected_folder)
+    other_folder = os.path.join( job_path, other_folder)
 
-        detected_folder = os.path.join( job_path, detected_folder)
-        other_folder = os.path.join( job_path, other_folder)
 
+    if __name__ == '__main__':
         #Analyze the images
         args = parser.parse_args()
-
-    if __name__ == '__main__':
         total_time.start()
+        status('-i-', 'Initialization completed')
+        status('-i-', 'Beginning Image Analysis...')
 
-    if int(args.procNum) > 1:
-        if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.
+    if __name__ == '__main__':  #In Windows you need to protect the thread creation froms each child thread. If not done, each child thread will create subthreads.
+        if int(args.procNum) > 1:
             with Pool(int(args.procNum)) as p:
                 p.map(run, img_list)
-    else:
-        for i in range(0, len(img_list)):
-            run(img_list[i])
+        else:
+            for i in range(0, len(img_list)):
+                run(img_list[i])
 
     if __name__ == '__main__':
         total_time.stop()
 
-    #if __name__ == '__main__':    #Replace with writing to log file
+    if __name__ == '__main__':    #Replace with writing to log file
+        status('-f-', [ total_time.get_time(), len(img_list) ] )
+		
         #Display time
         #print("\n{0} image(s) analyzed\n".format(len(img_list)))
         #print("Average elapsed time: {0:.3f} ms".format( total_time.get_time(1000) / len(img_list) ) )
@@ -118,17 +152,17 @@ def openFile(path):
 #--------------------------------------------------------------------------------------------------------
 
 def readArgs(args):
-    if __name__ == '__main__':
-        parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
-        parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
-        parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
-        parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
+    #if __name__ == '__main__':
+    parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
+    parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
+    parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
+    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
 
-        args = parser.parse_args()
-        if args.folderPath != None:
-            openFolder(args.folderPath)
-        elif args.filePath != None:
-            openFile(args.filePath)
+    args = parser.parse_args()
+    if args.folderPath != None:
+        openFolder(args.folderPath)
+    elif args.filePath != None:
+        openFile(args.filePath)
 
 #--------------------------------------------------------------------------------------------------------
 
@@ -146,15 +180,22 @@ def run(img):
     final_heatmap = dx[1]
     #Append run info to the log file
 
+
     #RXD Debug
     if rx[4] == 'D' or dx[3] == 'D':
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-d-", img_name, run_time, rx_stats) )
-        sys.stdout.flush()
+        #print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-d-", img_name, run_time, rx_stats) )
+        #sys.stdout.flush()
+        results_str = [ rx[0], rx[2] + dx[2], rx[3] ]
+        status('-d-', results_str)
+
         cv.imwrite(os.path.join( detected_folder, img_name + ".jpg"), final_heatmap)
 
     else:
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-o-", img_name, run_time, rx_stats) )
-        sys.stdout.flush()
+        #print("{0} {1} {2:.3f}ms {3:.6f}%".format( "-o-", img_name, run_time, rx_stats) )
+        #sys.stdout.flush()
+        results_str = [ rx[0], rx[2] + dx[2], rx[3] ]
+        status( '-o-', results_str)
+
         cv.imwrite(os.path.join( other_folder, img_name + ".jpg"), final_heatmap)
 
 
@@ -165,12 +206,13 @@ def run(img):
 #--------------------------------------------------------------------------------------------------------
 
 def main():
-    if __name__ == '__main__':
-        try:
-            readArgs(sys.argv)
-        except Exception as e:
-            print("exception handled in analyze.py: \n")
-            print(str(e) + "\n")
+    #if __name__ == '__main__':
+    try:
+        readArgs(sys.argv)
+    except Exception as e:
+        #print("exception handled in analyze.py: \n")
+        #print(str(e) + "\n")
+        status('-e-', str(e) )
     return 0
 
 
