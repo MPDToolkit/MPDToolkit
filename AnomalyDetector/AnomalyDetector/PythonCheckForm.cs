@@ -20,46 +20,56 @@ namespace AnomalyDetector
         {
             InitializeComponent();
             settings = set;
+            checkForPython();
         }
 
         private void checkForPython()
         {
 
-            Console.Out.WriteLine("-------------Running POST-------------");
+            //Console.Out.WriteLine("-------------Running POST-------------");
 
             //Check for Python
-            if (!string.IsNullOrEmpty(settings.PythonPath) && File.Exists(settings.PythonPath))
+            if (string.IsNullOrEmpty(settings.PythonPath) || !File.Exists(settings.PythonPath))
             {
                 //Check/Install required packages
-                Console.WriteLine("...Checking Python Version...");
+                infoLabel.Text = "Checking Python version...";
                 string python_version = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonVersion.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
-                if (python_version.Contains("Python 3.6.4")) Console.WriteLine("Python Version --> OK");
-                else Console.WriteLine("Python Version 3.6.4 Required!");
+                if (python_version.Contains("Python 3.6.4"))
+                {
+                    infoLabel.Text = "Checking Python version......OK";
+                }
+                else
+                {
+                    infoLabel.Text = "Python 3.6.4 is required. Please install the correct version.";
+                    this.DialogResult = DialogResult.No;     
+                }
 
-                Console.WriteLine("...Checking Python Packages...");
+                //Console.WriteLine("...Checking Python Packages...");
+                infoLabel.Text = "Checking Python packages...";
                 string pip_list = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
                 string[] required_pkgs = { "opencv-python", "numpy", "scipy", "scikit-learn", "spectral", "pyparsing", "matplotlib" };
                 foreach (string str in required_pkgs)
                 {
                     if (!pip_list.Contains(str))
                     {
-                        //Console.WriteLine("Installing missing packages...");
-                        //Console.WriteLine(str);
+                        infoLabel.Text = "Installing Python packages...";
                         Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\installPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false }).WaitForExit();
                         break;
                     }
                 }
-                Console.Out.WriteLine("Python Packages --> OK");
+                infoLabel.Text = "Python Setup Complete...";
                 settings.FirstRun = false;
                 UpdateSettings();
+
+                this.DialogResult = DialogResult.OK;   
             }
             else
             {
-                //Error: No python installation found
-                MessageBox.Show("Image analysis requires Python 3 to be installed.", "Missing Python", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, 0, "https://www.google.com");
-                //this.menuBtnNewAnalysis.Enabled = false;
+                infoLabel.Text = "Finished...";
+                this.DialogResult = DialogResult.OK;
             }
 
+            //this.Close();
         }
 
         //===================================================================================================================

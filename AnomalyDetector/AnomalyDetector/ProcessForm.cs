@@ -400,7 +400,8 @@ namespace AnomalyDetector
         //Kill backend process if ProcessForm is closed
         private void ProcessForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            backendProcess.Kill();
+            if( backendProcess != null && !backendProcess.HasExited )
+                backendProcess.Kill();
         }
     }
 }

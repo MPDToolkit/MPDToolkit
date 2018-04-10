@@ -64,7 +64,7 @@ namespace AnomalyDetector
             //Read settings.ini
             ReadSettings();
 
-            if( settings.FirstRun || settings.RunPOST ) POST();    //Should be redundant given the new installer
+            if( settings.FirstRun || settings.RunPOST ) POST();
 
             //Update settings.ini
             UpdateSettings();
@@ -200,6 +200,16 @@ namespace AnomalyDetector
             PythonCheckForm py = new PythonCheckForm(settings);
             py.ShowDialog();
 
+            if (py.DialogResult == DialogResult.No)
+            {
+                menuBtnNewAnalysis.Enabled = false;
+                settings.FirstRun = true;
+            }
+            else
+            {
+                settings.FirstRun = false;
+            }
+            UpdateSettings();
         }
 
         //===================================================================================================================
