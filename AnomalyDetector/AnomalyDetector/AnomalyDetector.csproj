@@ -86,6 +86,12 @@
     <Compile Include="batchName.Designer.cs">
       <DependentUpon>batchName.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParametersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParametersForm.Designer.cs">
+      <DependentUpon>ParametersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="resultDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParametersForm.resx">
+      <DependentUpon>ParametersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProcessForm.resx">
       <DependentUpon>ProcessForm.cs</DependentUpon>
