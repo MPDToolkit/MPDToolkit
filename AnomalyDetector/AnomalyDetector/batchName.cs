@@ -13,6 +13,9 @@ namespace AnamolyDetector
     public partial class batchName : Form
     {
         private string batch_name;
+        private string invalid_msg = "Invalid character";
+        private string valid_msg = "Please name this batch";
+        private string approved_characters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
@@ -55,5 +58,26 @@ namespace AnamolyDetector
             return batch_name;
         }
 
+        //===================================================================================================================
+        //-------------------------------------------------------------------------------------------------------------------
+        //===================================================================================================================
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            //Filter user input
+            foreach(char c in textBox1.Text.ToLower())
+            {
+                if(approved_characters.Contains(c))
+                {
+                    batchLabel.Text = valid_msg;
+                    button1.Enabled = true;
+                }
+                else
+                {
+                    batchLabel.Text = invalid_msg;
+                    button1.Enabled = false;
+                }
+            }
+        }
     }
 }
