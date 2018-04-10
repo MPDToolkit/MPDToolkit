@@ -33,3 +33,6 @@
 
 #pycache files
 *.pyc
+/AnomalyDetector/AnomalyDetector/bin/Debug/Batches/Batch_1
+/AnomalyDetector/AnomalyDetector/bin/Release/Batches/Batch_1/Copy
+/AnomalyDetector/AnomalyDetector
