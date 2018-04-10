@@ -50,3 +50,4 @@ F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\Anom
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.ParametersForm.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.ParametersForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache
