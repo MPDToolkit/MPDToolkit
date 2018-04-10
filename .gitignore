@@ -35,4 +35,4 @@
 *.pyc
 
 #Visual studio BULLSHIT
-.vs/*
+/.vs/*
