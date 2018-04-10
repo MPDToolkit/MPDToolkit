@@ -1,3 +1,4 @@
+import os
 import sys
 import cv2
 import numpy as np
@@ -58,10 +59,12 @@ def main():
 def DebrisDetect(img_path, heatmap = None):
 	# Create a Timer
 	t = timer.Timer()
+	t.start()
 	
 	img = cv2.imread(img_path)
 	# Name of the original file
-	result_name = img_path.split("/")[-1].split(".")[0]
+	#result_name = img_path.split("/")[-1].split(".")[0]
+	result_name = os.path.split(img_path)[1].split(".")[0]
 	
 	#If needed, scale image
 	if scale_value != 1:

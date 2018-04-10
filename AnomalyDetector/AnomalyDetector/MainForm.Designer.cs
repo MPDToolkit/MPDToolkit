@@ -28,134 +28,151 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
-            this.txtBoxUserLog = new System.Windows.Forms.TextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
+            this.menuStrip.BackColor = System.Drawing.Color.LightGray;
+            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10.75F);
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBtnSelectResults,
             this.menuBtnNewAnalysis});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(2104, 42);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
+            this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.menuStrip.Size = new System.Drawing.Size(1161, 26);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu";
             // 
             // menuBtnSelectResults
             // 
             this.menuBtnSelectResults.Name = "menuBtnSelectResults";
-            this.menuBtnSelectResults.Size = new System.Drawing.Size(246, 38);
+            this.menuBtnSelectResults.Size = new System.Drawing.Size(157, 24);
             this.menuBtnSelectResults.Text = "Select Results Folder";
             this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
             // 
             // menuBtnNewAnalysis
             // 
+            this.menuBtnNewAnalysis.BackColor = System.Drawing.Color.LightGray;
             this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
-            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(216, 38);
+            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(137, 24);
             this.menuBtnNewAnalysis.Text = "Run New Analysis";
             this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
             // 
             // checkedListBox
             // 
-            this.checkedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.checkedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.checkedListBox.ForeColor = System.Drawing.SystemColors.Menu;
             this.checkedListBox.FormattingEnabled = true;
-            this.checkedListBox.Location = new System.Drawing.Point(1745, 126);
+            this.checkedListBox.Location = new System.Drawing.Point(984, 4);
+            this.checkedListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 1);
             this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(337, 784);
-            this.checkedListBox.TabIndex = 2;
-            // 
-            // txtBoxUserLog
-            // 
-            this.txtBoxUserLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBoxUserLog.Location = new System.Drawing.Point(1745, 917);
-            this.txtBoxUserLog.Multiline = true;
-            this.txtBoxUserLog.Name = "txtBoxUserLog";
-            this.txtBoxUserLog.Size = new System.Drawing.Size(337, 181);
-            this.txtBoxUserLog.TabIndex = 3;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(24, 126);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(1715, 972);
-            this.splitContainer1.SplitterDistance = 857;
-            this.splitContainer1.TabIndex = 4;
+            this.checkedListBox.Size = new System.Drawing.Size(173, 548);
+            this.checkedListBox.TabIndex = 1;
+            this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
+            this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
+            this.checkedListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkedListBox_KeyDown);
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(1, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(1, 4, 1, 1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(857, 972);
+            this.pictureBox1.Size = new System.Drawing.Size(488, 548);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Location = new System.Drawing.Point(491, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(1, 4, 1, 1);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(854, 972);
+            this.pictureBox2.Size = new System.Drawing.Size(488, 548);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.21191F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.2119F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.57619F));
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.checkedListBox, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 26);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1, 11, 1, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1161, 553);
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // checkBoxNewWindow
+            // 
+            this.checkBoxNewWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxNewWindow.AutoSize = true;
+            this.checkBoxNewWindow.BackColor = System.Drawing.Color.LightGray;
+            this.checkBoxNewWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F);
+            this.checkBoxNewWindow.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.checkBoxNewWindow.Location = new System.Drawing.Point(929, 0);
+            this.checkBoxNewWindow.Name = "checkBoxNewWindow";
+            this.checkBoxNewWindow.Padding = new System.Windows.Forms.Padding(10, 2, 0, 0);
+            this.checkBoxNewWindow.Size = new System.Drawing.Size(232, 24);
+            this.checkBoxNewWindow.TabIndex = 4;
+            this.checkBoxNewWindow.TabStop = false;
+            this.checkBoxNewWindow.Text = "Open in Images New Window";
+            this.checkBoxNewWindow.UseVisualStyleBackColor = false;
+            this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2104, 1121);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.txtBoxUserLog);
-            this.Controls.Add(this.checkedListBox);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(1161, 579);
+            this.Controls.Add(this.checkBoxNewWindow);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
+            this.ForeColor = System.Drawing.SystemColors.Menu;
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(2130, 1192);
+            this.Margin = new System.Windows.Forms.Padding(1);
+            this.MinimumSize = new System.Drawing.Size(967, 618);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,9 +184,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuBtnSelectResults;
         private System.Windows.Forms.ToolStripMenuItem menuBtnNewAnalysis;
         private System.Windows.Forms.CheckedListBox checkedListBox;
-        private System.Windows.Forms.TextBox txtBoxUserLog;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.CheckBox checkBoxNewWindow;
     }
 }

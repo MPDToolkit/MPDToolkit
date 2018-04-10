@@ -37,32 +37,36 @@
             // 
             this.batchLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.batchLabel.AutoSize = true;
-            this.batchLabel.Location = new System.Drawing.Point(182, 46);
-            this.batchLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.batchLabel.MinimumSize = new System.Drawing.Size(236, 25);
+            this.batchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.batchLabel.Location = new System.Drawing.Point(71, 9);
+            this.batchLabel.MinimumSize = new System.Drawing.Size(118, 13);
             this.batchLabel.Name = "batchLabel";
-            this.batchLabel.Size = new System.Drawing.Size(236, 25);
+            this.batchLabel.Size = new System.Drawing.Size(161, 18);
             this.batchLabel.TabIndex = 0;
             this.batchLabel.Text = "Please name this batch";
+            this.batchLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(64, 96);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.textBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.textBox1.Location = new System.Drawing.Point(12, 34);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(494, 31);
+            this.textBox1.Size = new System.Drawing.Size(288, 24);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(230, 151);
-            this.button1.Margin = new System.Windows.Forms.Padding(6);
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.button1.Location = new System.Drawing.Point(108, 64);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(150, 44);
+            this.button1.Size = new System.Drawing.Size(95, 29);
             this.button1.TabIndex = 2;
             this.button1.Text = "Submit";
             this.button1.UseVisualStyleBackColor = true;
@@ -70,14 +74,16 @@
             // 
             // batchName
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 230);
+            this.BackColor = System.Drawing.Color.DarkGray;
+            this.ClientSize = new System.Drawing.Size(312, 105);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.batchLabel);
-            this.Margin = new System.Windows.Forms.Padding(6);
+            this.MinimumSize = new System.Drawing.Size(328, 144);
             this.Name = "batchName";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Batch Name";
             this.Load += new System.EventHandler(this.batchName_Load);
             this.ResumeLayout(false);
