@@ -169,20 +169,6 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_68E613A05DF34886A4A879D770E732B7"
-            {
-            "Name" = "8:installPythonPackages.vbs"
-            "Condition" = "8:"
-            "Object" = "8:_BC3061214C0245A9B03CD719901283AC"
-            "FileType" = "3:4"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_11184552_E31D_45E7_8BEC_CBE327C7A141"
-            "InstallerClass" = "11:FALSE"
-            "CustomActionData" = "8:"
-            }
         }
         "DefaultFeature"
         {
@@ -598,7 +584,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{4F1CD7F6-624B-4099-8140-4305261B8B62}"
+        "PackageCode" = "8:{1283C1BD-EFB9-44A1-9F2E-76CAF4656865}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"

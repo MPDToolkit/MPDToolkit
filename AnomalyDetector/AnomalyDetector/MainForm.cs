@@ -64,7 +64,7 @@ namespace AnamolyDetector
             //Read settings.ini
             ReadSettings();
 
-            if(settings.RunPOST) POST();    //Should be redundant given the new installer
+            if( settings.FirstRun || settings.RunPOST ) POST();    //Should be redundant given the new installer
 
             //Update settings.ini
             UpdateSettings();
@@ -221,15 +221,17 @@ namespace AnamolyDetector
                         break;
                     }
                 }
-                Console.Out.WriteLine("Python Packages --> OK"); 
+                Console.Out.WriteLine("Python Packages --> OK");
+                settings.FirstRun = false;
+                UpdateSettings();
             }
             else
             {
                 //Error: No python installation found
                 MessageBox.Show("Image analysis requires Python 3 to be installed.", "Missing Python", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.menuBtnNewAnalysis.Enabled = false;
-               
             }
+
 
             return 0;
         }
