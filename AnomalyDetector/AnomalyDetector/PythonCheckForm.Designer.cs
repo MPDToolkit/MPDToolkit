@@ -43,6 +43,7 @@
             this.infoLabel.TabIndex = 0;
             this.infoLabel.Text = "Please wait while we search for python...";
             this.infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.infoLabel.UseWaitCursor = true;
             // 
             // pythonLink
             // 
@@ -55,6 +56,7 @@
             this.pythonLink.TabStop = true;
             this.pythonLink.Text = "Python 3.6.4 Download Page";
             this.pythonLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pythonLink.UseWaitCursor = true;
             this.pythonLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.pythonLink_LinkClicked);
             // 
             // btnClose
@@ -67,6 +69,7 @@
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.UseWaitCursor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // PythonCheckForm

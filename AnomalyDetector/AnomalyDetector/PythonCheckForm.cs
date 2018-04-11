@@ -87,7 +87,7 @@ namespace AnomalyDetector
                 }
                 else
                 {
-                    Invoke(new Info(UpdateInfo), "Python 3.6.4 is required. Please install the correct version.");
+                    Invoke(new Info(UpdateInfo), "Python 3.6.4 is required.");
                     is_python_installed = false;
                     
                 }      

@@ -288,8 +288,7 @@ namespace AnomalyDetector
             backendProcess.BeginErrorReadLine();
 
             //Wait for backend to finish, then clean up
-            backendProcess.WaitForExit();
-            backendProcess.Dispose();       
+            backendProcess.WaitForExit();      
         }
 
         //===================================================================================================================

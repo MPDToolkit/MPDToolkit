@@ -36,9 +36,6 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\An
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
-F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.batchName.resources
-F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.MainForm.resources
-F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnamolyDetector.ProcessForm.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.Properties.Resources.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.GenerateResource.cache
@@ -51,3 +48,7 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\An
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.MainForm.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.ProcessForm.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.PythonCheckForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.batchName.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.MainForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.ProcessForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.PythonCheckForm.resources
