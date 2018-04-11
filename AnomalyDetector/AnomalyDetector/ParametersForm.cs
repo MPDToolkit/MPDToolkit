@@ -14,7 +14,7 @@ namespace AnomalyDetector
     public partial class ParametersForm : Form
     {
         public List<string> paramList = new List<string>();
-        public bool saved_changes = false;
+        public bool saved_changes = true;
 
 
         public ParametersForm()
@@ -23,7 +23,7 @@ namespace AnomalyDetector
 
             //Read the parameters.ini file and load into form
             Read();
-            saveStatus.Text = "Not Saved...";
+            saveStatus.Text = "Saved...";
         }
 
         //Read the parameters.ini file
@@ -39,7 +39,7 @@ namespace AnomalyDetector
                 string p_str = str.Split('#')[0];
 
                 string[] opt = p_str.Split('=');      //name=default=value
-                paramData.Rows.Add( Convert.ToInt32(opt[1]), opt[0], Convert.ToDouble(opt[2]) );
+                paramData.Rows.Add( opt[0], Convert.ToInt32(opt[1]), Convert.ToDouble(opt[2]), Convert.ToDouble(opt[3]));
             }
 
         }
@@ -52,7 +52,7 @@ namespace AnomalyDetector
                 //Create array of strings
                 foreach (DataGridViewRow row in paramData.Rows)
                 {
-                    paramList.Add(row.Cells[1].Value + "=" + Convert.ToInt32(row.Cells[0].Value).ToString() + "=" + Convert.ToDouble(row.Cells[2].Value).ToString());
+                    paramList.Add(row.Cells[0].Value + "=" + Convert.ToInt32(row.Cells[1].Value).ToString() + "=" + Convert.ToDouble(row.Cells[2].Value).ToString() + "=" + Convert.ToDouble(row.Cells[3].Value).ToString());
                 }
 
                 //Write string array to file
@@ -72,26 +72,18 @@ namespace AnomalyDetector
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if(!saved_changes)
-            {
-                DialogResult msg = MessageBox.Show("There are unsaved changes. Would you like to save before exitting?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-                if (msg == DialogResult.Yes)
-                    Save();
-                else if (msg == DialogResult.No)
-                    this.Close();
-            }
-            else
-            {
-                this.Close();
-            }
-           
+            this.Close();   
         }
 
         private void paramData_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //Something was changed
             saved_changes = false;
+
+            //Update checkboxes, excluding when form is loaded
+            if(e.RowIndex >= 0)
+                paramData.Rows[e.RowIndex].Cells[1].Value = false;
+
             saveStatus.Text = "Not Saved...";
         }
 

@@ -66,6 +66,9 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -168,6 +171,7 @@
     <Content Include="Resources\analyze.py" />
     <Content Include="Resources\DXDetector.py" />
     <None Include="Resources\installPythonPackages.vbs" />
+    <Content Include="Resources\icon.ico" />
     <Content Include="Resources\RXDetector.py" />
     <Content Include="Resources\timer.py" />
   </ItemGroup>

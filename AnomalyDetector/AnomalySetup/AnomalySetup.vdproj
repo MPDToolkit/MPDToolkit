@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_ABFCF4D7B9FE4DD682CE4875E2D03670"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B7C5E2B5B41F434C93A441D7EA4A8AEA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -307,6 +313,26 @@
             {
             "SourcePath" = "8:..\\AnomalyDetector\\Resources\\timer.py"
             "TargetName" = "8:timer.py"
+            "Tag" = "8:"
+            "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABFCF4D7B9FE4DD682CE4875E2D03670"
+            {
+            "SourcePath" = "8:..\\AnomalyDetector\\Resources\\icon.ico"
+            "TargetName" = "8:icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_B62EE9B3EAB94EFF92C21307FD02556D"
             "Condition" = "8:"
@@ -584,7 +610,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{BF697459-3D1F-42FD-8BD1-82FD6C314A5C}"
+        "PackageCode" = "8:{613F6551-3296-4670-8ED5-73EBC2E09334}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -601,7 +627,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_ABFCF4D7B9FE4DD682CE4875E2D03670"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1133,7 +1159,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B94A19D2B1E4001BA70800E8ACD0795"
             {
-            "SourcePath" = "8:..\\AnomalyDetector\\obj\\Release\\AnomalyDetector.exe"
+            "SourcePath" = "8:..\\AnomalyDetector\\obj\\Debug\\AnomalyDetector.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
