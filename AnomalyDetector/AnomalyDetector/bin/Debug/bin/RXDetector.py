@@ -25,7 +25,7 @@ def RXD( image_file, Params):
 
     #Analysis Variables
     scale_value = 1.0
-    chi_threshold = 0.999
+    chi_threshold = Params["RxChiThreshold"]
     anomaly_threshold = Params["RxThreshold"]
 
     #Output Variables

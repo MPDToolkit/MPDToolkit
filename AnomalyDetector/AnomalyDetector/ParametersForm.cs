@@ -47,6 +47,7 @@ namespace AnomalyDetector
         //Save to the parameters.ini file
         private void Save()
         {
+            paramList.Clear();
             if (paramData.Rows.Count > 0)
             {
                 //Create array of strings
@@ -81,7 +82,7 @@ namespace AnomalyDetector
             saved_changes = false;
 
             //Update checkboxes, excluding when form is loaded
-            if(e.RowIndex >= 0)
+            if(e.RowIndex >= 0 && e.ColumnIndex == 3)
                 paramData.Rows[e.RowIndex].Cells[1].Value = false;
 
             saveStatus.Text = "Not Saved...";
