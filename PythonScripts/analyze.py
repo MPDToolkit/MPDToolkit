@@ -30,10 +30,28 @@ copy_folder = "Copy"
 #Analysis Parameters
 total_time = timer.Timer()
 
+#Get parameters.ini file
+paramFile = open("parameters.ini", "r")
+
 #Default values in dictionaries
 RXDParams = {"RxThreshold":90.0}
-DXDParams = {"LineGaussian":0, "LineDilation":0, "LineBilatBlur":0, "LineCannyEdgeDetection":0, "LineThreshold":0, "CornerGaussian":0,"CornerErosion":0,"CornerBilateral":0, "CornerMaxDistance":0, "CornerNumPoints":0}
+DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeDetection":-1, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 #Add code to read in the parameters from the file Here to overwrite the defaults
+for line in paramFile:
+    if line[0] == '#':
+        pass
+    else:
+        #split the line into a list
+        splitLine=line.strip().split("=")
+        #see if parameter is in our dictionary
+        #splitline[1] is 1 for default, 0 for User value
+        if splitLine[0] in DXDParams and int(splitLine[1]) is 0:
+            DXDParams[splitLine[0]] = splitLine[2]
+            print("set parameter: %s", splitLine[0])
+        if splitLine[0] in RXDParams and int(splitLine[1]) is 0:
+            RXDParams[splitLine[0]] = splitLine[2]
+            print("set parameter: %s", splitLine[0])
+
 
 
 

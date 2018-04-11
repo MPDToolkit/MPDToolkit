@@ -82,13 +82,13 @@ def DebrisDetect(img_path, Params, heatmap = None):
 	line_check = copy.deepcopy(img)
 
 	# Gaussian Blur
-	proc_img = cv2.GaussianBlur(line_check, (5,5), 0)
+	proc_img = cv2.GaussianBlur(line_check, (5,5), Params["LineGaussianIter"])
 
     # Kernel Dilation
-	proc_img = cv2.dilate(proc_img, (5,5), iterations=1)
+	proc_img = cv2.dilate(proc_img, (5,5), iterations=Params["LineDilationIter"])
 
     # Bilateral Blur
-	proc_img = cv2.bilateralFilter(proc_img, 9, 75, 75)
+	proc_img = cv2.bilateralFilter(proc_img, 9, Params["LineBilatBlur"], Params["LineBilatBlur"])
 
     # Low sensitivity Hough transform
 	dst = cv2.Canny(proc_img, 100, 0)
@@ -136,13 +136,13 @@ def DebrisDetect(img_path, Params, heatmap = None):
 			heatmap_copy = copy.deepcopy(heatmap)
 
 		# Gaussian Blur
-		proc2_img = cv2.GaussianBlur(corner_check, (5,5), 0)
+		proc2_img = cv2.GaussianBlur(corner_check, (5,5), Params["CornerGaussianIter"])
 
 		# Erosion
-		proc2_img = cv2.erode(proc2_img, (5,5), iterations=1)
+		proc2_img = cv2.erode(proc2_img, (5,5), iterations=Params["CornerErosionIter"])
 
 		# Stronger Bilateral Blur
-		proc2_img = cv2.bilateralFilter(proc2_img, 16, 200, 500)
+		proc2_img = cv2.bilateralFilter(proc2_img, 16, Params["CornerBilateralColor"], Params["CornerBilateralSpace"])
 
 		# Shi-Tomasi
 		gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
@@ -228,7 +228,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 				pix1 = (x , y, 0)
 				pix2 = (x2, y2, 0)
 				dist = distance.euclidean(pix1, pix2)
-				if dist < 75 and dist != 0:
+				if dist < Params["CornerMaxDistance"] and dist != 0:
 					close = True
 					break
 			if close:
@@ -252,7 +252,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 				pix1 = (x , y, 0)
 				pix2 = (x2, y2, 0)
 				dist = distance.euclidean(pix1, pix2)
-				if dist < 75 and dist != 0:
+				if dist < Params["CornerMaxDistance"] and dist != 0:
 					if heatmap is not None:
 						cv2.line(heatmap_copy, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
 					else:
@@ -268,7 +268,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 							break
 
 		# If any of the polygons have more than 3 connected circles, then we have a hit
-		if any(len(t) > 3 for t in connected_pairs):
+		if any(len(t) > Params["CornerNumPoints"] for t in connected_pairs):
 			#Stop the timer
 			t.stop()
 			if heatmap is not None:
