@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace AnamolyDetector
+namespace AnomalyDetector
 {
 
 
@@ -288,8 +288,7 @@ namespace AnamolyDetector
             backendProcess.BeginErrorReadLine();
 
             //Wait for backend to finish, then clean up
-            backendProcess.WaitForExit();
-            backendProcess.Dispose();       
+            backendProcess.WaitForExit();      
         }
 
         //===================================================================================================================
@@ -400,7 +399,8 @@ namespace AnamolyDetector
         //Kill backend process if ProcessForm is closed
         private void ProcessForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            backendProcess.Kill();
+            if( backendProcess != null && !backendProcess.HasExited )
+                backendProcess.Kill();
         }
     }
 }

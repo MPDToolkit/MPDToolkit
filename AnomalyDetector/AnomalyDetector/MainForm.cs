@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AnamolyDetector
+namespace AnomalyDetector
 {
 
     //Global Settings
@@ -64,7 +64,7 @@ namespace AnamolyDetector
             //Read settings.ini
             ReadSettings();
 
-            if(settings.RunPOST) POST();    //Should be redundant given the new installer
+            if( settings.FirstRun || settings.RunPOST ) POST();
 
             //Update settings.ini
             UpdateSettings();
@@ -103,13 +103,10 @@ namespace AnamolyDetector
                         {
                             settings.PythonPath = opt[1];
                            
-                            if (string.IsNullOrEmpty(settings.PythonPath))
+                            if (string.IsNullOrEmpty(settings.PythonPath) || !File.Exists(settings.PythonPath))
                             {
-                                //Check the default python3 install location
-                                if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python36\python.exe")))
-                                {
-                                    settings.PythonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python36\python.exe");
-                                }
+                                settings.FirstRun = true;
+                                
                             }
                             break;
                         }
@@ -195,43 +192,28 @@ namespace AnamolyDetector
         //===================================================================================================================
 
         //Power On Self Test
-        private int POST()
+        private void POST()
         {
-            Console.Out.WriteLine("-------------Running POST-------------");
+            //Disable button while the program checks for python
+            menuBtnNewAnalysis.Enabled = false;
 
-            //Check for Python
-            if( !string.IsNullOrEmpty(settings.PythonPath) && File.Exists(settings.PythonPath) )
+            PythonCheckForm py = new PythonCheckForm(settings);
+            py.ShowDialog();
+            settings = py.GetSettings();
+
+            //Test if python is installed
+            if (py.DialogResult == DialogResult.No)
             {
-                //Check/Install required packages
-                Console.WriteLine("...Checking Python Version...");
-                string python_version = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonVersion.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
-                if (python_version.Contains("Python 3.6.4")) Console.WriteLine("Python Version --> OK");
-                else Console.WriteLine("Python Version 3.6.4 Required!");
-
-                Console.WriteLine("...Checking Python Packages...");
-                string pip_list = Process.Start(new ProcessStartInfo { FileName=Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonPackages.bat"), CreateNoWindow=true, UseShellExecute=false, RedirectStandardOutput=true }).StandardOutput.ReadToEnd();
-                string[] required_pkgs = { "opencv-python", "numpy", "scipy", "scikit-learn", "spectral", "pyparsing", "matplotlib"};
-                foreach(string str in required_pkgs)
-                {
-                    if (!pip_list.Contains(str))
-                    {
-                        //Console.WriteLine("Installing missing packages...");
-                        //Console.WriteLine(str);
-                        Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\installPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false }).WaitForExit();
-                        break;
-                    }
-                }
-                Console.Out.WriteLine("Python Packages --> OK"); 
+                menuBtnNewAnalysis.Enabled = false;
+                settings.FirstRun = true;
             }
             else
             {
-                //Error: No python installation found
-                MessageBox.Show("Image analysis requires Python 3 to be installed.", "Missing Python", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.menuBtnNewAnalysis.Enabled = false;
-               
+                menuBtnNewAnalysis.Enabled = true;
+                settings.FirstRun = false;
             }
-
-            return 0;
+           
+            UpdateSettings();
         }
 
         //===================================================================================================================

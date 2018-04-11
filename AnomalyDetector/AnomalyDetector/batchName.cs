@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AnamolyDetector
+namespace AnomalyDetector
 {
     public partial class batchName : Form
     {
         private string batch_name;
         private string invalid_msg = "Invalid character";
         private string valid_msg = "Please name this batch";
-        private string approved_characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+        private string approved_characters = "abcdefghijklmnopqrstuvwxyz0123456789()_";
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
