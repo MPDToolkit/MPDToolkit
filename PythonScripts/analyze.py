@@ -34,7 +34,7 @@ total_time = timer.Timer()
 paramFile = open("parameters.ini", "r")
 
 #Default values in dictionaries
-RXDParams = {"RxThreshold":90.0}
+RXDParams = {"RxThreshold":90.0, "RxChiThreshold":0.999}
 DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeDetection":-1, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 #Add code to read in the parameters from the file Here to overwrite the defaults
 for line in paramFile:
@@ -181,7 +181,7 @@ def readArgs(args):
     parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
     parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
     parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
-    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
+    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images", default=1, metavar="threads")
 
     args = parser.parse_args()
     if args.folderPath != None:

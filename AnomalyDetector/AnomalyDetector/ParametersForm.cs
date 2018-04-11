@@ -13,7 +13,7 @@ namespace AnomalyDetector
 {
     public partial class ParametersForm : Form
     {
-        public List<string> paramList { get; set; }
+        public List<string> paramList = new List<string>();
         public bool saved_changes = false;
 
 
@@ -39,7 +39,7 @@ namespace AnomalyDetector
                 string p_str = str.Split('#')[0];
 
                 string[] opt = p_str.Split('=');      //name=default=value
-                paramData.Rows.Add( Convert.ToBoolean(opt[1]), opt[0], Convert.ToDouble(opt[2]) );
+                paramData.Rows.Add( Convert.ToInt32(opt[1]), opt[0], Convert.ToDouble(opt[2]) );
             }
 
         }
@@ -52,7 +52,7 @@ namespace AnomalyDetector
                 //Create array of strings
                 foreach (DataGridViewRow row in paramData.Rows)
                 {
-                    paramList.Add(row.Cells[1].Value.ToString() + "=" + row.Cells[0].Value.ToString() + "=" + row.Cells[2].Value.ToString());
+                    paramList.Add(row.Cells[1].Value + "=" + Convert.ToInt32(row.Cells[0].Value).ToString() + "=" + Convert.ToDouble(row.Cells[2].Value).ToString());
                 }
 
                 //Write string array to file

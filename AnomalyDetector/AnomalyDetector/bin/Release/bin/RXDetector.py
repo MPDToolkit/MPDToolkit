@@ -1,4 +1,4 @@
-#   Missing Person Detection Tool 
+#   Missing Person Detection Tool
 #
 #
 # References:
@@ -17,20 +17,20 @@ import spectral as spc
 from scipy.stats import chi2
 #import matplotlib.pyplot as plt
 
-import timer   
-        
+import timer
+
 #----------------------------------------------------Analyze Image----------------------------------------------------
 
-def RXD( image_file, threshold=90.0 ):
-    
+def RXD( image_file, Params):
+
     #Analysis Variables
     scale_value = 1.0
     chi_threshold = 0.999
-    anomaly_threshold = threshold
-    
+    anomaly_threshold = Params["RxThreshold"]
+
     #Output Variables
     colormap_value = cv.COLORMAP_JET
-    
+
     #Statistics Variables
     t = timer.Timer()
 
@@ -40,7 +40,7 @@ def RXD( image_file, threshold=90.0 ):
         t.start()
 
         #Read the input image
-        src_img = cv.imread( image_file ) 
+        src_img = cv.imread( image_file )
 
         #Extract the name of the original image from its path
         result_name = os.path.split(image_file)[1].split(".")[0]
@@ -82,14 +82,14 @@ def RXD( image_file, threshold=90.0 ):
         t.stop()
 
         return result_name, heatmap, t.get_time(1000), stats, flag
-        
-        
+
+
 
         ##Display results and save analysis results to the correct folder
-        #if np.max(rx_mask) >= anomaly_threshold : 
+        #if np.max(rx_mask) >= anomaly_threshold :
         #    print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-D', result_name, t.get_time(1000), stats) )
         #    cv.imwrite(os.path.join( "Result", result_name + "_result.jpg"), heatmap)
-        #    
+        #
 #
         #else:
         #    print("{0} {1} {2:.3f}_ms {3:.6f}_%".format( '-O', result_name, t.get_time(1000), stats) )
@@ -103,7 +103,3 @@ def RXD( image_file, threshold=90.0 ):
         print("Type error: {0}".format(e))
     except Exception as e:
         print("Unexpected error: {0}".format(e))
-
-
-    
-
