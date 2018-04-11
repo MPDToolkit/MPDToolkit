@@ -88,7 +88,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 	proc_img = cv2.dilate(proc_img, (5,5), iterations=Params["LineDilationIter"])
 
     # Bilateral Blur
-	proc_img = cv2.bilateralFilter(proc_img, 9, Params["LineBilatBlur"], Params["LineBilatBlur"])
+	proc_img = cv2.bilateralFilter(proc_img, 9, Params["LineBilatBlurColor"], Params["LineBilatBlurSpace"])
 
     # Low sensitivity Hough transform
 	dst = cv2.Canny(proc_img, 100, 0)

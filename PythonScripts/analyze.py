@@ -31,10 +31,10 @@ copy_folder = "Copy"
 total_time = timer.Timer()
 
 #Get parameters.ini file
-paramFile = open("parameters.ini", "r")
+paramFile = open(os.path.join( os.path.dirname(sys.argv[0]), "parameters.ini"), "r")      #current path is "..\bin\analyze.py", therefore need to backup to root folder "bin"
 
 #Default values in dictionaries
-RXDParams = {"RxThreshold":90.0}
+RXDParams = {"RxThreshold":90.0, "RxChiThreshold":0.999}
 DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeDetection":-1, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 #Add code to read in the parameters from the file Here to overwrite the defaults
 for line in paramFile:
@@ -46,10 +46,10 @@ for line in paramFile:
         #see if parameter is in our dictionary
         #splitline[1] is 1 for default, 0 for User value
         if splitLine[0] in DXDParams and int(splitLine[1]) is 0:
-            DXDParams[splitLine[0]] = splitLine[2]
+            DXDParams[splitLine[0]] = splitLine[3]
             print("set parameter: %s", splitLine[0])
         if splitLine[0] in RXDParams and int(splitLine[1]) is 0:
-            RXDParams[splitLine[0]] = splitLine[2]
+            RXDParams[splitLine[0]] = splitLine[3]
             print("set parameter: %s", splitLine[0])
 
 
@@ -181,7 +181,7 @@ def readArgs(args):
     parser.add_argument("-F", "--folder", dest="folderPath", help="path to the folder containing images to process.", metavar="folder", default=None)
     parser.add_argument("-f", "--file", dest="filePath", help="path to the specific image to process", metavar="file", default=None)
     parser.add_argument("-t", "--threshold", dest="pixThreshold", help="Color threshold value between 0-1024 for finding anomalies", default=90.0, metavar="threshold")
-    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images (NOT IMPLEMENTED)", default=1, metavar="threads")
+    parser.add_argument("-p", "--processes", dest="procNum", help="Number of processes to create to process images", default=1, metavar="threads")
 
     args = parser.parse_args()
     if args.folderPath != None:

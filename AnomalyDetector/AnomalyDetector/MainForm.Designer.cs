@@ -41,6 +41,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
+            this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.editParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -55,6 +60,7 @@
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10.75F);
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOptions,
             this.menuBtnSelectResults,
             this.menuBtnNewAnalysis});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -148,9 +154,9 @@
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.6087F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3913F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.pictureBoxLegend, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.label2, 2, 0);
@@ -167,7 +173,7 @@
             // 
             this.pictureBoxLegend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxLegend.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLegend.Image")));
-            this.pictureBoxLegend.Location = new System.Drawing.Point(100, 0);
+            this.pictureBoxLegend.Location = new System.Drawing.Point(118, 0);
             this.pictureBoxLegend.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBoxLegend.Name = "pictureBoxLegend";
             this.pictureBoxLegend.Size = new System.Drawing.Size(250, 30);
@@ -179,7 +185,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label1.Location = new System.Drawing.Point(17, 0);
+            this.label1.Location = new System.Drawing.Point(35, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 30);
             this.label1.TabIndex = 6;
@@ -190,7 +196,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Location = new System.Drawing.Point(353, 0);
+            this.label2.Location = new System.Drawing.Point(371, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 30);
             this.label2.TabIndex = 7;
@@ -214,6 +220,45 @@
             this.checkBoxNewWindow.UseVisualStyleBackColor = false;
             this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
             // 
+            // menuOptions
+            // 
+            this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editParametersToolStripMenuItem,
+            this.optimizeForViewingToolStripMenuItem});
+            this.menuOptions.Name = "menuOptions";
+            this.menuOptions.Size = new System.Drawing.Size(73, 24);
+            this.menuOptions.Text = "Options";
+            // 
+            // editParametersToolStripMenuItem
+            // 
+            this.editParametersToolStripMenuItem.Name = "editParametersToolStripMenuItem";
+            this.editParametersToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.editParametersToolStripMenuItem.Text = "Edit Parameters";
+            this.editParametersToolStripMenuItem.Click += new System.EventHandler(this.editParametersToolStripMenuItem_Click);
+            // 
+            // optimizeForViewingToolStripMenuItem
+            // 
+            this.optimizeForViewingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewingToolStripMenuItem,
+            this.analysisToolStripMenuItem});
+            this.optimizeForViewingToolStripMenuItem.Name = "optimizeForViewingToolStripMenuItem";
+            this.optimizeForViewingToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.optimizeForViewingToolStripMenuItem.Text = "Optimize for...";
+            // 
+            // viewingToolStripMenuItem
+            // 
+            this.viewingToolStripMenuItem.Name = "viewingToolStripMenuItem";
+            this.viewingToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.viewingToolStripMenuItem.Text = "Viewing";
+            this.viewingToolStripMenuItem.Click += new System.EventHandler(this.viewingToolStripMenuItem_Click);
+            // 
+            // analysisToolStripMenuItem
+            // 
+            this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
+            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.analysisToolStripMenuItem.Text = "Analysis";
+            this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -230,7 +275,7 @@
             this.MinimumSize = new System.Drawing.Size(967, 618);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "Anomaly Detector";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -258,5 +303,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem menuOptions;
+        private System.Windows.Forms.ToolStripMenuItem editParametersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optimizeForViewingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
     }
 }

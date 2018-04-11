@@ -24,6 +24,8 @@ namespace AnomalyDetector
         public string BatchesPath;
         public string BinPath;
         public bool NewImageWindow;
+        public bool AllowMultiThread;
+
     }
 
     //Global Parameters
@@ -138,6 +140,12 @@ namespace AnomalyDetector
                             break;
                         }
 
+                    case "AllowMultiThread":
+                        {
+                            settings.AllowMultiThread = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
+                            break;
+                        }
+
                     default:
                         {
                             break;
@@ -162,7 +170,8 @@ namespace AnomalyDetector
                     "PythonPath=" + settings.PythonPath,
                     "BatchesPath=" + settings.BatchesPath,
                     "BinPath=" + settings.BinPath,
-                    "NewImageWindow=" + settings.NewImageWindow
+                    "NewImageWindow=" + settings.NewImageWindow,
+                    "AllowMultiThread=" + settings.AllowMultiThread 
                 });
         }
 
@@ -463,6 +472,24 @@ namespace AnomalyDetector
         {
             if (e.KeyCode == Keys.Space)
                 allow_checked = true;   
+        }
+
+        private void editParametersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ParametersForm pf = new ParametersForm();
+            pf.ShowDialog();
+        }
+
+        private void viewingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.AllowMultiThread = false;
+            UpdateSettings();
+        }
+
+        private void analysisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.AllowMultiThread = true;
+            UpdateSettings();
         }
     }
 }

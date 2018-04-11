@@ -28,6 +28,7 @@ namespace AnomalyDetector
         private string othDir;
         private int completed_files_ct = 0;
         private string infoLogStr;
+        private int num_threads = 1;
 
         private List<string> batch_names = new List<string>();
 
@@ -43,6 +44,9 @@ namespace AnomalyDetector
             batchesDirectory = Path.Combine(workingDirectory, "Batches");
 
             pythonPath = settings.PythonPath;
+
+            if (settings.AllowMultiThread) num_threads = System.Environment.ProcessorCount;
+            else num_threads = 1;
         }
 
         //===================================================================================================================
@@ -250,7 +254,6 @@ namespace AnomalyDetector
             lblProgressBar.Text = "Initializing...";
             lblProgressBar.Update();
 
-            int num_threads = 1;
             string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
 
             if(currentBatch != null)
