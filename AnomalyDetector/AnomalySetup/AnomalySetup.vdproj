@@ -453,7 +453,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_6CE002842CB54BC29B10DCCC58A2F05A"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[AppDataFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -494,6 +494,17 @@
                             }
                         }
                     }
+                }
+            }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_A9D6308B7B12417485B63315A76D6997"
+            {
+            "Name" = "8:#1915"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:AppDataFolder"
+                "Folders"
+                {
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_BA591C6FD0974B9BAFFAF7903687F02D"
@@ -584,7 +595,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{1283C1BD-EFB9-44A1-9F2E-76CAF4656865}"
+        "PackageCode" = "8:{43008608-FBE0-4A37-94B3-3F66CD53918A}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -595,7 +606,7 @@
         "Manufacturer" = "8:MPDT"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:AnomalySetup"
+        "Title" = "8:Anomaly Detector Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:MPDT"
         "Keywords" = "8:"
@@ -605,7 +616,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
