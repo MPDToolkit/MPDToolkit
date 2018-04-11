@@ -30,6 +30,13 @@ copy_folder = "Copy"
 #Analysis Parameters
 total_time = timer.Timer()
 
+#Default values in dictionaries
+RXDParams = {"RxThreshold":90.0}
+DXDParams = {"LineGaussian":0, "LineDilation":0, "LineBilatBlur":0, "LineCannyEdgeDetection":0, "LineThreshold":0, "CornerGaussian":0,"CornerErosion":0,"CornerBilateral":0, "CornerMaxDistance":0, "CornerNumPoints":0}
+#Add code to read in the parameters from the file Here to overwrite the defaults
+
+
+
 
 #--------------------------------------------------------------------------------------------------------
 #Outputs backend stsatus to the frontend
@@ -124,7 +131,7 @@ def openFolder(path):
 
     if __name__ == '__main__':    #Replace with writing to log file
         status('-f-', [ total_time.get_time(), len(img_list) ] )
-		
+
         #Display time
         #print("\n{0} image(s) analyzed\n".format(len(img_list)))
         #print("Average elapsed time: {0:.3f} ms".format( total_time.get_time(1000) / len(img_list) ) )
@@ -170,8 +177,9 @@ def readArgs(args):
 def run(img):
 
     #Call the algorithms
-    rx = RXD(img)
-    dx = DebrisDetect(img, rx[1])
+    rx = RXD(img, RXDParams)
+    RxHeatmap = rx[1]
+    dx = DebrisDetect(img, DXDParams, RxHeatmap)
 
     #Print merged results for frontend to read
     run_time = rx[2] + dx[2]
