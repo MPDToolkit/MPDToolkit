@@ -134,8 +134,8 @@ namespace AnomalyDetector
 
                     case "NewImageWindow":
                         {
-                            settings.NewImageWindow = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
-                            this.checkBoxNewWindow.Checked = settings.NewImageWindow;
+                            //settings.NewImageWindow = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
+                            //this.checkBoxNewWindow.Checked = settings.NewImageWindow;
 
                             break;
                         }
@@ -143,6 +143,7 @@ namespace AnomalyDetector
                     case "AllowMultiThread":
                         {
                             settings.AllowMultiThread = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
+                            menuOptimizedMode.Text = (settings.AllowMultiThread) ? "Optimized for: Analysis" : "Optimized for: Viewing";
                             break;
                         }
 
@@ -170,7 +171,7 @@ namespace AnomalyDetector
                     "PythonPath=" + settings.PythonPath,
                     "BatchesPath=" + settings.BatchesPath,
                     "BinPath=" + settings.BinPath,
-                    "NewImageWindow=" + settings.NewImageWindow,
+                    //"NewImageWindow=" + settings.NewImageWindow,
                     "AllowMultiThread=" + settings.AllowMultiThread 
                 });
         }
@@ -229,17 +230,21 @@ namespace AnomalyDetector
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
-        private void displayImages()
+        private void displayImages(bool use_window)
         {
             //Display initial image in list
-            if (!settings.NewImageWindow)
+            if (!use_window)
             {
                 //find image with selected checkbox item and show it in pictureBoxes 
                 if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
                     pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+                else
+                    pictureBox2.ImageLocation = "";
 
                 if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
                     pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+                else
+                    pictureBox1.ImageLocation = "";
 
                 pictureBox1.Update();
                 pictureBox2.Update();
@@ -303,7 +308,7 @@ namespace AnomalyDetector
                 watcher.Changed += Watcher_Changed;
 
                 //Display currently selected images
-                displayImages();
+                displayImages(false);
                 
             }
         }
@@ -315,7 +320,7 @@ namespace AnomalyDetector
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             //Calls the method with the thread that owns the UI object
-            Invoke((MethodInvoker)(() => loadImages()));
+            Invoke((MethodInvoker)(() => updateImages()));
         }
 
         //===================================================================================================================
@@ -326,7 +331,7 @@ namespace AnomalyDetector
         {
             
             //Calls the method with the thread that owns the UI object
-            Invoke((MethodInvoker)(() => loadImages()));
+            Invoke((MethodInvoker)(() => updateImages()));
             
         }
 
@@ -337,12 +342,14 @@ namespace AnomalyDetector
 
         private void checkedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Prevents multiple images from being open when checking an image that is currently selected
-            if (previousSelectedIndex != checkedListBox.SelectedIndex)
-            {
-                previousSelectedIndex = checkedListBox.SelectedIndex;
-                displayImages();
-            }           
+
+            displayImages(false);
+            ////Prevents multiple images from being open when checking an image that is currently selected
+            //if (previousSelectedIndex != checkedListBox.SelectedIndex)
+            //{
+            //    previousSelectedIndex = checkedListBox.SelectedIndex;
+            //    displayImages(false);
+            //}           
         }
 
         //===================================================================================================================
@@ -365,6 +372,7 @@ namespace AnomalyDetector
 
         private void loadImages()
         {
+           
             //Read the checkbox.ini
             checked_images = ReadCheckbox(selectResultsFolder);
 
@@ -391,26 +399,65 @@ namespace AnomalyDetector
                     checkedListBox.SetItemChecked(i, true);
                 }
             }
-
+            
             //Set the initially selected index
-            if (checkedListBox.Items.Count > 0)
-            {
-                if (settings.NewImageWindow)
-                {
-                    //This section updates the selected item while preventing multiple windows of the same image opening
-                    //This is a bug only when viewing a batch while it is still running
-                    settings.NewImageWindow = !settings.NewImageWindow;     //Sets to false
-                    checkedListBox.SelectedIndex = previousSelectedIndex;
-                    settings.NewImageWindow = !settings.NewImageWindow;     //Returns to original state
-                }
-                else
-                {
-                    checkedListBox.SelectedIndex = previousSelectedIndex;
-                }
+            //if (checkedListBox.Items.Count > 0)
+            //{
+            //    checkedListBox.SelectedIndex = previousSelectedIndex; 
+            //}
                 
+
+        }
+
+        //===================================================================================================================
+        //-------------------------------------------------------------------------------------------------------------------
+        //===================================================================================================================
+
+        private void updateImages()
+        {
+            //Read the checkbox.ini
+            //checked_images = ReadCheckbox(selectResultsFolder);
+
+            String combined = System.IO.Path.Combine(selectResultsFolder, "Detected");
+            string[] temp = Directory.GetFiles(combined);
+
+            //Reset current images and checkbox
+            //currentImages.Clear();
+            //checkedListBox.Items.Clear();
+
+            //Ensure images have results and are of right format
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i].ToLower().EndsWith(".jpg") || temp[i].ToLower().EndsWith(".jpeg") || temp[i].ToLower().EndsWith(".png"))
+                {
+                    currentImages.Add(Path.GetFileName(temp[i]));
+                } 
             }
                 
 
+            for (int i = 0; i < currentImages.Count; i++)
+            {
+                //Only add new images to the list
+                if(!checkedListBox.Items.Contains(currentImages[i]))
+                {
+                    checkedListBox.Items.Add(currentImages[i]);
+                }
+                
+
+                //Checks previously checked images
+                //if (checked_images.Contains(checkedListBox.Items[i].ToString()))
+                //{
+                //    allow_checked = true;   //Give permission to check image box
+                //    checkedListBox.SetItemChecked(i, true);
+                //}
+            }
+
+            checkedListBox.Update();
+            //Set the initially selected index
+            //if (checkedListBox.Items.Count > 0)
+            //{
+            //    checkedListBox.SelectedIndex = previousSelectedIndex;
+            //}
         }
 
         //===================================================================================================================
@@ -452,19 +499,6 @@ namespace AnomalyDetector
         }
 
         //===================================================================================================================
-        //----------------------------------------------New Window Checked Changed-------------------------------------------
-        //===================================================================================================================
-
-        private void checkBoxNewWindow_CheckedChanged(object sender, EventArgs e)
-        {
-            settings.NewImageWindow = checkBoxNewWindow.Checked;
-            UpdateSettings();
-
-            displayImages();
-            checkedListBox.Focus();     //Set focus back to the checkbox
-        }
-
-        //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
@@ -483,13 +517,27 @@ namespace AnomalyDetector
         private void viewingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settings.AllowMultiThread = false;
+            menuOptimizedMode.Text = "Optimized for: Viewing";
             UpdateSettings();
         }
 
         private void analysisToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settings.AllowMultiThread = true;
+            menuOptimizedMode.Text = "Optimized for: Analysis";
             UpdateSettings();
+        }
+
+        private void openImagesInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayImages(true);
+            checkedListBox.Focus();     //Set focus back to the checkbox
+        }
+
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            displayImages(true);
+            checkedListBox.Focus();     //Set focus back to the checkbox
         }
     }
 }

@@ -30,13 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.editParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOptimizedMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.openImageNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMarkImage = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -45,7 +48,6 @@
             this.pictureBoxLegend = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -62,7 +64,10 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBtnSelectResults,
             this.menuBtnNewAnalysis,
-            this.menuOptions});
+            this.menuOptions,
+            this.menuOptimizedMode,
+            this.openImageNewWindow,
+            this.menuMarkImage});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -70,6 +75,21 @@
             this.menuStrip.Size = new System.Drawing.Size(1161, 26);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu";
+            // 
+            // menuBtnSelectResults
+            // 
+            this.menuBtnSelectResults.Name = "menuBtnSelectResults";
+            this.menuBtnSelectResults.Size = new System.Drawing.Size(157, 24);
+            this.menuBtnSelectResults.Text = "Select Results Folder";
+            this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
+            // 
+            // menuBtnNewAnalysis
+            // 
+            this.menuBtnNewAnalysis.BackColor = System.Drawing.Color.LightGray;
+            this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
+            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(137, 24);
+            this.menuBtnNewAnalysis.Text = "Run New Analysis";
+            this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
             // 
             // menuOptions
             // 
@@ -110,20 +130,29 @@
             this.analysisToolStripMenuItem.Text = "Analysis";
             this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
             // 
-            // menuBtnSelectResults
+            // menuOptimizedMode
             // 
-            this.menuBtnSelectResults.Name = "menuBtnSelectResults";
-            this.menuBtnSelectResults.Size = new System.Drawing.Size(157, 24);
-            this.menuBtnSelectResults.Text = "Select Results Folder";
-            this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
+            this.menuOptimizedMode.Enabled = false;
+            this.menuOptimizedMode.Name = "menuOptimizedMode";
+            this.menuOptimizedMode.Size = new System.Drawing.Size(121, 24);
+            this.menuOptimizedMode.Text = "Optimized for: ";
             // 
-            // menuBtnNewAnalysis
+            // openImageNewWindow
             // 
-            this.menuBtnNewAnalysis.BackColor = System.Drawing.Color.LightGray;
-            this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
-            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(137, 24);
-            this.menuBtnNewAnalysis.Text = "Run New Analysis";
-            this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
+            this.openImageNewWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.openImageNewWindow.Name = "openImageNewWindow";
+            this.openImageNewWindow.Size = new System.Drawing.Size(212, 24);
+            this.openImageNewWindow.Text = "Open Image in New Window";
+            this.openImageNewWindow.Click += new System.EventHandler(this.openImagesInNewWindowToolStripMenuItem_Click);
+            // 
+            // menuMarkImage
+            // 
+            this.menuMarkImage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.menuMarkImage.Enabled = false;
+            this.menuMarkImage.Name = "menuMarkImage";
+            this.menuMarkImage.Size = new System.Drawing.Size(100, 24);
+            this.menuMarkImage.Text = "Mark Image";
+            this.menuMarkImage.Visible = false;
             // 
             // checkedListBox
             // 
@@ -138,6 +167,7 @@
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(174, 508);
             this.checkedListBox.TabIndex = 1;
+            this.checkedListBox.UseCompatibleTextRendering = true;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             this.checkedListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkedListBox_KeyDown);
@@ -153,6 +183,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
             // pictureBox2
             // 
@@ -165,6 +196,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
             // tableLayoutPanel1
             // 
@@ -242,30 +274,12 @@
             this.label2.Text = "High Anomaly";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkBoxNewWindow
-            // 
-            this.checkBoxNewWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxNewWindow.AutoSize = true;
-            this.checkBoxNewWindow.BackColor = System.Drawing.Color.LightGray;
-            this.checkBoxNewWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F);
-            this.checkBoxNewWindow.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.checkBoxNewWindow.Location = new System.Drawing.Point(929, 0);
-            this.checkBoxNewWindow.Name = "checkBoxNewWindow";
-            this.checkBoxNewWindow.Padding = new System.Windows.Forms.Padding(10, 2, 0, 0);
-            this.checkBoxNewWindow.Size = new System.Drawing.Size(232, 24);
-            this.checkBoxNewWindow.TabIndex = 4;
-            this.checkBoxNewWindow.TabStop = false;
-            this.checkBoxNewWindow.Text = "Open Images in New Window";
-            this.checkBoxNewWindow.UseVisualStyleBackColor = false;
-            this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1161, 579);
-            this.Controls.Add(this.checkBoxNewWindow);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
@@ -299,7 +313,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkBoxNewWindow;
         private System.Windows.Forms.PictureBox pictureBoxLegend;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
@@ -309,5 +322,8 @@
         private System.Windows.Forms.ToolStripMenuItem optimizeForViewingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openImageNewWindow;
+        private System.Windows.Forms.ToolStripMenuItem menuOptimizedMode;
+        private System.Windows.Forms.ToolStripMenuItem menuMarkImage;
     }
 }
