@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.editParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
@@ -41,11 +46,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
-            this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.editParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -60,9 +60,9 @@
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10.75F);
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuOptions,
             this.menuBtnSelectResults,
-            this.menuBtnNewAnalysis});
+            this.menuBtnNewAnalysis,
+            this.menuOptions});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -70,6 +70,45 @@
             this.menuStrip.Size = new System.Drawing.Size(1161, 26);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu";
+            // 
+            // menuOptions
+            // 
+            this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editParametersToolStripMenuItem,
+            this.optimizeForViewingToolStripMenuItem});
+            this.menuOptions.Name = "menuOptions";
+            this.menuOptions.Size = new System.Drawing.Size(73, 24);
+            this.menuOptions.Text = "Options";
+            // 
+            // editParametersToolStripMenuItem
+            // 
+            this.editParametersToolStripMenuItem.Name = "editParametersToolStripMenuItem";
+            this.editParametersToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.editParametersToolStripMenuItem.Text = "Edit Parameters";
+            this.editParametersToolStripMenuItem.Click += new System.EventHandler(this.editParametersToolStripMenuItem_Click);
+            // 
+            // optimizeForViewingToolStripMenuItem
+            // 
+            this.optimizeForViewingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewingToolStripMenuItem,
+            this.analysisToolStripMenuItem});
+            this.optimizeForViewingToolStripMenuItem.Name = "optimizeForViewingToolStripMenuItem";
+            this.optimizeForViewingToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.optimizeForViewingToolStripMenuItem.Text = "Optimize for...";
+            // 
+            // viewingToolStripMenuItem
+            // 
+            this.viewingToolStripMenuItem.Name = "viewingToolStripMenuItem";
+            this.viewingToolStripMenuItem.Size = new System.Drawing.Size(131, 24);
+            this.viewingToolStripMenuItem.Text = "Viewing";
+            this.viewingToolStripMenuItem.Click += new System.EventHandler(this.viewingToolStripMenuItem_Click);
+            // 
+            // analysisToolStripMenuItem
+            // 
+            this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
+            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(131, 24);
+            this.analysisToolStripMenuItem.Text = "Analysis";
+            this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
             // 
             // menuBtnSelectResults
             // 
@@ -219,45 +258,6 @@
             this.checkBoxNewWindow.Text = "Open in Images New Window";
             this.checkBoxNewWindow.UseVisualStyleBackColor = false;
             this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
-            // 
-            // menuOptions
-            // 
-            this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editParametersToolStripMenuItem,
-            this.optimizeForViewingToolStripMenuItem});
-            this.menuOptions.Name = "menuOptions";
-            this.menuOptions.Size = new System.Drawing.Size(73, 24);
-            this.menuOptions.Text = "Options";
-            // 
-            // editParametersToolStripMenuItem
-            // 
-            this.editParametersToolStripMenuItem.Name = "editParametersToolStripMenuItem";
-            this.editParametersToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
-            this.editParametersToolStripMenuItem.Text = "Edit Parameters";
-            this.editParametersToolStripMenuItem.Click += new System.EventHandler(this.editParametersToolStripMenuItem_Click);
-            // 
-            // optimizeForViewingToolStripMenuItem
-            // 
-            this.optimizeForViewingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewingToolStripMenuItem,
-            this.analysisToolStripMenuItem});
-            this.optimizeForViewingToolStripMenuItem.Name = "optimizeForViewingToolStripMenuItem";
-            this.optimizeForViewingToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
-            this.optimizeForViewingToolStripMenuItem.Text = "Optimize for...";
-            // 
-            // viewingToolStripMenuItem
-            // 
-            this.viewingToolStripMenuItem.Name = "viewingToolStripMenuItem";
-            this.viewingToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.viewingToolStripMenuItem.Text = "Viewing";
-            this.viewingToolStripMenuItem.Click += new System.EventHandler(this.viewingToolStripMenuItem_Click);
-            // 
-            // analysisToolStripMenuItem
-            // 
-            this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
-            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.analysisToolStripMenuItem.Text = "Analysis";
-            this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
             // 
             // MainForm
             // 
