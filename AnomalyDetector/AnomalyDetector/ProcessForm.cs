@@ -17,6 +17,7 @@ namespace AnomalyDetector
 
     public partial class ProcessForm : Form
     {
+        String batchName;
         private string workingDirectory;
         private string batchesDirectory;
         private string currentBatch;
@@ -92,13 +93,9 @@ namespace AnomalyDetector
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
-            //get the next default batch name
-            batchName bn = new batchName(getNextBatchName());
-
             //Prompt user to select a batch name
-            if (bn.ShowDialog() == DialogResult.OK)
-            {
-                string batchName = bn.getText();           
+            if (!String.IsNullOrEmpty(batchName))
+            {          
                 currentBatch = batchesDirectory + "\\" + batchName;
                 copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
                 detDir = batchesDirectory + "\\" + batchName + "\\Detected";
@@ -173,13 +170,9 @@ namespace AnomalyDetector
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
-            //Get the next default batch name
-            batchName bn = new batchName(getNextBatchName());
-
             //Prompt user to select a batch name
-            if (bn.ShowDialog() == DialogResult.OK)
+            if (!String.IsNullOrEmpty(batchName))
             {
-                String batchName = bn.getText();
                 currentBatch = batchesDirectory + "\\" + batchName;
                 copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
                 detDir = batchesDirectory + "\\" + batchName + "\\Detected";
@@ -410,5 +403,23 @@ namespace AnomalyDetector
             if( backendProcess != null && !backendProcess.HasExited )
                 backendProcess.Kill();
         }
+
+        private void btnBatchName_Click(object sender, EventArgs e)
+        {
+            //Get the next default batch name
+            batchName bn = new batchName(getNextBatchName());
+
+            //Prompt user to select a batch name
+            if (bn.ShowDialog() == DialogResult.OK)
+            {
+                batchName = bn.getText();
+                btnBatchName.Enabled = false;
+                btnBatchName.Visible = false;
+                btnSelectFolder.Enabled = true;
+                btnSelectFile.Enabled = true;
+                btnAnalyze.Enabled = true;
+            }
+        }
+
     }
 }

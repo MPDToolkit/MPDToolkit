@@ -39,6 +39,11 @@ namespace AnomalyDetector
             btnClose.Enabled = state;
         }
 
+        private void SetWaitCursor(bool state)
+        {
+            this.UseWaitCursor = state;
+        }
+
         private delegate void Info(string str);
         private void UpdateInfo(string str)
         {
@@ -67,6 +72,7 @@ namespace AnomalyDetector
                         if (!pip_list.Contains(str))
                         {
                             Invoke(new Info(UpdateInfo), "Installing Python packages...");
+                            Invoke(new Bool(SetWaitCursor), true);
                             Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\installPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false }).WaitForExit();
                             break;
                         }
@@ -95,11 +101,13 @@ namespace AnomalyDetector
             else
             {
                 Invoke(new Info(UpdateInfo), "Finished...");
+                Invoke(new Bool(SetWaitCursor), false);
                 is_python_installed = true;
             }
 
             //Re-enabled the close button
             Invoke(new Bool(SetEnabled), true);
+            Invoke(new Bool(SetWaitCursor), false);
         }
 
         private void pythonLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

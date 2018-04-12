@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.editParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuBtnSelectResults = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuBtnNewAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -45,7 +45,7 @@
             this.pictureBoxLegend = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBoxNewWindow = new System.Windows.Forms.CheckBox();
+            this.openImageNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -62,7 +62,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBtnSelectResults,
             this.menuBtnNewAnalysis,
-            this.menuOptions});
+            this.menuOptions,
+            this.openImageNewWindow});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -70,6 +71,21 @@
             this.menuStrip.Size = new System.Drawing.Size(1161, 26);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu";
+            // 
+            // menuBtnSelectResults
+            // 
+            this.menuBtnSelectResults.Name = "menuBtnSelectResults";
+            this.menuBtnSelectResults.Size = new System.Drawing.Size(157, 24);
+            this.menuBtnSelectResults.Text = "Select Results Folder";
+            this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
+            // 
+            // menuBtnNewAnalysis
+            // 
+            this.menuBtnNewAnalysis.BackColor = System.Drawing.Color.LightGray;
+            this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
+            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(137, 24);
+            this.menuBtnNewAnalysis.Text = "Run New Analysis";
+            this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
             // 
             // menuOptions
             // 
@@ -109,21 +125,6 @@
             this.analysisToolStripMenuItem.Size = new System.Drawing.Size(131, 24);
             this.analysisToolStripMenuItem.Text = "Analysis";
             this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
-            // 
-            // menuBtnSelectResults
-            // 
-            this.menuBtnSelectResults.Name = "menuBtnSelectResults";
-            this.menuBtnSelectResults.Size = new System.Drawing.Size(157, 24);
-            this.menuBtnSelectResults.Text = "Select Results Folder";
-            this.menuBtnSelectResults.Click += new System.EventHandler(this.menuBtnSelectResults_Click);
-            // 
-            // menuBtnNewAnalysis
-            // 
-            this.menuBtnNewAnalysis.BackColor = System.Drawing.Color.LightGray;
-            this.menuBtnNewAnalysis.Name = "menuBtnNewAnalysis";
-            this.menuBtnNewAnalysis.Size = new System.Drawing.Size(137, 24);
-            this.menuBtnNewAnalysis.Text = "Run New Analysis";
-            this.menuBtnNewAnalysis.Click += new System.EventHandler(this.menuBtnNewAnalysis_Click);
             // 
             // checkedListBox
             // 
@@ -242,22 +243,13 @@
             this.label2.Text = "High Anomaly";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkBoxNewWindow
+            // openImageNewWindow
             // 
-            this.checkBoxNewWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxNewWindow.AutoSize = true;
-            this.checkBoxNewWindow.BackColor = System.Drawing.Color.LightGray;
-            this.checkBoxNewWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F);
-            this.checkBoxNewWindow.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.checkBoxNewWindow.Location = new System.Drawing.Point(929, 0);
-            this.checkBoxNewWindow.Name = "checkBoxNewWindow";
-            this.checkBoxNewWindow.Padding = new System.Windows.Forms.Padding(10, 2, 0, 0);
-            this.checkBoxNewWindow.Size = new System.Drawing.Size(232, 24);
-            this.checkBoxNewWindow.TabIndex = 4;
-            this.checkBoxNewWindow.TabStop = false;
-            this.checkBoxNewWindow.Text = "Open Images in New Window";
-            this.checkBoxNewWindow.UseVisualStyleBackColor = false;
-            this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
+            this.openImageNewWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.openImageNewWindow.Name = "openImageNewWindow";
+            this.openImageNewWindow.Size = new System.Drawing.Size(212, 24);
+            this.openImageNewWindow.Text = "Open Image in New Window";
+            this.openImageNewWindow.Click += new System.EventHandler(this.openImagesInNewWindowToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -265,7 +257,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1161, 579);
-            this.Controls.Add(this.checkBoxNewWindow);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
@@ -299,7 +290,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkBoxNewWindow;
         private System.Windows.Forms.PictureBox pictureBoxLegend;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
@@ -309,5 +299,6 @@
         private System.Windows.Forms.ToolStripMenuItem optimizeForViewingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openImageNewWindow;
     }
 }

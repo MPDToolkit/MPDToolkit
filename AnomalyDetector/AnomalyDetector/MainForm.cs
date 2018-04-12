@@ -134,8 +134,8 @@ namespace AnomalyDetector
 
                     case "NewImageWindow":
                         {
-                            settings.NewImageWindow = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
-                            this.checkBoxNewWindow.Checked = settings.NewImageWindow;
+                            //settings.NewImageWindow = (!string.IsNullOrEmpty(opt[1])) ? Convert.ToBoolean(opt[1]) : false;
+                            //this.checkBoxNewWindow.Checked = settings.NewImageWindow;
 
                             break;
                         }
@@ -170,7 +170,7 @@ namespace AnomalyDetector
                     "PythonPath=" + settings.PythonPath,
                     "BatchesPath=" + settings.BatchesPath,
                     "BinPath=" + settings.BinPath,
-                    "NewImageWindow=" + settings.NewImageWindow,
+                    //"NewImageWindow=" + settings.NewImageWindow,
                     "AllowMultiThread=" + settings.AllowMultiThread 
                 });
         }
@@ -229,10 +229,10 @@ namespace AnomalyDetector
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
-        private void displayImages()
+        private void displayImages(bool use_window)
         {
             //Display initial image in list
-            if (!settings.NewImageWindow)
+            if (!use_window)
             {
                 //find image with selected checkbox item and show it in pictureBoxes 
                 if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
@@ -303,7 +303,7 @@ namespace AnomalyDetector
                 watcher.Changed += Watcher_Changed;
 
                 //Display currently selected images
-                displayImages();
+                displayImages(false);
                 
             }
         }
@@ -341,7 +341,7 @@ namespace AnomalyDetector
             if (previousSelectedIndex != checkedListBox.SelectedIndex)
             {
                 previousSelectedIndex = checkedListBox.SelectedIndex;
-                displayImages();
+                displayImages(false);
             }           
         }
 
@@ -452,19 +452,6 @@ namespace AnomalyDetector
         }
 
         //===================================================================================================================
-        //----------------------------------------------New Window Checked Changed-------------------------------------------
-        //===================================================================================================================
-
-        private void checkBoxNewWindow_CheckedChanged(object sender, EventArgs e)
-        {
-            settings.NewImageWindow = checkBoxNewWindow.Checked;
-            UpdateSettings();
-
-            displayImages();
-            checkedListBox.Focus();     //Set focus back to the checkbox
-        }
-
-        //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
 
@@ -490,6 +477,12 @@ namespace AnomalyDetector
         {
             settings.AllowMultiThread = true;
             UpdateSettings();
+        }
+
+        private void openImagesInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayImages(true);
+            checkedListBox.Focus();     //Set focus back to the checkbox
         }
     }
 }
