@@ -255,7 +255,7 @@
             this.checkBoxNewWindow.Size = new System.Drawing.Size(232, 24);
             this.checkBoxNewWindow.TabIndex = 4;
             this.checkBoxNewWindow.TabStop = false;
-            this.checkBoxNewWindow.Text = "Open in Images New Window";
+            this.checkBoxNewWindow.Text = "Open Images in New Window";
             this.checkBoxNewWindow.UseVisualStyleBackColor = false;
             this.checkBoxNewWindow.CheckedChanged += new System.EventHandler(this.checkBoxNewWindow_CheckedChanged);
             // 

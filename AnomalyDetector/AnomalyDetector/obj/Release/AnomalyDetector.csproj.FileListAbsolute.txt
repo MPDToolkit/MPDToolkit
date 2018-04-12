@@ -26,4 +26,3 @@ F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\An
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.MainForm.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.ProcessForm.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.PythonCheckForm.resources
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Release\AnomalyDetector.csprojResolveAssemblyReference.cache
