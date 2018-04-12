@@ -84,7 +84,56 @@ namespace AnomalyDetector
 
         private void createDirectories()
         {
+            //Only create the directories when a folder has been selected
+            Directory.CreateDirectory(currentBatch);
+            Directory.CreateDirectory(copyDir);
+            Directory.CreateDirectory(detDir);
+            Directory.CreateDirectory(othDir);
+            File.Create(currentBatch + @"\batch_log.txt").Close();
+            File.Create(currentBatch + @"\checkbox.ini").Close();
+        }
 
+        private void btnBatchName_Click(object sender, EventArgs e)
+        {
+            //Get the next default batch name
+            batchName bn = new batchName(getNextBatchName());
+
+            //Prompt user to select a batch name
+            if (bn.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(bn.getText()))
+            {
+                batchName = bn.getText();
+                currentBatch = batchesDirectory + "\\" + batchName;
+
+                //Handles case where batch name already exists
+                int i = 0;
+                if (Directory.Exists(currentBatch))
+                {
+                    i++;
+                    while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
+                    {
+                        i++;
+                    }
+                    batchName += " (" + i.ToString() + ")";
+                }
+
+                //Update the window title
+                this.Text = batchName;
+
+                btnBatchName.Enabled = false;
+                btnBatchName.Visible = false;
+                btnSelectFolder.Enabled = true;
+                btnSelectFile.Enabled = true;
+                btnAnalyze.Enabled = true;
+
+                currentBatch = batchesDirectory + "\\" + batchName;
+                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
+                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
+                othDir = batchesDirectory + "\\" + batchName + "\\Other";
+
+                createDirectories();
+
+
+            }
         }
 
         //===================================================================================================================
@@ -96,14 +145,6 @@ namespace AnomalyDetector
             //Prompt user to select a batch name
             if (!String.IsNullOrEmpty(batchName))
             {          
-                currentBatch = batchesDirectory + "\\" + batchName;
-                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                othDir = batchesDirectory + "\\" + batchName + "\\Other";
-
-                //Update the window title
-                this.Text = batchName;
-
                 //Setup the file selection window
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
                 openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -120,27 +161,6 @@ namespace AnomalyDetector
                     {
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;          
                     }
-
-                    //Handles case where batch name already exists
-                    int i = 0;
-                    if (Directory.Exists(currentBatch))
-                    {
-                        i++;
-                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
-                        {
-                            i++;
-                        }         
-                         currentBatch = currentBatch + " (" + i.ToString() + ")";
-                    }
-
-
-                    //Only create the directories when a folder has been selected
-                    Directory.CreateDirectory(currentBatch);
-                    Directory.CreateDirectory(copyDir);
-                    Directory.CreateDirectory(detDir);
-                    Directory.CreateDirectory(othDir);
-                    File.Create(currentBatch + @"\batch_log.txt").Close();
-                    File.Create(currentBatch + @"\checkbox.ini").Close();
 
                     //Extracts the valid images from the selected image(s)
                     string path;
@@ -173,14 +193,7 @@ namespace AnomalyDetector
             //Prompt user to select a batch name
             if (!String.IsNullOrEmpty(batchName))
             {
-                currentBatch = batchesDirectory + "\\" + batchName;
-                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                othDir = batchesDirectory + "\\" + batchName + "\\Other";
-
-                //Update the window title
-                this.Text = batchName;
-
+               
                 //Prompt user to select a directory of images
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -191,27 +204,7 @@ namespace AnomalyDetector
                     {
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
                     }
-
-                    //Handles case where batch name already exists
-                    int i = 0;
-                    if (Directory.Exists(currentBatch))
-                    {
-                        i++;
-                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
-                        {
-                            i++;
-                        }
-                        currentBatch = currentBatch + " (" + i.ToString() + ")";
-                    }
-
-                    //Only create the directories when a folder has been selected
-                    Directory.CreateDirectory(currentBatch);
-                    Directory.CreateDirectory(copyDir);
-                    Directory.CreateDirectory(detDir);
-                    Directory.CreateDirectory(othDir);
-                    File.Create(currentBatch + @"\batch_log.txt").Close();
-                    File.Create(currentBatch + @"\checkbox.ini").Close();
-
+                    
                     //Extracts the valid images from the selected image(s)
                     string path;
                     foreach (string file in FileNames)
@@ -380,7 +373,14 @@ namespace AnomalyDetector
             if (!string.IsNullOrEmpty(line.Data))
             {
                 infoLogStr += line.Data + "\r\n";
-                Invoke(new Change(OnChange), line.Data, completed_files_ct, fileCt);
+                try
+                {
+                    Invoke(new Change(OnChange), line.Data, completed_files_ct, fileCt);
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -404,22 +404,7 @@ namespace AnomalyDetector
                 backendProcess.Kill();
         }
 
-        private void btnBatchName_Click(object sender, EventArgs e)
-        {
-            //Get the next default batch name
-            batchName bn = new batchName(getNextBatchName());
-
-            //Prompt user to select a batch name
-            if (bn.ShowDialog() == DialogResult.OK)
-            {
-                batchName = bn.getText();
-                btnBatchName.Enabled = false;
-                btnBatchName.Visible = false;
-                btnSelectFolder.Enabled = true;
-                btnSelectFile.Enabled = true;
-                btnAnalyze.Enabled = true;
-            }
-        }
+       
 
     }
 }

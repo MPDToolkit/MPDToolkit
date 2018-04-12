@@ -46,6 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.openImageNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOptimizedMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMarkImage = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -63,7 +65,9 @@
             this.menuBtnSelectResults,
             this.menuBtnNewAnalysis,
             this.menuOptions,
-            this.openImageNewWindow});
+            this.menuOptimizedMode,
+            this.openImageNewWindow,
+            this.menuMarkImage});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
@@ -139,6 +143,7 @@
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(174, 508);
             this.checkedListBox.TabIndex = 1;
+            this.checkedListBox.UseCompatibleTextRendering = true;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             this.checkedListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkedListBox_KeyDown);
@@ -251,6 +256,22 @@
             this.openImageNewWindow.Text = "Open Image in New Window";
             this.openImageNewWindow.Click += new System.EventHandler(this.openImagesInNewWindowToolStripMenuItem_Click);
             // 
+            // menuOptimizedMode
+            // 
+            this.menuOptimizedMode.Enabled = false;
+            this.menuOptimizedMode.Name = "menuOptimizedMode";
+            this.menuOptimizedMode.Size = new System.Drawing.Size(121, 24);
+            this.menuOptimizedMode.Text = "Optimized for: ";
+            // 
+            // menuMarkImage
+            // 
+            this.menuMarkImage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.menuMarkImage.Enabled = false;
+            this.menuMarkImage.Name = "menuMarkImage";
+            this.menuMarkImage.Size = new System.Drawing.Size(100, 24);
+            this.menuMarkImage.Text = "Mark Image";
+            this.menuMarkImage.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -300,5 +321,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openImageNewWindow;
+        private System.Windows.Forms.ToolStripMenuItem menuOptimizedMode;
+        private System.Windows.Forms.ToolStripMenuItem menuMarkImage;
     }
 }
