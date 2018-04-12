@@ -91,8 +91,9 @@ def DebrisDetect(img_path, Params, heatmap = None):
 	proc_img = cv2.bilateralFilter(proc_img, 9, Params["LineBilatBlurColor"], Params["LineBilatBlurSpace"])
 
     # Low sensitivity Hough transform
-	dst = cv2.Canny(proc_img, 100, 0)
+	dst = cv2.Canny(proc_img, Params["LineCannyEdgeLowerBound"], Params["LineCannyEdgeThreshold"])
 	cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
+
 	lines = cv2.HoughLines(dst, 0.7, float(np.pi / 180.0), int(avg_dim/2))
 
 	# If lines are found

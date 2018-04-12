@@ -35,7 +35,7 @@ paramFile = open(os.path.join( os.path.dirname(sys.argv[0]), "parameters.ini"), 
 
 #Default values in dictionaries
 RXDParams = {"RxThreshold":90.0, "RxChiThreshold":0.999}
-DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeDetection":-1, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
+DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeLowerBound":100,"LineCannyEdgeThreshold":0, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 #Add code to read in the parameters from the file Here to overwrite the defaults
 for line in paramFile:
     if line[0] == '#':
@@ -46,7 +46,7 @@ for line in paramFile:
         #see if parameter is in our dictionary
         #splitline[1] is 1 for default, 0 for User value
         if splitLine[0] in DXDParams and int(splitLine[1]) is 0:
-            DXDParams[splitLine[0]] = (int)splitLine[3]
+            DXDParams[splitLine[0]] = float(splitLine[3])
             #print("set parameter: %s", splitLine[0])
         if splitLine[0] in RXDParams and int(splitLine[1]) is 0:
             RXDParams[splitLine[0]] = float(splitLine[3])
