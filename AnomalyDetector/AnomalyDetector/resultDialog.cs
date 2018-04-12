@@ -52,10 +52,11 @@ namespace AnomalyDetector
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            //String temp = listBox1.GetItemText( listBox1.SelectedItem ).Split('\t')[1];
-            String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+            if(dataGridView1.SelectedRows.Count > 0)
+            {
+                String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+            }
             this.Close();
         }
 

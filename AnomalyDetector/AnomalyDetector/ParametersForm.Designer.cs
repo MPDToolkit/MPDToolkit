@@ -175,7 +175,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ParametersForm";
-            this.Text = "ParametersForm";
+            this.Text = "Edit Parameters";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ParametersForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.paramData)).EndInit();
             this.ResumeLayout(false);
