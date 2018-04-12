@@ -113,7 +113,7 @@
             this.paramData.RowHeadersVisible = false;
             this.paramData.Size = new System.Drawing.Size(757, 398);
             this.paramData.TabIndex = 2;
-            this.paramData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.paramData_CellValueChanged);
+            this.paramData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.paramData_CellContentClick);
             // 
             // Parameter
             // 
@@ -175,6 +175,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ParametersForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Parameters";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ParametersForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.paramData)).EndInit();

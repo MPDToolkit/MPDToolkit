@@ -238,9 +238,13 @@ namespace AnomalyDetector
                 //find image with selected checkbox item and show it in pictureBoxes 
                 if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 1) == true)
                     pictureBox2.ImageLocation = Path.Combine(selectResultsFolder, "Detected", checkedListBox.SelectedItem.ToString());
+                else
+                    pictureBox2.ImageLocation = "";
 
                 if (checkedListBox.SelectedItem != null && checkImages(checkedListBox.SelectedItem.ToString(), 0) == true)
                     pictureBox1.ImageLocation = Path.Combine(selectResultsFolder, "Copy", checkedListBox.SelectedItem.ToString());
+                else
+                    pictureBox1.ImageLocation = "";
 
                 pictureBox1.Update();
                 pictureBox2.Update();
@@ -525,6 +529,12 @@ namespace AnomalyDetector
         }
 
         private void openImagesInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayImages(true);
+            checkedListBox.Focus();     //Set focus back to the checkbox
+        }
+
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
         {
             displayImages(true);
             checkedListBox.Focus();     //Set focus back to the checkbox

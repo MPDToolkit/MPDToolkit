@@ -76,18 +76,6 @@ namespace AnomalyDetector
             this.Close();   
         }
 
-        private void paramData_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //Something was changed
-            saved_changes = false;
-            saveStatus.Text = "Not Saved...";       //TODO***look into checkbox not applying this label change
-
-            //Update checkboxes, excluding when form is loaded
-            if (e.RowIndex >= 0 && e.ColumnIndex == 3)
-                paramData.Rows[e.RowIndex].Cells[1].Value = false;
-            
-        }
-
         private void ParametersForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Last chance to save
@@ -96,6 +84,13 @@ namespace AnomalyDetector
                 if (MessageBox.Show("Any unsaved changes will be lost. Would you like to save before exitting?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     Save();
             }
+        }
+
+        private void paramData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Something was changed
+            saved_changes = false;
+            saveStatus.Text = "Not Saved...";       //TODO***look into checkbox not applying this label change
         }
     }
 }

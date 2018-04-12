@@ -37,6 +37,9 @@
             this.optimizeForViewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOptimizedMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.openImageNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMarkImage = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -45,9 +48,6 @@
             this.pictureBoxLegend = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.openImageNewWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOptimizedMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMarkImage = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -130,6 +130,30 @@
             this.analysisToolStripMenuItem.Text = "Analysis";
             this.analysisToolStripMenuItem.Click += new System.EventHandler(this.analysisToolStripMenuItem_Click);
             // 
+            // menuOptimizedMode
+            // 
+            this.menuOptimizedMode.Enabled = false;
+            this.menuOptimizedMode.Name = "menuOptimizedMode";
+            this.menuOptimizedMode.Size = new System.Drawing.Size(121, 24);
+            this.menuOptimizedMode.Text = "Optimized for: ";
+            // 
+            // openImageNewWindow
+            // 
+            this.openImageNewWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.openImageNewWindow.Name = "openImageNewWindow";
+            this.openImageNewWindow.Size = new System.Drawing.Size(212, 24);
+            this.openImageNewWindow.Text = "Open Image in New Window";
+            this.openImageNewWindow.Click += new System.EventHandler(this.openImagesInNewWindowToolStripMenuItem_Click);
+            // 
+            // menuMarkImage
+            // 
+            this.menuMarkImage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.menuMarkImage.Enabled = false;
+            this.menuMarkImage.Name = "menuMarkImage";
+            this.menuMarkImage.Size = new System.Drawing.Size(100, 24);
+            this.menuMarkImage.Text = "Mark Image";
+            this.menuMarkImage.Visible = false;
+            // 
             // checkedListBox
             // 
             this.checkedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -159,6 +183,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
             // pictureBox2
             // 
@@ -171,6 +196,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
             // tableLayoutPanel1
             // 
@@ -247,30 +273,6 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "High Anomaly";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // openImageNewWindow
-            // 
-            this.openImageNewWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.openImageNewWindow.Name = "openImageNewWindow";
-            this.openImageNewWindow.Size = new System.Drawing.Size(212, 24);
-            this.openImageNewWindow.Text = "Open Image in New Window";
-            this.openImageNewWindow.Click += new System.EventHandler(this.openImagesInNewWindowToolStripMenuItem_Click);
-            // 
-            // menuOptimizedMode
-            // 
-            this.menuOptimizedMode.Enabled = false;
-            this.menuOptimizedMode.Name = "menuOptimizedMode";
-            this.menuOptimizedMode.Size = new System.Drawing.Size(121, 24);
-            this.menuOptimizedMode.Text = "Optimized for: ";
-            // 
-            // menuMarkImage
-            // 
-            this.menuMarkImage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.menuMarkImage.Enabled = false;
-            this.menuMarkImage.Name = "menuMarkImage";
-            this.menuMarkImage.Size = new System.Drawing.Size(100, 24);
-            this.menuMarkImage.Text = "Mark Image";
-            this.menuMarkImage.Visible = false;
             // 
             // MainForm
             // 
