@@ -18,6 +18,7 @@ namespace AnomalyDetector
     public partial class ProcessForm : Form
     {
         String batchName;
+        string[] selectedFileNames;
         private string workingDirectory;
         private string batchesDirectory;
         private string currentBatch;
@@ -136,6 +137,32 @@ namespace AnomalyDetector
             }
         }
 
+        private delegate void LabelInfo(string file, string progress);
+        private void UpdateLabelInfo(string file, string progress)
+        {
+            filesSelected.Text = file + fileCt;
+            lblProgressBar.Text = progress;
+            lblProgressBar.Update();
+        }
+
+        private void run_copy(object sender, DoWorkEventArgs e)
+        {
+            string path;
+            foreach (string file in selectedFileNames)
+            {
+                if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                {
+                    path = Path.Combine(copyDir, Path.GetFileName(file));
+                    File.Copy(file, path, true);
+                    fileCt++;
+                }
+            }
+
+            if (fileCt > 0)
+                Invoke(new LabelInfo(UpdateLabelInfo), "Files Selected: ", "Ready to analyze...");
+
+        }
+
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
         //===================================================================================================================
@@ -163,21 +190,30 @@ namespace AnomalyDetector
                     }
 
                     //Extracts the valid images from the selected image(s)
-                    string path;
-                    foreach (string file in openFileDialog1.FileNames)
-                    {
-                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
-                        {
-                            path = Path.Combine(copyDir, Path.GetFileName(file));
-                            File.Copy(file, path, true);
-                            fileCt++;
-                        }
-                    }
+                    selectedFileNames = openFileDialog1.FileNames;
+
+                    lblProgressBar.Text = "Copying Images...";
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_copy);
+                    worker.RunWorkerAsync(this);
+
+                    //string path;
+                    //foreach (string file in openFileDialog1.FileNames)
+                    //{
+                    //    if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                    //    {
+                    //        path = Path.Combine(copyDir, Path.GetFileName(file));
+                    //        File.Copy(file, path, true);
+                    //        fileCt++;
+                    //    }
+                    //}
 
                     //Updates labels on the form
-                    filesSelected.Text = "Files Selected: " + fileCt;
-                    lblProgressBar.Text = "Ready to analyze...";
-                    lblProgressBar.Update();
+                    //filesSelected.Text = "Files Selected: " + fileCt;
+                    //lblProgressBar.Text = "Ready to analyze...";
+                    //lblProgressBar.Update();
                 }
             }
         }
@@ -204,24 +240,34 @@ namespace AnomalyDetector
                     {
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
                     }
-                    
+
+
+                    selectedFileNames = FileNames;
+
+                    lblProgressBar.Text = "Copying Images...";
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_copy);
+                    worker.RunWorkerAsync(this);
+
                     //Extracts the valid images from the selected image(s)
-                    string path;
-                    foreach (string file in FileNames)
-                    {
-                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
-                        {
-                            path = Path.Combine(copyDir, Path.GetFileName(file));
-                            File.Copy(file, path, true);
-                            fileCt++;
-                        }
-                    }
+                    //string path;
+                    //foreach (string file in FileNames)
+                    //{
+                    //    if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                    //    {
+                    //        path = Path.Combine(copyDir, Path.GetFileName(file));
+                    //        File.Copy(file, path, true);
+                    //        fileCt++;
+                    //    }
+                    //}
 
                     //Update labels on the form
-                    filesSelected.Text = "Files Selected: " + fileCt;
-                    if( fileCt > 0)
-                        lblProgressBar.Text = "Ready to analyze...";
-                    lblProgressBar.Update();
+                    //filesSelected.Text = "Files Selected: " + fileCt;
+                    //if( fileCt > 0)
+                    //    lblProgressBar.Text = "Ready to analyze...";
+                    //lblProgressBar.Update();
                 }
             }
         }
