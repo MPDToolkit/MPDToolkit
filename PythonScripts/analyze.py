@@ -35,7 +35,7 @@ paramFile = open(os.path.join( os.path.dirname(sys.argv[0]), "parameters.ini"), 
 
 #Default values in dictionaries
 RXDParams = {"RxThreshold":90.0, "RxChiThreshold":0.999}
-DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeLowerBound":100,"LineCannyEdgeThreshold":0, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
+DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeLowerBound":100,"LineCannyEdgeThreshold":0, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 #Add code to read in the parameters from the file Here to overwrite the defaults
 for line in paramFile:
     if line[0] == '#':
