@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcessForm));
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.btnSelectFolder = new System.Windows.Forms.Button();
@@ -160,11 +161,12 @@
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.btnAnalyze);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(580, 275);
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ProcessForm";
+            this.Text = "Steve";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProcessForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PythonCheckForm));
             this.infoLabel = new System.Windows.Forms.Label();
             this.pythonLink = new System.Windows.Forms.LinkLabel();
             this.btnClose = new System.Windows.Forms.Button();
@@ -81,6 +82,7 @@
             this.Controls.Add(this.pythonLink);
             this.Controls.Add(this.infoLabel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(365, 110);
             this.Name = "PythonCheckForm";
