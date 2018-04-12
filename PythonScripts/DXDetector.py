@@ -233,10 +233,6 @@ def DebrisDetect(img_path, Params, heatmap = None):
 					close = True
 					break
 			if close:
-				if heatmap is not None:
-					cv2.circle(heatmap_copy, (x,y), 3, 255, 10)
-				else:
-					cv2.circle(src, (x,y), 3, 255, 10)
 				kept_corners.append(i)
 
 		# This list is to count the number of circles in a polygon when connected
@@ -254,10 +250,6 @@ def DebrisDetect(img_path, Params, heatmap = None):
 				pix2 = (x2, y2, 0)
 				dist = distance.euclidean(pix1, pix2)
 				if dist < Params["CornerMaxDistance"] and dist != 0:
-					if heatmap is not None:
-						cv2.line(heatmap_copy, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
-					else:
-						cv2.line(src, (x,y), (x2,y2), (0,0,255), 1, cv2.LINE_AA)
 					for k in connected_pairs:
 						if (x,y) in k and (x2,y2) in k:
 							break;
@@ -273,8 +265,20 @@ def DebrisDetect(img_path, Params, heatmap = None):
 			#Stop the timer
 			t.stop()
 			if heatmap is not None:
+				for poly in connected_pairs:
+					if len(poly) > 3:
+						for point_a in poly:
+							for point_b in poly:
+								if point_a is not point_b:
+									cv2.line(heatmap_copy, point_a, point_b, (0,0,255), 1, cv2.LINE_AA)
 				return result_name, heatmap_copy, t.get_time(1000), 'D'
 			else:
+				for poly in connected_pairs:
+					if len(poly) > 3:
+						for point_a in poly:
+							for point_b in poly:
+								if point_a is not point_b:
+									cv2.line(src, point_a, point_b, (0,0,255), 1, cv2.LINE_AA)
 				return result_name, src, t.get_time(1000), 'D'
 
 		else:
