@@ -34,14 +34,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParametersForm));
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.paramData = new System.Windows.Forms.DataGridView();
-            this.saveStatus = new System.Windows.Forms.Label();
             this.Parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DefaultChkBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.DefaultValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.paramData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,17 +115,6 @@
             this.paramData.TabIndex = 2;
             this.paramData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.paramData_CellValueChanged);
             // 
-            // saveStatus
-            // 
-            this.saveStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveStatus.Location = new System.Drawing.Point(12, 431);
-            this.saveStatus.Name = "saveStatus";
-            this.saveStatus.Size = new System.Drawing.Size(517, 25);
-            this.saveStatus.TabIndex = 3;
-            this.saveStatus.Text = "Save Status";
-            this.saveStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // Parameter
             // 
             this.Parameter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -161,6 +151,17 @@
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
             // 
+            // saveStatus
+            // 
+            this.saveStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveStatus.Location = new System.Drawing.Point(12, 431);
+            this.saveStatus.Name = "saveStatus";
+            this.saveStatus.Size = new System.Drawing.Size(517, 25);
+            this.saveStatus.TabIndex = 3;
+            this.saveStatus.Text = "Save Status";
+            this.saveStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ParametersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -171,6 +172,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ParametersForm";
             this.Text = "ParametersForm";

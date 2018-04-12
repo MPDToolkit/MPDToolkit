@@ -245,38 +245,42 @@ namespace AnomalyDetector
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            //Disable buttons
-            btnSelectFolder.Enabled = false;
-            btnSelectFile.Enabled = false;
-            btnAnalyze.Enabled = false;
-
-            //Inform user that images are being analyzed
-            lblProgressBar.Text = "Initializing...";
-            lblProgressBar.Update();
-
-            string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
-
-            if(currentBatch != null)
+            if(fileCt > 0)
             {
-                ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
-                startConfig.UseShellExecute = false;
-                startConfig.RedirectStandardOutput = true;
-                startConfig.RedirectStandardError = true;
-                startConfig.CreateNoWindow = true;
+                //Disable buttons
+                btnSelectFolder.Enabled = false;
+                btnSelectFile.Enabled = false;
+                btnAnalyze.Enabled = false;
 
-                backendProcess = new Process { StartInfo = startConfig };
+                //Inform user that images are being analyzed
+                lblProgressBar.Text = "Initializing...";
+                lblProgressBar.Update();
 
-                //Create output handlers
-                backendProcess.OutputDataReceived += redirectHandler;
-                backendProcess.ErrorDataReceived += redirectHandler;
-                backendProcess.EnableRaisingEvents = true;
+                string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
 
-                //Create a background thread for the progress bar 
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += new DoWorkEventHandler(run_analyze);
-                worker.RunWorkerAsync(this);
-                
+                if (currentBatch != null)
+                {
+                    ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
+                    startConfig.UseShellExecute = false;
+                    startConfig.RedirectStandardOutput = true;
+                    startConfig.RedirectStandardError = true;
+                    startConfig.CreateNoWindow = true;
+
+                    backendProcess = new Process { StartInfo = startConfig };
+
+                    //Create output handlers
+                    backendProcess.OutputDataReceived += redirectHandler;
+                    backendProcess.ErrorDataReceived += redirectHandler;
+                    backendProcess.EnableRaisingEvents = true;
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_analyze);
+                    worker.RunWorkerAsync(this);
+
+                }
             }
+            
         }
 
         //===================================================================================================================

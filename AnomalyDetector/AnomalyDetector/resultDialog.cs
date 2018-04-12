@@ -36,7 +36,7 @@ namespace AnomalyDetector
             for (int i = 0; i < directories.Length; i++)
             {
                 int num_checked = System.IO.File.ReadAllLines(directories[i] + @"\checkbox.ini").Count<string>();
-                int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Copy").Count<string>();
+                int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Detected").Count<string>();
 
                 //listBox1.Items.Add( num_checked.ToString() + "/" + num_total.ToString() + "\t" + System.IO.Path.GetFileName(directories[i]));
 
