@@ -86,7 +86,7 @@
             this.MinimumSize = new System.Drawing.Size(328, 144);
             this.Name = "batchName";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Batch Name";
+            this.Text = "Select Batch Name";
             this.Load += new System.EventHandler(this.batchName_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

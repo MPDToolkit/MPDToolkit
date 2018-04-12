@@ -166,7 +166,7 @@
             this.MinimumSize = new System.Drawing.Size(580, 275);
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Steve";
+            this.Text = "Analysis";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProcessForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

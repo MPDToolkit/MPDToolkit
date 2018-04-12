@@ -233,7 +233,8 @@ namespace AnomalyDetector
 
                     //Update labels on the form
                     filesSelected.Text = "Files Selected: " + fileCt;
-                    lblProgressBar.Text = "Ready to analyze...";
+                    if( fileCt > 0)
+                        lblProgressBar.Text = "Ready to analyze...";
                     lblProgressBar.Update();
                 }
             }

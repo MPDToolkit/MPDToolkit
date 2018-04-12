@@ -80,12 +80,12 @@ namespace AnomalyDetector
         {
             //Something was changed
             saved_changes = false;
+            saveStatus.Text = "Not Saved...";       //TODO***look into checkbox not applying this label change
 
             //Update checkboxes, excluding when form is loaded
-            if(e.RowIndex >= 0 && e.ColumnIndex == 3)
+            if (e.RowIndex >= 0 && e.ColumnIndex == 3)
                 paramData.Rows[e.RowIndex].Cells[1].Value = false;
-
-            saveStatus.Text = "Not Saved...";
+            
         }
 
         private void ParametersForm_FormClosing(object sender, FormClosingEventArgs e)
