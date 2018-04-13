@@ -89,6 +89,7 @@
     <Compile Include="batchName.Designer.cs">
       <DependentUpon>batchName.cs</DependentUpon>
     </Compile>
+    <Compile Include="SystemLog.cs" />
     <Compile Include="ParametersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,9 +161,12 @@
     </Compile>
     <None Include="Resources\checkPythonPackages.bat" />
     <None Include="Resources\checkPythonVersion.bat" />
+    <None Include="Resources\codes.ini" />
+    <None Include="Resources\error.log" />
     <None Include="Resources\installPythonPackages.bat" />
     <None Include="Resources\parameters.ini" />
     <None Include="Resources\settings.ini" />
+    <None Include="Resources\status.log" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

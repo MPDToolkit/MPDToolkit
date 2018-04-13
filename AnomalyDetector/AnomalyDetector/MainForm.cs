@@ -1,5 +1,4 @@
-﻿using AnomalyDetector;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SystemLog;
 
 namespace AnomalyDetector
 {
@@ -42,7 +42,9 @@ namespace AnomalyDetector
         public Settings settings = new Settings();     //Values read from the 'settings.ini'
         public string settingsPath = @"settings.ini";
 
-        //Parameters
+        //SystemLog
+        ErrorLog errorLog = new ErrorLog();
+        StatusLog statusLog = new StatusLog();
 
 
         //Result viewing variables
@@ -70,6 +72,9 @@ namespace AnomalyDetector
 
             //Update settings.ini
             UpdateSettings();
+
+            statusLog.Report("0000");
+            errorLog.Report("0000");
 
         }
 
