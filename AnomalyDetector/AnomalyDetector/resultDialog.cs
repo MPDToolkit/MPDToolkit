@@ -30,17 +30,25 @@ namespace AnomalyDetector
 
         public void LoadBatches()
         {
-            String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches");
-            String[] directories = System.IO.Directory.GetDirectories(Path);
-
-            for (int i = 0; i < directories.Length; i++)
+            try
             {
-                int num_checked = System.IO.File.ReadAllLines(directories[i] + @"\checkbox.ini").Count<string>();
-                int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Detected").Count<string>();
 
-                //listBox1.Items.Add( num_checked.ToString() + "/" + num_total.ToString() + "\t" + System.IO.Path.GetFileName(directories[i]));
+                String Path = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches");
+                String[] directories = System.IO.Directory.GetDirectories(Path);
 
-                dataGridView1.Rows.Add( System.IO.Path.GetFileName(directories[i]), num_checked, num_total );
+                for (int i = 0; i < directories.Length; i++)
+                {
+                    int num_checked = System.IO.File.ReadAllLines(directories[i] + @"\checkbox.ini").Count<string>();
+                    int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Detected").Count<string>();
+
+                    //listBox1.Items.Add( num_checked.ToString() + "/" + num_total.ToString() + "\t" + System.IO.Path.GetFileName(directories[i]));
+
+                    dataGridView1.Rows.Add( System.IO.Path.GetFileName(directories[i]), num_checked, num_total );
+
+                }
+            }
+            catch
+            {
 
             }
 
@@ -52,12 +60,20 @@ namespace AnomalyDetector
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(dataGridView1.SelectedRows.Count > 0)
+            try
             {
-                String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+
+                if(dataGridView1.SelectedRows.Count > 0)
+                {
+                    String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+                }
+                this.Close();
             }
-            this.Close();
+            catch
+            {
+
+            }
         }
 
         //===================================================================================================================

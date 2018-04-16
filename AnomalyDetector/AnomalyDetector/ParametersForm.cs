@@ -29,17 +29,25 @@ namespace AnomalyDetector
         //Read the parameters.ini file
         private void Read()
         {
-            string[] entries = File.ReadAllLines(@"bin\parameters.ini");
-            foreach (string str in entries)
+            try
             {
-                //Skip comment lines
-                if (str.StartsWith("#")) continue;
 
-                //Remove any remaining comment sections
-                string p_str = str.Split('#')[0];
+                string[] entries = File.ReadAllLines(@"bin\parameters.ini");
+                foreach (string str in entries)
+                {
+                    //Skip comment lines
+                    if (str.StartsWith("#")) continue;
 
-                string[] opt = p_str.Split('=');      //name=default=value
-                paramData.Rows.Add( opt[0], Convert.ToInt32(opt[1]), Convert.ToDouble(opt[2]), Convert.ToDouble(opt[3]));
+                    //Remove any remaining comment sections
+                    string p_str = str.Split('#')[0];
+
+                    string[] opt = p_str.Split('=');      //name=default=value
+                    paramData.Rows.Add( opt[0], Convert.ToInt32(opt[1]), Convert.ToDouble(opt[2]), Convert.ToDouble(opt[3]));
+                }
+            }
+            catch(Exception)
+            {
+
             }
 
         }
@@ -47,21 +55,29 @@ namespace AnomalyDetector
         //Save to the parameters.ini file
         private void Save()
         {
-            paramList.Clear();
-            if (paramData.Rows.Count > 0)
+            try
             {
-                //Create array of strings
-                foreach (DataGridViewRow row in paramData.Rows)
+
+                paramList.Clear();
+                if (paramData.Rows.Count > 0)
                 {
-                    paramList.Add(row.Cells[0].Value + "=" + Convert.ToInt32(row.Cells[1].Value).ToString() + "=" + Convert.ToDouble(row.Cells[2].Value).ToString() + "=" + Convert.ToDouble(row.Cells[3].Value).ToString());
+                    //Create array of strings
+                    foreach (DataGridViewRow row in paramData.Rows)
+                    {
+                        paramList.Add(row.Cells[0].Value + "=" + Convert.ToInt32(row.Cells[1].Value).ToString() + "=" + Convert.ToDouble(row.Cells[2].Value).ToString() + "=" + Convert.ToDouble(row.Cells[3].Value).ToString());
+                    }
+
+                    //Write string array to file
+                    File.WriteAllLines(@"bin\parameters.ini", paramList.ToArray());
                 }
 
-                //Write string array to file
-                File.WriteAllLines(@"bin\parameters.ini", paramList.ToArray());
+                saved_changes = true;
+                saveStatus.Text = "Saved...";
             }
+            catch(Exception)
+            {
 
-            saved_changes = true;
-            saveStatus.Text = "Saved...";
+            }
 
         }
 
