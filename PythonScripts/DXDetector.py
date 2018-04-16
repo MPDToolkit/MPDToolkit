@@ -115,7 +115,7 @@ def DebrisDetect(img_path, Params):
 		t.stop()
 
 		dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
-		stats = ((dx_scores.sum() / dx_scores.max()) / dx_scores.size ) * 100.0
+		stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
 		return result_name, dx_scores, t.get_time(1000), stats, 'D'
 
 		#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
@@ -260,7 +260,7 @@ def DebrisDetect(img_path, Params):
 								cv2.line(heatmap, point_a, point_b, color, 1, cv2.LINE_AA)
 
 			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
-			stats = ((dx_scores.sum() / dx_scores.max()) / dx_scores.size ) * 100.0
+			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
 			return result_name, dx_scores, t.get_time(1000), stats, 'D'
 
 			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
@@ -270,7 +270,7 @@ def DebrisDetect(img_path, Params):
 			t.stop()
 
 			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
-			stats = ((dx_scores.sum() / dx_scores.max()) / dx_scores.size ) * 100.0
+			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
 			return result_name, dx_scores, t.get_time(1000), stats, 'O'
 
 			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0

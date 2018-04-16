@@ -610,7 +610,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Anomaly Detector"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{613F6551-3296-4670-8ED5-73EBC2E09334}"
+        "PackageCode" = "8:{0C4F86AF-DB9E-4CB8-925A-B88EE24196AA}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -741,7 +741,7 @@
             "Target" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
             "Folder" = "8:_BA591C6FD0974B9BAFFAF7903687F02D"
             "WorkingFolder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
-            "Icon" = "8:"
+            "Icon" = "8:_ABFCF4D7B9FE4DD682CE4875E2D03670"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D432678E247C42D19BAD205DF6244D74"
@@ -755,7 +755,7 @@
             "Target" = "8:_0B94A19D2B1E4001BA70800E8ACD0795"
             "Folder" = "8:_857E9E3F60F34857AF4CE107A8AA8A85"
             "WorkingFolder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
-            "Icon" = "8:"
+            "Icon" = "8:_ABFCF4D7B9FE4DD682CE4875E2D03670"
             "Feature" = "8:"
             }
         }
@@ -1159,7 +1159,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B94A19D2B1E4001BA70800E8ACD0795"
             {
-            "SourcePath" = "8:..\\AnomalyDetector\\obj\\Debug\\AnomalyDetector.exe"
+            "SourcePath" = "8:..\\AnomalyDetector\\obj\\x64\\Release\\AnomalyDetector.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
