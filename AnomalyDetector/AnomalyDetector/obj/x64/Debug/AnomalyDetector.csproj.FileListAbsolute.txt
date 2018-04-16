@@ -1,0 +1,15 @@
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Debug\AnomalyDetector.exe.config
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Debug\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Debug\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.csprojResolveAssemblyReference.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.batchName.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.MainForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.ParametersForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.ProcessForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.Properties.Resources.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.PythonCheckForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.resultDialog.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.csproj.GenerateResource.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Debug\AnomalyDetector.pdb
