@@ -45,7 +45,7 @@ namespace AnomalyDetector
                     paramData.Rows.Add( opt[0], Convert.ToInt32(opt[1]), Convert.ToDouble(opt[2]), Convert.ToDouble(opt[3]));
                 }
             }
-            catch(Exception)
+            catch
             {
 
             }

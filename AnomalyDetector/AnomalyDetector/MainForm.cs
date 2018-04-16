@@ -115,7 +115,7 @@ namespace AnomalyDetector
                         case "BatchesPath":
                             {
                                 settings.BatchesPath = opt[1];
-                                if (string.IsNullOrEmpty(settings.BatchesPath))
+                                if (string.IsNullOrEmpty(settings.BatchesPath) || !File.Exists(settings.BatchesPath))
                                 {
                                     settings.BatchesPath = Path.Combine(Environment.CurrentDirectory, "Batches");
                                 }
@@ -124,7 +124,7 @@ namespace AnomalyDetector
                         case "BinPath":
                             {
                                 settings.BinPath = opt[1];
-                                if (string.IsNullOrEmpty(settings.BinPath))
+                                if (string.IsNullOrEmpty(settings.BinPath) || !File.Exists(settings.BinPath))
                                 {
                                     settings.BinPath = Path.Combine(Environment.CurrentDirectory, "bin");
                                 }
