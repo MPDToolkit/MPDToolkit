@@ -36,7 +36,7 @@ namespace AnomalyDetector
             for (int i = 0; i < directories.Length; i++)
             {
                 int num_checked = System.IO.File.ReadAllLines(directories[i] + @"\checkbox.ini").Count<string>();
-                int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Copy").Count<string>();
+                int num_total = System.IO.Directory.GetFiles(directories[i] + @"\Detected").Count<string>();
 
                 //listBox1.Items.Add( num_checked.ToString() + "/" + num_total.ToString() + "\t" + System.IO.Path.GetFileName(directories[i]));
 
@@ -52,10 +52,11 @@ namespace AnomalyDetector
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            //String temp = listBox1.GetItemText( listBox1.SelectedItem ).Split('\t')[1];
-            String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+            if(dataGridView1.SelectedRows.Count > 0)
+            {
+                String temp = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                Selection = System.IO.Path.Combine(Environment.CurrentDirectory, "Batches", temp);
+            }
             this.Close();
         }
 

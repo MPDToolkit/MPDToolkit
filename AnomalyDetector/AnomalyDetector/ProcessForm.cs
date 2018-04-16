@@ -17,6 +17,8 @@ namespace AnomalyDetector
 
     public partial class ProcessForm : Form
     {
+        String batchName;
+        string[] selectedFileNames;
         private string workingDirectory;
         private string batchesDirectory;
         private string currentBatch;
@@ -28,6 +30,7 @@ namespace AnomalyDetector
         private string othDir;
         private int completed_files_ct = 0;
         private string infoLogStr;
+        private int num_threads = 1;
 
         private List<string> batch_names = new List<string>();
 
@@ -43,6 +46,9 @@ namespace AnomalyDetector
             batchesDirectory = Path.Combine(workingDirectory, "Batches");
 
             pythonPath = settings.PythonPath;
+
+            if (settings.AllowMultiThread) num_threads = System.Environment.ProcessorCount;
+            else num_threads = 1;
         }
 
         //===================================================================================================================
@@ -79,6 +85,81 @@ namespace AnomalyDetector
 
         private void createDirectories()
         {
+            //Only create the directories when a folder has been selected
+            Directory.CreateDirectory(currentBatch);
+            Directory.CreateDirectory(copyDir);
+            Directory.CreateDirectory(detDir);
+            Directory.CreateDirectory(othDir);
+            File.Create(currentBatch + @"\batch_log.txt").Close();
+            File.Create(currentBatch + @"\checkbox.ini").Close();
+        }
+
+        private void btnBatchName_Click(object sender, EventArgs e)
+        {
+            //Get the next default batch name
+            batchName bn = new batchName(getNextBatchName());
+
+            //Prompt user to select a batch name
+            if (bn.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(bn.getText()))
+            {
+                batchName = bn.getText();
+                currentBatch = batchesDirectory + "\\" + batchName;
+
+                //Handles case where batch name already exists
+                int i = 0;
+                if (Directory.Exists(currentBatch))
+                {
+                    i++;
+                    while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
+                    {
+                        i++;
+                    }
+                    batchName += " (" + i.ToString() + ")";
+                }
+
+                //Update the window title
+                this.Text = batchName;
+
+                btnBatchName.Enabled = false;
+                btnBatchName.Visible = false;
+                btnSelectFolder.Enabled = true;
+                btnSelectFile.Enabled = true;
+                btnAnalyze.Enabled = true;
+
+                currentBatch = batchesDirectory + "\\" + batchName;
+                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
+                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
+                othDir = batchesDirectory + "\\" + batchName + "\\Other";
+
+                createDirectories();
+
+
+            }
+        }
+
+        private delegate void LabelInfo(string file, string progress);
+        private void UpdateLabelInfo(string file, string progress)
+        {
+            filesSelected.Text = file + fileCt;
+            lblProgressBar.Text = progress;
+            lblProgressBar.Update();
+        }
+
+        private void run_copy(object sender, DoWorkEventArgs e)
+        {
+            string path;
+            foreach (string file in selectedFileNames)
+            {
+                if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                {
+                    path = Path.Combine(copyDir, Path.GetFileName(file));
+                    File.Copy(file, path, true);
+                    fileCt++;
+                }
+            }
+
+            if (fileCt > 0)
+                Invoke(new LabelInfo(UpdateLabelInfo), "Files Selected: ", "Ready to analyze...");
 
         }
 
@@ -88,21 +169,9 @@ namespace AnomalyDetector
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
-            //get the next default batch name
-            batchName bn = new batchName(getNextBatchName());
-
             //Prompt user to select a batch name
-            if (bn.ShowDialog() == DialogResult.OK)
-            {
-                string batchName = bn.getText();           
-                currentBatch = batchesDirectory + "\\" + batchName;
-                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                othDir = batchesDirectory + "\\" + batchName + "\\Other";
-
-                //Update the window title
-                this.Text = batchName;
-
+            if (!String.IsNullOrEmpty(batchName))
+            {          
                 //Setup the file selection window
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
                 openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -120,43 +189,31 @@ namespace AnomalyDetector
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;          
                     }
 
-                    //Handles case where batch name already exists
-                    int i = 0;
-                    if (Directory.Exists(currentBatch))
-                    {
-                        i++;
-                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
-                        {
-                            i++;
-                        }         
-                         currentBatch = currentBatch + " (" + i.ToString() + ")";
-                    }
-
-
-                    //Only create the directories when a folder has been selected
-                    Directory.CreateDirectory(currentBatch);
-                    Directory.CreateDirectory(copyDir);
-                    Directory.CreateDirectory(detDir);
-                    Directory.CreateDirectory(othDir);
-                    File.Create(currentBatch + @"\batch_log.txt").Close();
-                    File.Create(currentBatch + @"\checkbox.ini").Close();
-
                     //Extracts the valid images from the selected image(s)
-                    string path;
-                    foreach (string file in openFileDialog1.FileNames)
-                    {
-                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
-                        {
-                            path = Path.Combine(copyDir, Path.GetFileName(file));
-                            File.Copy(file, path, true);
-                            fileCt++;
-                        }
-                    }
+                    selectedFileNames = openFileDialog1.FileNames;
+
+                    lblProgressBar.Text = "Copying Images...";
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_copy);
+                    worker.RunWorkerAsync(this);
+
+                    //string path;
+                    //foreach (string file in openFileDialog1.FileNames)
+                    //{
+                    //    if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                    //    {
+                    //        path = Path.Combine(copyDir, Path.GetFileName(file));
+                    //        File.Copy(file, path, true);
+                    //        fileCt++;
+                    //    }
+                    //}
 
                     //Updates labels on the form
-                    filesSelected.Text = "Files Selected: " + fileCt;
-                    lblProgressBar.Text = "Ready to analyze...";
-                    lblProgressBar.Update();
+                    //filesSelected.Text = "Files Selected: " + fileCt;
+                    //lblProgressBar.Text = "Ready to analyze...";
+                    //lblProgressBar.Update();
                 }
             }
         }
@@ -169,21 +226,10 @@ namespace AnomalyDetector
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
-            //Get the next default batch name
-            batchName bn = new batchName(getNextBatchName());
-
             //Prompt user to select a batch name
-            if (bn.ShowDialog() == DialogResult.OK)
+            if (!String.IsNullOrEmpty(batchName))
             {
-                String batchName = bn.getText();
-                currentBatch = batchesDirectory + "\\" + batchName;
-                copyDir = batchesDirectory + "\\" + batchName + "\\Copy";
-                detDir = batchesDirectory + "\\" + batchName + "\\Detected";
-                othDir = batchesDirectory + "\\" + batchName + "\\Other";
-
-                //Update the window title
-                this.Text = batchName;
-
+               
                 //Prompt user to select a directory of images
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -195,42 +241,33 @@ namespace AnomalyDetector
                         if (MessageBox.Show("It is not recommended to run more than 1000 files. Speed is not guaranteed.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
                     }
 
-                    //Handles case where batch name already exists
-                    int i = 0;
-                    if (Directory.Exists(currentBatch))
-                    {
-                        i++;
-                        while (Directory.Exists(currentBatch + " (" + i.ToString() + ")"))
-                        {
-                            i++;
-                        }
-                        currentBatch = currentBatch + " (" + i.ToString() + ")";
-                    }
 
-                    //Only create the directories when a folder has been selected
-                    Directory.CreateDirectory(currentBatch);
-                    Directory.CreateDirectory(copyDir);
-                    Directory.CreateDirectory(detDir);
-                    Directory.CreateDirectory(othDir);
-                    File.Create(currentBatch + @"\batch_log.txt").Close();
-                    File.Create(currentBatch + @"\checkbox.ini").Close();
+                    selectedFileNames = FileNames;
+
+                    lblProgressBar.Text = "Copying Images...";
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_copy);
+                    worker.RunWorkerAsync(this);
 
                     //Extracts the valid images from the selected image(s)
-                    string path;
-                    foreach (string file in FileNames)
-                    {
-                        if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
-                        {
-                            path = Path.Combine(copyDir, Path.GetFileName(file));
-                            File.Copy(file, path, true);
-                            fileCt++;
-                        }
-                    }
+                    //string path;
+                    //foreach (string file in FileNames)
+                    //{
+                    //    if (file.ToLower().EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                    //    {
+                    //        path = Path.Combine(copyDir, Path.GetFileName(file));
+                    //        File.Copy(file, path, true);
+                    //        fileCt++;
+                    //    }
+                    //}
 
                     //Update labels on the form
-                    filesSelected.Text = "Files Selected: " + fileCt;
-                    lblProgressBar.Text = "Ready to analyze...";
-                    lblProgressBar.Update();
+                    //filesSelected.Text = "Files Selected: " + fileCt;
+                    //if( fileCt > 0)
+                    //    lblProgressBar.Text = "Ready to analyze...";
+                    //lblProgressBar.Update();
                 }
             }
         }
@@ -241,39 +278,42 @@ namespace AnomalyDetector
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            //Disable buttons
-            btnSelectFolder.Enabled = false;
-            btnSelectFile.Enabled = false;
-            btnAnalyze.Enabled = false;
-
-            //Inform user that images are being analyzed
-            lblProgressBar.Text = "Initializing...";
-            lblProgressBar.Update();
-
-            int num_threads = 1;
-            string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
-
-            if(currentBatch != null)
+            if(fileCt > 0)
             {
-                ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
-                startConfig.UseShellExecute = false;
-                startConfig.RedirectStandardOutput = true;
-                startConfig.RedirectStandardError = true;
-                startConfig.CreateNoWindow = true;
+                //Disable buttons
+                btnSelectFolder.Enabled = false;
+                btnSelectFile.Enabled = false;
+                btnAnalyze.Enabled = false;
 
-                backendProcess = new Process { StartInfo = startConfig };
+                //Inform user that images are being analyzed
+                lblProgressBar.Text = "Initializing...";
+                lblProgressBar.Update();
 
-                //Create output handlers
-                backendProcess.OutputDataReceived += redirectHandler;
-                backendProcess.ErrorDataReceived += redirectHandler;
-                backendProcess.EnableRaisingEvents = true;
+                string pythonArgs = "\"" + @workingDirectory + @"\bin\analyze.py" + "\" -F \"" + @currentBatch + "\"" + " -p " + num_threads.ToString();
 
-                //Create a background thread for the progress bar 
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += new DoWorkEventHandler(run_analyze);
-                worker.RunWorkerAsync(this);
-                
+                if (currentBatch != null)
+                {
+                    ProcessStartInfo startConfig = new ProcessStartInfo(pythonPath, pythonArgs);
+                    startConfig.UseShellExecute = false;
+                    startConfig.RedirectStandardOutput = true;
+                    startConfig.RedirectStandardError = true;
+                    startConfig.CreateNoWindow = true;
+
+                    backendProcess = new Process { StartInfo = startConfig };
+
+                    //Create output handlers
+                    backendProcess.OutputDataReceived += redirectHandler;
+                    backendProcess.ErrorDataReceived += redirectHandler;
+                    backendProcess.EnableRaisingEvents = true;
+
+                    //Create a background thread for the progress bar 
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler(run_analyze);
+                    worker.RunWorkerAsync(this);
+
+                }
             }
+            
         }
 
         //===================================================================================================================
@@ -379,7 +419,14 @@ namespace AnomalyDetector
             if (!string.IsNullOrEmpty(line.Data))
             {
                 infoLogStr += line.Data + "\r\n";
-                Invoke(new Change(OnChange), line.Data, completed_files_ct, fileCt);
+                try
+                {
+                    Invoke(new Change(OnChange), line.Data, completed_files_ct, fileCt);
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -402,5 +449,8 @@ namespace AnomalyDetector
             if( backendProcess != null && !backendProcess.HasExited )
                 backendProcess.Kill();
         }
+
+       
+
     }
 }
