@@ -74,7 +74,7 @@ namespace AnomalyDetector
                 saved_changes = true;
                 saveStatus.Text = "Saved...";
             }
-            catch(Exception)
+            catch
             {
 
             }
@@ -106,7 +106,8 @@ namespace AnomalyDetector
         {
             //Something was changed
             saved_changes = false;
-            saveStatus.Text = "Not Saved...";       //TODO***look into checkbox not applying this label change
+            saveStatus.Text = "Not Saved...";
+            paramData.Rows[e.RowIndex].Cells[1].Value = false;
         }
     }
 }
