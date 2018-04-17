@@ -24,15 +24,10 @@ C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\A
 C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
 C:\Users\BRADY\Source\Repos\CSCE4823\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
 C:\Users\Omega\Desktop\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.Properties.Resources.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.resultDialog.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.GenerateResource.cache
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.csproj.CoreCompileInputs.cache
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.exe
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.pdb
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe.config
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.exe
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\AnomalyDetector.pdb
@@ -52,3 +47,8 @@ F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\Anom
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.MainForm.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.ProcessForm.resources
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\AnomalyDetector.PythonCheckForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\MPDT.exe.config
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\Debug\MPDT.pdb
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\Debug\MPDT.pdb

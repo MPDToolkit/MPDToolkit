@@ -133,6 +133,7 @@
             // menuOptimizedMode
             // 
             this.menuOptimizedMode.Enabled = false;
+            this.menuOptimizedMode.ForeColor = System.Drawing.SystemColors.Menu;
             this.menuOptimizedMode.Name = "menuOptimizedMode";
             this.menuOptimizedMode.Size = new System.Drawing.Size(121, 24);
             this.menuOptimizedMode.Text = "Optimized for: ";
@@ -290,7 +291,7 @@
             this.MinimumSize = new System.Drawing.Size(967, 618);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Anomaly Detector";
+            this.Text = "Missing Person Detection Toolkit";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -13,9 +13,6 @@ F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Releas
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.exe
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.pdb
 F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csprojResolveAssemblyReference.cache
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.exe.config
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.exe
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.pdb
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.batchName.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.MainForm.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.ParametersForm.resources
@@ -25,5 +22,8 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Rele
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.resultDialog.resources
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.GenerateResource.cache
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.CoreCompileInputs.cache
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.exe
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.pdb
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.exe.config
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.pdb
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.pdb

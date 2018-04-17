@@ -7,7 +7,7 @@
     <ProjectGuid>{1B207724-1E16-43B6-9C20-2603C2A6CEA5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>AnomalyDetector</RootNamespace>
-    <AssemblyName>AnomalyDetector</AssemblyName>
+    <AssemblyName>MPDT</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
