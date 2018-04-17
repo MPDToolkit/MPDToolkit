@@ -111,7 +111,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\AnomalySetup.msi"
+        "OutputFilename" = "8:Debug\\Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -143,7 +143,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\AnomalySetup.msi"
+        "OutputFilename" = "8:Release\\Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -466,7 +466,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_857E9E3F60F34857AF4CE107A8AA8A85"
                     {
-                    "Name" = "8:Anomaly Detector"
+                    "Name" = "8:MPDT"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -608,9 +608,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Anomaly Detector"
+        "ProductName" = "8:Missing Person Detection Toolkit"
         "ProductCode" = "8:{B2742D99-AFFF-45F7-93CD-C86A12B2BEB7}"
-        "PackageCode" = "8:{0C4F86AF-DB9E-4CB8-925A-B88EE24196AA}"
+        "PackageCode" = "8:{7675E16A-90C6-487D-947A-B71EBDFF2333}"
         "UpgradeCode" = "8:{1DCD60FB-B680-4CCC-8F9A-21D118DE0C08}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -621,7 +621,7 @@
         "Manufacturer" = "8:MPDT"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Anomaly Detector Setup"
+        "Title" = "8:MPDT Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:MPDT"
         "Keywords" = "8:"
@@ -732,7 +732,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_67B6C72231974C278AB061D90E9A3F3A"
             {
-            "Name" = "8:Anomaly Detector"
+            "Name" = "8:MPDT"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -744,9 +744,23 @@
             "Icon" = "8:_ABFCF4D7B9FE4DD682CE4875E2D03670"
             "Feature" = "8:"
             }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C9850793E1684EBF815F4EDB48A877FA"
+            {
+            "Name" = "8:Batches"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_50828ADA532E4CF8B297C1D9C594FC62"
+            "Folder" = "8:_BA591C6FD0974B9BAFFAF7903687F02D"
+            "WorkingFolder" = "8:_6CE002842CB54BC29B10DCCC58A2F05A"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D432678E247C42D19BAD205DF6244D74"
             {
-            "Name" = "8:Anomaly Detector"
+            "Name" = "8:MPDT"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
