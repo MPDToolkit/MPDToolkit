@@ -14,7 +14,6 @@ import timer	#Custom Timer class
 #========================================================================================================
 
 scale_value = 1
-
 window_property = cv2.WINDOW_KEEPRATIO
 
 window_init_width = 1600
@@ -56,14 +55,20 @@ def main():
 """
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-def DebrisDetect(img_path, Params, heatmap = None):
+def DebrisDetect(img_path, Params):
+	#This color value results in all lines having a value of 100 after the colormap has been applied in the analyze.py
+	color = (0,170,0)
+	
 	# Create a Timer
 	t = timer.Timer()
 	t.start()
 
 	img = cv2.imread(img_path)
+
+	#Zeroed out version of img
+	heatmap = img * 0
+
 	# Name of the original file
-	#result_name = img_path.split("/")[-1].split(".")[0]
 	result_name = os.path.split(img_path)[1].split(".")[0]
 
 	#If needed, scale image
@@ -78,11 +83,8 @@ def DebrisDetect(img_path, Params, heatmap = None):
 	height, width = img.shape[:2]
 	avg_dim = (((width+height)//2)//3)*2
 
-	# Create copy of original img
-	line_check = copy.deepcopy(img)
-
 	# Gaussian Blur
-	proc_img = cv2.GaussianBlur(line_check, (5,5), Params["LineGaussianIter"])
+	proc_img = cv2.GaussianBlur(img, (5,5), Params["LineGaussianIter"])
 
     # Kernel Dilation
 	proc_img = cv2.dilate(proc_img, (5,5), iterations=Params["LineDilationIter"])
@@ -98,46 +100,32 @@ def DebrisDetect(img_path, Params, heatmap = None):
 
 	# If lines are found
 	if lines is not None:
-		if heatmap is not None:
-			for i in range(0, len(lines)):
-				rho = lines[i][0][0]
-				theta = lines[i][0][1]
-				a = math.cos(theta)
-				b = math.sin(theta)
-				x0 = a * rho
-				y0 = b * rho
-				pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
-				pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
-				cv2.line(heatmap, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
-			#Stop the timer
-			t.stop()
-			return result_name, heatmap, t.get_time(1000), 'D'
-		else:
-			for i in range(0, len(lines)):
-				rho = lines[i][0][0]
-				theta = lines[i][0][1]
-				a = math.cos(theta)
-				b = math.sin(theta)
-				x0 = a * rho
-				y0 = b * rho
-				pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
-				pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
-				cv2.line(line_check, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
-			#Stop the timer
-			t.stop()
-			return result_name, line_check, t.get_time(1000), 'D'
+		for i in range(0, len(lines)):
+			rho = lines[i][0][0]
+			theta = lines[i][0][1]
+			a = math.cos(theta)
+			b = math.sin(theta)
+			x0 = a * rho
+			y0 = b * rho
+			pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+			pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+			cv2.line(heatmap, pt1, pt2, color, 3, cv2.LINE_AA)
 
+		#Stop the timer
+		t.stop()
+
+		dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
+		stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
+		return result_name, dx_scores, t.get_time(1000), stats, 'D'
+
+		#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
+		#return result_name, heatmap, t.get_time(1000), stats, 'D'
+		
 	# Otherwise, corner detection
 	else:
-		# more copies of the original img and heatmap is there is one
-		src = copy.deepcopy(img)
-		corner_check = copy.deepcopy(img)
-		img_copy = copy.deepcopy(img)
-		if heatmap is not None:
-			heatmap_copy = copy.deepcopy(heatmap)
-
+		
 		# Gaussian Blur
-		proc2_img = cv2.GaussianBlur(corner_check, (5,5), Params["CornerGaussianIter"])
+		proc2_img = cv2.GaussianBlur(img, (5,5), Params["CornerGaussianIter"])
 
 		# Erosion
 		proc2_img = cv2.erode(proc2_img, (5,5), iterations=Params["CornerErosionIter"])
@@ -149,7 +137,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 		gray = cv2.cvtColor(proc2_img, cv2.COLOR_BGR2GRAY)
 		corners = cv2.goodFeaturesToTrack(gray, 50, 0.02, 10)
 		corners = np.int0(corners)
-		hsv_img = cv2.cvtColor(img_copy, cv2.COLOR_BGR2HSV)
+		hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
 		# Green and brown HSV values
 		lower_green = np.array([33, 87, 78])
@@ -252,7 +240,7 @@ def DebrisDetect(img_path, Params, heatmap = None):
 				if dist < Params["CornerMaxDistance"] and dist != 0:
 					for k in connected_pairs:
 						if (x,y) in k and (x2,y2) in k:
-							break;
+							break
 						elif (x,y) in k:
 							k.append((x2,y2))
 							break
@@ -264,24 +252,27 @@ def DebrisDetect(img_path, Params, heatmap = None):
 		if any(len(t) > Params["CornerNumPoints"] for t in connected_pairs):
 			#Stop the timer
 			t.stop()
-			if heatmap is not None:
-				for poly in connected_pairs:
-					if len(poly) > 3:
-						for point_a in poly:
-							for point_b in poly:
-								if point_a is not point_b:
-									cv2.line(heatmap_copy, point_a, point_b, (0,0,255), 1, cv2.LINE_AA)
-				return result_name, heatmap_copy, t.get_time(1000), 'D'
-			else:
-				for poly in connected_pairs:
-					if len(poly) > 3:
-						for point_a in poly:
-							for point_b in poly:
-								if point_a is not point_b:
-									cv2.line(src, point_a, point_b, (0,0,255), 1, cv2.LINE_AA)
-				return result_name, src, t.get_time(1000), 'D'
+			for poly in connected_pairs:
+				if len(poly) > 3:
+					for point_a in poly:
+						for point_b in poly:
+							if point_a is not point_b:
+								cv2.line(heatmap, point_a, point_b, color, 1, cv2.LINE_AA)
 
+			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
+			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
+			return result_name, dx_scores, t.get_time(1000), stats, 'D'
+
+			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
+			#return result_name, heatmap, t.get_time(1000), stats, 'D'
+			
 		else:
 			t.stop()
-			return result_name, heatmap, t.get_time(1000), 'O'
+
+			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
+			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
+			return result_name, dx_scores, t.get_time(1000), stats, 'O'
+
+			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
+			#return result_name, heatmap, t.get_time(1000), stats, 'O'
 	exit()
