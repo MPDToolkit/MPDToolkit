@@ -33,7 +33,7 @@ total_time = timer.Timer()
 
 #Default values in dictionaries
 RXDParams = {"RxThreshold":90.0, "RxChiThreshold":0.999}
-DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeLowerBound":100,"LineCannyEdgeThreshold":0, "LineThreshold":-1, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
+DXDParams = {"LineGaussianIter":0, "LineDilationIter":1, "LineBilatBlurColor":75,"LineBilatBlurSpace":75, "LineCannyEdgeLowerBound":100,"LineCannyEdgeThreshold":140, "CornerGaussianIter":0,"CornerErosionIter":1,"CornerBilateralColor":200,"CornerBilateralSpace":500, "CornerMaxDistance":75, "CornerNumPoints":3}
 
 
 #--------------------------------------------------------------------------------------------------------
@@ -62,16 +62,16 @@ def status(flag, in_str=None):
         print("{0} {1}".format( flag, in_str ))
 
     if flag == '-d-':	#Detected
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+        print("{0} {1} {2:.6f} sec {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
 
     if flag == '-o-':	#Other
-        print("{0} {1} {2:.3f}ms {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
+        print("{0} {1} {2:.6f} sec {3:.6f}%".format( flag, in_str[0], in_str[1], in_str[2]) )
 
 
     if flag == '-f-':   #Finished
         print('-f- Finished Image Analysis...\n')
         print("\n{0} image(s) analyzed\n".format( in_str[1] ))
-        print("Average elapsed time: {0:.3f} ms".format( (in_str[0] * 1000) / in_str[1] ) )
+        print("Average elapsed time: {0:.3f} sec".format( (in_str[0] ) / in_str[1] ) )
         print("Total elapsed time: {0:.3f} sec\n".format( in_str[0] ) )
 
     if flag == '-e-':	#Error
