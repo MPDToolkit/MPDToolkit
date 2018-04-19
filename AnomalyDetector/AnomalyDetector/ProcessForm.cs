@@ -47,7 +47,14 @@ namespace AnomalyDetector
 
             pythonPath = settings.PythonPath;
 
-            if (settings.AllowMultiThread) num_threads = System.Environment.ProcessorCount;
+            if (settings.AllowMultiThread)
+            {
+                num_threads = System.Environment.ProcessorCount;
+
+                //Reserve 2 processes for the rest of the system
+                if (num_threads > 2)
+                    num_threads -= 2;
+            }
             else num_threads = 1;
         }
 
