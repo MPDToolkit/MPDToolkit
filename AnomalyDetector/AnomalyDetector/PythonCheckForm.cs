@@ -27,16 +27,29 @@ namespace AnomalyDetector
 
         private void PythonCheckForm_Load(object sender, EventArgs e)
         {
-            //Create a background thread for the progress bar 
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(checkForPython);
-            worker.RunWorkerAsync(this);
+            try
+            {
+
+                //Create a background thread for the progress bar 
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += new DoWorkEventHandler(checkForPython);
+                worker.RunWorkerAsync(this);
+            }
+            catch
+            {
+
+            }
         }
 
         private delegate void Bool(bool state);
         private void SetEnabled(bool state)
         {
             btnClose.Enabled = state;
+        }
+
+        private void SetWaitCursor(bool state)
+        {
+            this.UseWaitCursor = state;
         }
 
         private delegate void Info(string str);
@@ -47,59 +60,69 @@ namespace AnomalyDetector
 
         private void checkForPython(object sender, DoWorkEventArgs e)
         {
-           
-            //Check for Python
-            if (string.IsNullOrEmpty(settings.PythonPath) || !File.Exists(settings.PythonPath))
+           try
             {
-                //Check/Install required packages
-                Invoke(new Info(UpdateInfo), "Checking Python version...");
-                string python_version = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonVersion.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
-                if (python_version.Contains("Python 3.6"))
+
+                //Check for Python
+                if (string.IsNullOrEmpty(settings.PythonPath) || !File.Exists(settings.PythonPath))
                 {
-                    Invoke(new Info(UpdateInfo), "Checking Python version......OK");
-
-                    //Console.WriteLine("...Checking Python Packages...");
-                    Invoke(new Info(UpdateInfo), "Checking Python packages...");
-                    string pip_list = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
-                    string[] required_pkgs = { "opencv-python", "numpy", "scipy", "scikit-learn", "spectral", "pyparsing", "matplotlib" };
-                    foreach (string str in required_pkgs)
+                    //Check/Install required packages
+                    Invoke(new Info(UpdateInfo), "Checking Python version...");
+                    string python_version = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonVersion.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
+                    if (python_version.Contains("Python 3.6"))
                     {
-                        if (!pip_list.Contains(str))
-                        {
-                            Invoke(new Info(UpdateInfo), "Installing Python packages...");
-                            Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\installPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false }).WaitForExit();
-                            break;
-                        }
-                    }
+                        Invoke(new Info(UpdateInfo), "Checking Python version......OK");
 
-                    //Search for python path in the default install locations
-                    foreach (string path in default_python_path)
+                        //Console.WriteLine("...Checking Python Packages...");
+                        Invoke(new Info(UpdateInfo), "Checking Python packages...");
+                        string pip_list = Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\checkPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false, RedirectStandardOutput = true }).StandardOutput.ReadToEnd();
+                        string[] required_pkgs = { "opencv-python", "numpy", "scipy", "scikit-learn", "spectral", "pyparsing", "matplotlib" };
+                        foreach (string str in required_pkgs)
+                        {
+                            if (!pip_list.Contains(str))
+                            {
+                                Invoke(new Info(UpdateInfo), "Installing Python packages...");
+                                Invoke(new Bool(SetWaitCursor), true);
+                                Process.Start(new ProcessStartInfo { FileName = Path.Combine(Environment.CurrentDirectory, "bin\\Setup\\installPythonPackages.bat"), CreateNoWindow = true, UseShellExecute = false }).WaitForExit();
+                                break;
+                            }
+                        }
+
+                        //Search for python path in the default install locations
+                        foreach (string path in default_python_path)
+                        {
+                            if (File.Exists(Environment.ExpandEnvironmentVariables(path)))
+                            {
+                                settings.PythonPath = Environment.ExpandEnvironmentVariables(path);
+                            }
+                        }
+
+                        Invoke(new Info(UpdateInfo), "Python Setup Complete...");
+                        settings.FirstRun = false;
+                        is_python_installed = true;
+                    }
+                    else
                     {
-                        if (File.Exists(Environment.ExpandEnvironmentVariables(path)))
-                        {
-                            settings.PythonPath = Environment.ExpandEnvironmentVariables(path);
-                        }
-                    }
-
-                    Invoke(new Info(UpdateInfo), "Python Setup Complete...");
-                    settings.FirstRun = false;
-                    is_python_installed = true;
+                        Invoke(new Info(UpdateInfo), "Python 3.6.4 is required.");
+                        is_python_installed = false;
+                    
+                    }      
                 }
                 else
                 {
-                    Invoke(new Info(UpdateInfo), "Python 3.6.4 is required.");
-                    is_python_installed = false;
-                    
-                }      
-            }
-            else
-            {
-                Invoke(new Info(UpdateInfo), "Finished...");
-                is_python_installed = true;
-            }
+                    Invoke(new Info(UpdateInfo), "Finished...");
+                    Invoke(new Bool(SetWaitCursor), false);
+                    is_python_installed = true;
+                }
 
-            //Re-enabled the close button
-            Invoke(new Bool(SetEnabled), true);
+                //Re-enabled the close button
+                Invoke(new Bool(SetEnabled), true);
+                Invoke(new Bool(SetWaitCursor), false);
+            }
+            catch
+            {
+
+            }
         }
 
         private void pythonLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -126,8 +149,6 @@ namespace AnomalyDetector
         {
             return settings;
         }
-
-
 
     }
 }

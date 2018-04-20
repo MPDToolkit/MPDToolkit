@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcessForm));
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.btnSelectFolder = new System.Windows.Forms.Button();
@@ -36,12 +37,14 @@
             this.lblPercent = new System.Windows.Forms.Label();
             this.filesSelected = new System.Windows.Forms.Label();
             this.infoLog = new System.Windows.Forms.TextBox();
+            this.btnBatchName = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAnalyze
             // 
-            this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAnalyze.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnAnalyze.BackColor = System.Drawing.Color.LightGray;
+            this.btnAnalyze.Enabled = false;
             this.btnAnalyze.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAnalyze.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.btnAnalyze.Location = new System.Drawing.Point(432, 167);
@@ -56,6 +59,7 @@
             // btnSelectFile
             // 
             this.btnSelectFile.BackColor = System.Drawing.Color.LightGray;
+            this.btnSelectFile.Enabled = false;
             this.btnSelectFile.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSelectFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.btnSelectFile.Location = new System.Drawing.Point(146, 19);
@@ -70,6 +74,7 @@
             // btnSelectFolder
             // 
             this.btnSelectFolder.BackColor = System.Drawing.Color.LightGray;
+            this.btnSelectFolder.Enabled = false;
             this.btnSelectFolder.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSelectFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.btnSelectFolder.Location = new System.Drawing.Point(16, 19);
@@ -120,16 +125,17 @@
             // 
             // filesSelected
             // 
-            this.filesSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesSelected.AutoSize = true;
+            this.filesSelected.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filesSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.filesSelected.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.filesSelected.Location = new System.Drawing.Point(429, 26);
+            this.filesSelected.Location = new System.Drawing.Point(265, 19);
             this.filesSelected.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.filesSelected.Name = "filesSelected";
-            this.filesSelected.Size = new System.Drawing.Size(124, 18);
+            this.filesSelected.Size = new System.Drawing.Size(281, 33);
             this.filesSelected.TabIndex = 7;
             this.filesSelected.Text = "No Files Selected";
+            this.filesSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // infoLog
             // 
@@ -146,12 +152,24 @@
             this.infoLog.TabIndex = 8;
             this.infoLog.TabStop = false;
             // 
+            // btnBatchName
+            // 
+            this.btnBatchName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.btnBatchName.Location = new System.Drawing.Point(16, 19);
+            this.btnBatchName.Name = "btnBatchName";
+            this.btnBatchName.Size = new System.Drawing.Size(244, 33);
+            this.btnBatchName.TabIndex = 9;
+            this.btnBatchName.Text = "Create New Batch";
+            this.btnBatchName.UseVisualStyleBackColor = true;
+            this.btnBatchName.Click += new System.EventHandler(this.btnBatchName_Click);
+            // 
             // ProcessForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(564, 236);
+            this.Controls.Add(this.btnBatchName);
             this.Controls.Add(this.infoLog);
             this.Controls.Add(this.filesSelected);
             this.Controls.Add(this.lblPercent);
@@ -160,11 +178,12 @@
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.btnAnalyze);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(580, 275);
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ProcessForm";
+            this.Text = "Analysis";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProcessForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -180,5 +199,6 @@
         private System.Windows.Forms.Label lblPercent;
         private System.Windows.Forms.Label filesSelected;
         private System.Windows.Forms.TextBox infoLog;
+        private System.Windows.Forms.Button btnBatchName;
     }
 }

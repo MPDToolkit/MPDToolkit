@@ -1,0 +1,29 @@
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.exe.config
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.batchName.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.MainForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.ParametersForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.ProcessForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.Properties.Resources.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.PythonCheckForm.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.resultDialog.resources
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.GenerateResource.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.CoreCompileInputs.cache
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.exe
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.pdb
+F:\Program Files\VS Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csprojResolveAssemblyReference.cache
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.batchName.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.MainForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.ParametersForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.ProcessForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.Properties.Resources.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.PythonCheckForm.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.resultDialog.resources
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.GenerateResource.cache
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csproj.CoreCompileInputs.cache
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.exe.config
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.pdb
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.exe
+C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.pdb
