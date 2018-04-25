@@ -15,7 +15,7 @@ namespace AnomalyDetector
         private string batch_name;
         private string invalid_msg = "Invalid character";
         private string valid_msg = "Please name this batch";
-        private string approved_characters = "abcdefghijklmnopqrstuvwxyz0123456789()_";
+        private string approved_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()_- ";
 
         //===================================================================================================================
         //-------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,6 @@ namespace AnomalyDetector
 
             batch_name = default_batch_name;
 
-            textBox1.Text = batch_name;
         }
 
         //===================================================================================================================
@@ -36,7 +35,9 @@ namespace AnomalyDetector
 
         private void batchName_Load(object sender, EventArgs e)
         {
-
+            textBox1.Text = batch_name;
+            batchLabel.Text = valid_msg;
+            button1.Enabled = true;
         }
 
         //===================================================================================================================
@@ -64,20 +65,19 @@ namespace AnomalyDetector
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //Filter user input
-            foreach(char c in textBox1.Text.ToLower())
+            //Check user input
+            if(textBox1.Text.All(approved_characters.Contains))
             {
-                if(approved_characters.Contains(c))
-                {
-                    batchLabel.Text = valid_msg;
-                    button1.Enabled = true;
-                }
-                else
-                {
-                    batchLabel.Text = invalid_msg;
-                    button1.Enabled = false;
-                }
+                batchLabel.Text = valid_msg;
+                button1.Enabled = true;
             }
+            else
+            {
+                batchLabel.Text = invalid_msg;
+                button1.Enabled = false;
+            }
+            
+            
         }
     }
 }

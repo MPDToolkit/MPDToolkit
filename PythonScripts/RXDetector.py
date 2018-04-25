@@ -42,7 +42,7 @@ def RXD( image_file, Params):
     src_img = cv.imread( image_file )
 
     #Extract the name of the original image from its path
-    result_name = os.path.split(image_file)[1].split(".")[0]
+    result_name = ".".join(os.path.split(image_file)[1].split(".")[:-1])
 
     #If needed, scale image
     if scale_value != 1.0:
@@ -68,16 +68,16 @@ def RXD( image_file, Params):
     #Percentage of anomalies above the annomaly_threshold
     stats = ((rx_mask >= anomaly_threshold).sum() / rx_mask.size ) * 100.0
 
-    #Flag the image as a Result (R) or Other (O)
+    #Flag the image as a Detected (D) or Other (O)
     if np.max(rx_mask) >= anomaly_threshold:
         flag = 'D'
     else:
         flag = 'O'
 
-    #Apply a colormap
+    #Apply a colormap	Note: Moved to 'analyze.py'
     #heatmap = cv.applyColorMap( rx_mask.astype(np.uint8), colormap_value )
     heatmap = rx_mask
 
     t.stop()
 
-    return result_name, heatmap, t.get_time(1000), stats, flag
+    return result_name, heatmap, t.get_time(), stats, flag

@@ -56,9 +56,9 @@ def main():
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 def DebrisDetect(img_path, Params):
-	#This color value results in all lines having a value of 100 after the colormap has been applied in the analyze.py
-	color = (0,170,0)
-	
+	#This color value results in all lines having a neutral color value after the colormap has been applied in the analyze.py
+	color = (0,180,0)
+
 	# Create a Timer
 	t = timer.Timer()
 	t.start()
@@ -69,7 +69,7 @@ def DebrisDetect(img_path, Params):
 	heatmap = img * 0
 
 	# Name of the original file
-	result_name = os.path.split(img_path)[1].split(".")[0]
+	result_name = ".".join(os.path.split(img_path)[1].split(".")[:-1])
 
 	#If needed, scale image
 	if scale_value != 1:
@@ -116,14 +116,14 @@ def DebrisDetect(img_path, Params):
 
 		dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
 		stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
-		return result_name, dx_scores, t.get_time(1000), stats, 'D'
+		return result_name, dx_scores, t.get_time(), stats, 'D'
 
 		#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
 		#return result_name, heatmap, t.get_time(1000), stats, 'D'
-		
+
 	# Otherwise, corner detection
 	else:
-		
+
 		# Gaussian Blur
 		proc2_img = cv2.GaussianBlur(img, (5,5), Params["CornerGaussianIter"])
 
@@ -261,17 +261,17 @@ def DebrisDetect(img_path, Params):
 
 			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
 			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
-			return result_name, dx_scores, t.get_time(1000), stats, 'D'
+			return result_name, dx_scores, t.get_time(), stats, 'D'
 
 			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
 			#return result_name, heatmap, t.get_time(1000), stats, 'D'
-			
+
 		else:
 			t.stop()
 
 			dx_scores = cv2.cvtColor(heatmap, cv2.COLOR_BGR2GRAY)
 			stats = (np.count_nonzero(dx_scores) / dx_scores.size ) * 100.0
-			return result_name, dx_scores, t.get_time(1000), stats, 'O'
+			return result_name, dx_scores, t.get_time(), stats, 'O'
 
 			#stats = ((heatmap.sum() / color_sum) / heatmap.size ) * 100.0
 			#return result_name, heatmap, t.get_time(1000), stats, 'O'
