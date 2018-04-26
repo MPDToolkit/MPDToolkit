@@ -56,8 +56,8 @@ def main():
 #--------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
 def DebrisDetect(img_path, Params):
-	#This color value results in all lines having a value of 100 after the colormap has been applied in the analyze.py
-	color = (0,170,0)
+	#This color value results in all lines having a neutral color value after the colormap has been applied in the analyze.py
+	color = (0,180,0)
 
 	# Create a Timer
 	t = timer.Timer()

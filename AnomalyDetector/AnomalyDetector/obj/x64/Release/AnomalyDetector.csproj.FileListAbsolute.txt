@@ -27,4 +27,3 @@ C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Rele
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\bin\x64\Release\MPDT.pdb
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.exe
 C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\MPDT.pdb
-C:\Users\Omega\Source\Repos\CSCE482\AnomalyDetector\AnomalyDetector\obj\x64\Release\AnomalyDetector.csprojResolveAssemblyReference.cache
