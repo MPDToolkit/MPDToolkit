@@ -28,12 +28,8 @@ def RXD( image_file, Params):
     chi_threshold = Params["RxChiThreshold"]
     anomaly_threshold = Params["RxThreshold"]
 
-    #Output Variables
-    colormap_value = cv.COLORMAP_JET
-
     #Statistics Variables
     t = timer.Timer()
-
 
     #Attempt to Analyze
     t.start()
@@ -49,12 +45,8 @@ def RXD( image_file, Params):
         height, width = src_img.shape[:2]
         src_img = cv.resize( src_img, (int( width * scale_value ), int( height * scale_value)), interpolation= cv.INTER_LINEAR)
 
-
     #Calculate the rx scores for the image
     rx_scores = spc.rx(src_img)
-
-    #Calculate the reference bands
-    #rx_bands = src_img.shape[-1]       #Removed and integrated into chi function in order to save of memory usage
 
     #Apply a threshold to the rx scores using the chi-square percent point function
     rx_chi = chi2.ppf( chi_threshold, src_img.shape[-1])
@@ -74,10 +66,6 @@ def RXD( image_file, Params):
     else:
         flag = 'O'
 
-    #Apply a colormap	Note: Moved to 'analyze.py'
-    #heatmap = cv.applyColorMap( rx_mask.astype(np.uint8), colormap_value )
-    heatmap = rx_mask
-
     t.stop()
 
-    return result_name, heatmap, t.get_time(), stats, flag
+    return result_name, rx_mask, t.get_time(), stats, flag

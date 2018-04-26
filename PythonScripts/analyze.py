@@ -107,7 +107,10 @@ def run(img):
     img_name = rx[0]
     run_time = rx[2] + dx[2]
     stats = rx[3] + dx[3]
-    raw_scores = rx[1] + dx[1]
+    raw_scores = np.interp(rx[1], [0,np.max(rx[1])], [0, 255]) + dx[1]
+
+	#Map raw_scores to the range [0,255]
+    raw_scores = np.interp(raw_scores, [0,np.max(raw_scores)], [0, 255])
     
     #Apply colormap to the combined heatmap
     final_heatmap = cv.applyColorMap( raw_scores.astype(np.uint8), cv.COLORMAP_JET )
